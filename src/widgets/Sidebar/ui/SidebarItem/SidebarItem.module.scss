@@ -1,0 +1,20 @@
+.item {
+    display: flex;
+    align-items: center;
+
+    .icon {
+        width: 30px;
+        height: 30px;
+        transition: 200ms;
+        fill: var(--primary-color);
+    }
+
+    &:hover .icon {
+        fill: var(--bg-color);
+    }
+}
+
+.link {
+    margin-left: 10px;
+    opacity: 1;
+}

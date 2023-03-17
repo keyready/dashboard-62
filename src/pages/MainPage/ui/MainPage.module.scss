@@ -1,0 +1,30 @@
+.MainPage {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+.mainInfo {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.year {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.addIndo {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.skills {
+    grid-row: 1 / span 2;
+}
+
+.bar {
+    fill: #0449e0;
+    width: 10px;
+}

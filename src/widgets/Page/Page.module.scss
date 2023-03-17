@@ -1,0 +1,14 @@
+.Page {
+    height: 100vh;
+    padding: 30px;
+    overflow-y: auto;
+    flex-shrink: 100;
+    flex-grow: 1;
+    position: relative;
+}
+
+.arrow {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+}
