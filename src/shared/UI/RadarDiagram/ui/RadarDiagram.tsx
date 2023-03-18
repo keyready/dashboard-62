@@ -73,16 +73,23 @@ export const RadarDiagram = memo((props: RadarDiagramProps) => {
                 <PolarRadiusAxis />
                 <Radar
                     name={names?.[0]}
-                    dataKey="A"
+                    dataKey="Candidate1_Surname"
                     stroke="red"
                     fill="crimson"
                     fillOpacity={0.5}
                 />
                 <Radar
                     name={names?.[1]}
-                    dataKey="B"
+                    dataKey="Candidate2_Surname"
                     stroke="blue"
                     fill="lightblue"
+                    fillOpacity={0.5}
+                />
+                <Radar
+                    name={names?.[2]}
+                    dataKey="Candidate3_Surname"
+                    stroke="yellow"
+                    fill="lightyellow"
                     fillOpacity={0.5}
                 />
                 <Legend />

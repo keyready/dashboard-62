@@ -1,6 +1,9 @@
 import { classNames } from 'shared/lib/classNames/classNames';
-import { memo } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { memo, useCallback } from 'react';
+import {
+    Button, Form, OverlayTrigger, Tooltip,
+} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import classes from './PageNavbar.module.scss';
 
 interface PageNavbarProps {
@@ -16,6 +19,11 @@ export const PageNavbar = memo((props: PageNavbarProps) => {
         setIsFocused,
     } = props;
 
+    const navigate = useNavigate();
+    const redirectHandler = useCallback(() => {
+        navigate('/comparison');
+    }, [navigate]);
+
     return (
         <div className={classNames(classes.PageNavbar, {}, [className])}>
             <Form
@@ -27,13 +35,34 @@ export const PageNavbar = memo((props: PageNavbarProps) => {
                     onClick={() => setIsFocused?.(true)}
                 />
             </Form>
-            <Button
-                disabled={!isCandidates}
-                variant="warning"
-                onClick={() => console.log('Сравнение кандидатов')}
-            >
-                Сравнить
-            </Button>
+
+            {!isCandidates
+                ? (
+                    <OverlayTrigger
+                        placement="left"
+                        delay={{ show: 10, hide: 500 }}
+                        overlay={<Tooltip>Выберите 2-4 кандидата!</Tooltip>}
+                    >
+                        <span className="d-inline-block">
+                            <Button
+                                disabled={!isCandidates}
+                                variant="warning"
+                                onClick={redirectHandler}
+                            >
+                                Сравнить
+                            </Button>
+                        </span>
+                    </OverlayTrigger>
+                )
+                : (
+                    <Button
+                        disabled={!isCandidates}
+                        variant="warning"
+                        onClick={redirectHandler}
+                    >
+                        Сравнить
+                    </Button>
+                )}
         </div>
     );
 });

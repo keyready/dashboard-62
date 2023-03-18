@@ -71,6 +71,8 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
     useEffect(() => {
         dispatch(fetchCandidates());
+        dispatch(CandidatesPageActions.setSelectedIds([]));
+        dispatch(CandidatesPageActions.setSelectedCandidates([]));
 
         // TODO: хоткиз для открытия окна поиска
         // const onKeypress = (e: any) => {

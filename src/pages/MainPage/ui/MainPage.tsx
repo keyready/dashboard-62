@@ -1,6 +1,8 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useCallback, useState } from 'react';
+import React, {
+    memo, useCallback, useEffect, useState,
+} from 'react';
 import { RadarDiagram } from 'shared/UI/RadarDiagram';
 import { Card } from 'shared/UI/Card';
 import { Modal } from 'react-bootstrap';
@@ -16,32 +18,44 @@ interface MainPageProps {
 const data = [
     {
         subject: 'Frontend Developing',
-        A: 9,
+        Candidate1_Surname: 9,
+        Candidate2_Surname: 4,
+        Candidate3_Surname: 10,
         fullMark: 10,
     },
     {
         subject: 'Backend Developing',
-        A: 6,
+        Candidate1_Surname: 6,
+        Candidate2_Surname: 9,
+        Candidate3_Surname: 8,
         fullMark: 10,
     },
     {
         subject: 'Android Developing',
-        A: 2,
+        Candidate1_Surname: 1,
+        Candidate2_Surname: 2,
+        Candidate3_Surname: 6,
         fullMark: 10,
     },
     {
         subject: 'QA Engineer',
-        A: 2,
+        Candidate1_Surname: 1,
+        Candidate2_Surname: 1,
+        Candidate3_Surname: 1,
         fullMark: 10,
     },
     {
         subject: 'Java Developer',
-        A: 2,
+        Candidate1_Surname: 2,
+        Candidate2_Surname: 8,
+        Candidate3_Surname: 6,
         fullMark: 10,
     },
     {
         subject: 'Go Developer',
-        A: 3,
+        Candidate1_Surname: 5,
+        Candidate2_Surname: 8,
+        Candidate3_Surname: 8,
         fullMark: 10,
     },
 ];
@@ -82,6 +96,10 @@ const MainPage = memo((props: MainPageProps) => {
     const {
         className,
     } = props;
+
+    useEffect(() => {
+        document.title = 'Хакатон 62 курс | 1 кейс';
+    }, []);
 
     const [show, setShow] = useState<boolean>(false);
     const [specializationInfo, setSpecializationInfo] = useState<string>('');
@@ -141,8 +159,8 @@ const MainPage = memo((props: MainPageProps) => {
                 <h2>Умения</h2>
                 <RadarDiagram
                     onLabelClickHandler={onLabelClickHandler}
-                    names={['Rodion']}
-                    multiple={false}
+                    names={['Rodion', 'Andrew', 'Kostya']}
+                    multiple
                     height={350}
                     data={data}
                 />

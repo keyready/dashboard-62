@@ -1,8 +1,6 @@
 /* eslint-disable max-len */
-import { memo, useCallback, useMemo } from 'react';
-import {
-    Alert, Button, Form, Table,
-} from 'react-bootstrap';
+import { memo, useMemo } from 'react';
+import { Alert, Table } from 'react-bootstrap';
 import { Card } from 'shared/UI/Card';
 import { Candidate } from 'entities/Candidate';
 import { Loader } from 'shared/UI/Loader';
