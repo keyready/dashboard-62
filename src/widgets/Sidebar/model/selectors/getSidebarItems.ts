@@ -19,11 +19,6 @@ export const getSidebarItems = createSelector(
                 text: 'Кандидаты',
                 Icon: LeaderBoardIcon,
             },
-            {
-                path: RoutePath.heroes,
-                text: 'Наш полк',
-                Icon: MainIcon,
-            },
         ];
         if (userData) {
             SidebarItemsList.push();

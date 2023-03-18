@@ -1,4 +1,6 @@
-import { ChangeEvent, memo, useCallback } from 'react';
+import {
+    ChangeEvent, memo, useCallback, useState,
+} from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { Candidate } from 'entities/Candidate';
 import { Disclosure } from '@headlessui/react';
@@ -14,6 +16,7 @@ interface CandidateTabsProps {
     candidate: Candidate;
     setSelectedId?: (id: number) => void;
     isLoading?: boolean
+    isSelectingAvailable?: boolean
 }
 
 export const CandidateTabs = memo((props: CandidateTabsProps) => {
@@ -22,9 +25,12 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
         candidate,
         setSelectedId,
         isLoading,
+        isSelectingAvailable,
     } = props;
 
     const { theme } = useTheme();
+
+    const [isCurrentSelected, setIsCurrentSelected] = useState<boolean>(false);
 
     const randomInteger = useCallback((min: number, max: number) => {
         const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -36,12 +42,11 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
 
         if (e.target.id) {
             setSelectedId?.(e.target.id as unknown as number);
+            setIsCurrentSelected((prevState) => !prevState);
         }
     }, [setSelectedId]);
 
-    // TODO: лоадер должен работать!
     if (isLoading) {
-        console.log('загрзука');
         return (
             <div className={classes.loaderCard}>
                 <Loader />
@@ -62,6 +67,8 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                             onClick={(e) => e.stopPropagation()}
                         >
                             <Form.Check
+                                // TODO: отключение возможности выбора больше 4 кандидатов
+                                // disabled={!isSelectingAvailable && !isCurrentSelected}
                                 type="checkbox"
                                 id={candidate.id ? candidate.id.toString() : ''}
                                 onChange={checkboxHandler}

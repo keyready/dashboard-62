@@ -11,7 +11,85 @@
       "experience": 1.5,
       "img": "",
       "average_score": 38,
-      "email": "dallss13@bk.ru"
+      "email": "dallss13@bk.ru",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 7.42,
+          "children": {
+            "HTML": 9,
+            "CSS": 9,
+            "Javascript": 8,
+            "Usage of Git": 6,
+            "Package Managers": 6,
+            "Build Tools": 6,
+            "CSS Frameworks": 8
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 4.2,
+          "children": {
+            "JavaScript": 8,
+            "Python": 5,
+            "Go": 1,
+            "Usage of Git": 6,
+            "Relational Databases": 6,
+            "NoSQL databases": 2,
+            "Web Security Knowledge": 2
+          }
+        },
+        "Android Developer": {
+          "averageScore": 2.5,
+          "children": {
+            "Kotlin": 1,
+            "Usage of Git": 6,
+            "Components and their usage":  1,
+            "Application": 1,
+            "Building":  1,
+            "Testing": 6,
+            "Security":  2
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 1.42,
+          "children": {
+            "Project":  1,
+            "Management": 1,
+            "SDLC":  1,
+            "QA": 1,
+            "Manual Testing":  1,
+            "Automated Testing": 1,
+            "Non Functional Testing":  1,
+            "CI/CD": 3
+          }
+        },
+        "Go Developer": {
+          "averageScore": 2.7,
+          "children": {
+            "Building":  2,
+            "CLI Applications": 2,
+            "ORMs":  2,
+            "Web Frameworks": 2,
+            "Logging":  2,
+            "Go realtime communication": 2,
+            "API Clients": 2,
+            "Microservices": 2
+          }
+        },
+        "Java Developer": {
+          "averageScore": 1.2,
+          "children": {
+            "Generics":2,
+            "Build": 2,
+            "Tools": 2,
+            "Web Frameworks": 2,
+            "ORM": 2,
+            "Object-Relational Mapping": 2,
+            "Java": 2,
+            "JDBC": 2,
+            "Testing":  2
+          }
+        }
+      }
     },
     {
       "id": 2,
@@ -24,7 +102,85 @@
       "experience": 3.5,
       "img": "",
       "average_score": 91,
-      "email": "ivanovpetr27@mail.ru"
+      "email": "ivanovpetr27@mail.ru",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 6.83,
+          "children": {
+            "HTML": 8,
+            "CSS": 7,
+            "Javascript": 7,
+            "Usage of Git": 8,
+            "Package Managers": 6,
+            "Build Tools": 8,
+            "CSS Frameworks": 8
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 5.2,
+          "children": {
+            "JavaScript": 6,
+            "Python": 8,
+            "Go": 3,
+            "Usage of Git": 8,
+            "Relational Databases": 7,
+            "NoSQL databases": 5,
+            "Web Security Knowledge": 4
+          }
+        },
+        "Android Developer": {
+          "averageScore": 3.8,
+          "children": {
+            "Kotlin": 4,
+            "Usage of Git": 7,
+            "Components and their usage": 2,
+            "Application": 4,
+            "Building": 3,
+            "Testing": 4,
+            "Security": 2
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 2.96,
+          "children": {
+            "Project": 3,
+            "Management": 3,
+            "SDLC": 3,
+            "QA": 3,
+            "Manual Testing": 3,
+            "Automated Testing": 3,
+            "Non Functional Testing": 2,
+            "CI/CD": 2
+          }
+        },
+        "Go Developer": {
+          "averageScore": 3.1,
+          "children": {
+            "Building": 3,
+            "CLI Applications": 3,
+            "ORMs": 3,
+            "Web Frameworks": 2,
+            "Logging": 2,
+            "Go realtime communication": 4,
+            "API Clients": 2,
+            "Microservices": 4
+          }
+        },
+        "Java Developer": {
+          "averageScore": 4.6,
+          "children": {
+            "Generics": 5,
+            "Build": 4,
+            "Tools": 5,
+            "Web Frameworks": 5,
+            "ORM": 5,
+            "Object-Relational Mapping": 4,
+            "Java": 5,
+            "JDBC": 4,
+            "Testing": 4
+          }
+        }
+      }
     },
     {
       "id": 3,
@@ -37,7 +193,85 @@
       "experience": 2,
       "img": "",
       "average_score": 78,
-      "email": "sidorovalek24@gmail.com"
+      "email": "sidorovalek24@gmail.com",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 8.36,
+          "children": {
+            "HTML": 9,
+            "CSS": 10,
+            "Javascript": 8,
+            "Usage of Git": 7,
+            "Package Managers": 6,
+            "Build Tools": 7,
+            "CSS Frameworks": 9
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 5.68,
+          "children": {
+            "JavaScript": 8,
+            "Python": 6,
+            "Go": 4,
+            "Usage of Git": 7,
+            "Relational Databases": 7,
+            "NoSQL databases": 3,
+            "Web Security Knowledge": 3
+          }
+        },
+        "Android Developer": {
+          "averageScore": 3.85,
+          "children": {
+            "Kotlin": 3,
+            "Usage of Git": 7,
+            "Components and their usage": 2,
+            "Application": 3,
+            "Building":  2,
+            "Testing": 7,
+            "Security":  3
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 2.73,
+          "children": {
+            "Project":  2,
+            "Management": 2,
+            "SDLC":  3,
+            "QA": 3,
+            "Manual Testing":  2,
+            "Automated Testing": 2,
+            "Non Functional Testing":  2,
+            "CI/CD": 4
+          }
+        },
+        "Go Developer": {
+          "averageScore": 3.98,
+          "children": {
+            "Building":  3,
+            "CLI Applications": 3,
+            "ORMs":  4,
+            "Web Frameworks": 4,
+            "Logging":  3,
+            "Go realtime communication": 4,
+            "API Clients": 3,
+            "Microservices": 4
+          }
+        },
+        "Java Developer": {
+          "averageScore": 2.59,
+          "children": {
+            "Generics":3,
+            "Build": 3,
+            "Tools": 3,
+            "Web Frameworks": 4,
+            "ORM": 3,
+            "Object-Relational Mapping": 4,
+            "Java": 3,
+            "JDBC": 3,
+            "Testing":  2
+          }
+        }
+      }
     },
     {
       "id": 4,
@@ -50,7 +284,85 @@
       "experience": 5,
       "img": "",
       "average_score": 85,
-      "email": "petrovivan30@mail.ru"
+      "email": "petrovivan30@mail.ru",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 8.3,
+          "children": {
+            "HTML": 9,
+            "CSS": 8,
+            "Javascript": 9,
+            "Usage of Git": 8,
+            "Package Managers": 7,
+            "Build Tools": 7,
+            "CSS Frameworks": 9
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 6.8,
+          "children": {
+            "JavaScript": 7,
+            "Python": 8,
+            "Go": 6,
+            "Usage of Git": 7,
+            "Relational Databases": 9,
+            "NoSQL databases": 6,
+            "Web Security Knowledge": 5
+          }
+        },
+        "Android Developer": {
+          "averageScore": 3.7,
+          "children": {
+            "Kotlin": 5,
+            "Usage of Git": 7,
+            "Components and their usage": 2,
+            "Application": 3,
+            "Building": 2,
+            "Testing": 6,
+            "Security": 3
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 2.8,
+          "children": {
+            "Project": 2,
+            "Management": 2,
+            "SDLC": 3,
+            "QA": 4,
+            "Manual Testing": 4,
+            "Automated Testing": 3,
+            "Non Functional Testing": 3,
+            "CI/CD": 4
+          }
+        },
+        "Go Developer": {
+          "averageScore": 4.1,
+          "children": {
+            "Building": 6,
+            "CLI Applications": 5,
+            "ORMs": 4,
+            "Web Frameworks": 5,
+            "Logging": 4,
+            "Go realtime communication": 5,
+            "API Clients": 5,
+            "Microservices": 6
+          }
+        },
+        "Java Developer": {
+          "averageScore": 3.5,
+          "children": {
+            "Generics": 4,
+            "Build": 4,
+            "Tools": 4,
+            "Web Frameworks": 4,
+            "ORM": 5,
+            "Object-Relational Mapping": 5,
+            "Java": 5,
+            "JDBC": 5,
+            "Testing": 4
+          }
+        }
+      }
     },
     {
       "id": 5,
@@ -63,7 +375,85 @@
       "experience": 4.5,
       "img": "",
       "average_score": 89,
-      "email": "ivan.sidorov@gmail.com"
+      "email": "ivan.sidorov@gmail.com",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 8.1,
+          "children": {
+            "HTML": 9,
+            "CSS": 9,
+            "Javascript": 9,
+            "Usage of Git": 7,
+            "Package Managers": 7,
+            "Build Tools": 7,
+            "CSS Frameworks": 9
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 5.3,
+          "children": {
+            "JavaScript": 7,
+            "Python": 6,
+            "Go": 4,
+            "Usage of Git": 7,
+            "Relational Databases": 7,
+            "NoSQL databases": 4,
+            "Web Security Knowledge": 4
+          }
+        },
+        "Android Developer": {
+          "averageScore": 3.6,
+          "children": {
+            "Kotlin": 4,
+            "Usage of Git": 7,
+            "Components and their usage": 2,
+            "Application": 2,
+            "Building": 3,
+            "Testing": 8,
+            "Security": 4
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 2.8,
+          "children": {
+            "Project": 3,
+            "Management": 3,
+            "SDLC": 3,
+            "QA": 3,
+            "Manual Testing": 3,
+            "Automated Testing": 3,
+            "Non Functional Testing": 3,
+            "CI/CD": 7
+          }
+        },
+        "Go Developer": {
+          "averageScore": 4.5,
+          "children": {
+            "Building": 5,
+            "CLI Applications": 5,
+            "ORMs": 5,
+            "Web Frameworks": 5,
+            "Logging": 5,
+            "Go realtime communication": 5,
+            "API Clients": 5,
+            "Microservices": 5
+          }
+        },
+        "Java Developer": {
+          "averageScore": 3.9,
+          "children": {
+            "Generics": 4,
+            "Build": 4,
+            "Tools": 4,
+            "Web Frameworks": 4,
+            "ORM": 4,
+            "Object-Relational Mapping": 4,
+            "Java": 4,
+            "JDBC": 4,
+            "Testing": 4
+          }
+        }
+      }
     },
     {
       "id": 6,
@@ -76,7 +466,85 @@
       "experience": 2,
       "img": "",
       "average_score": 95,
-      "email": "anna.smirnova@yandex.ru"
+      "email": "anna.smirnova@yandex.ru",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 8.25,
+          "children": {
+            "HTML": 9,
+            "CSS": 9,
+            "Javascript": 9,
+            "Usage of Git": 8,
+            "Package Managers": 7,
+            "Build Tools": 7,
+            "CSS Frameworks": 9
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 6.8,
+          "children": {
+            "JavaScript": 7,
+            "Python": 8,
+            "Go": 6,
+            "Usage of Git": 9,
+            "Relational Databases": 7,
+            "NoSQL databases": 5,
+            "Web Security Knowledge": 6
+          }
+        },
+        "Android Developer": {
+          "averageScore": 5.7,
+          "children": {
+            "Kotlin": 8,
+            "Usage of Git": 9,
+            "Components and their usage": 7,
+            "Application": 7,
+            "Building": 8,
+            "Testing": 8,
+            "Security": 6
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 4.9,
+          "children": {
+            "Project": 6,
+            "Management": 6,
+            "SDLC": 8,
+            "QA": 7,
+            "Manual Testing": 7,
+            "Automated Testing": 6,
+            "Non Functional Testing": 8,
+            "CI/CD": 5
+          }
+        },
+        "Go Developer": {
+          "averageScore": 7.1,
+          "children": {
+            "Building": 8,
+            "CLI Applications": 7,
+            "ORMs": 8,
+            "Web Frameworks": 7,
+            "Logging": 8,
+            "Go realtime communication": 9,
+            "API Clients": 8,
+            "Microservices": 7
+          }
+        },
+        "Java Developer": {
+          "averageScore": 6.2,
+          "children": {
+            "Generics": 8,
+            "Build": 8,
+            "Tools": 7,
+            "Web Frameworks": 8,
+            "ORM": 7,
+            "Object-Relational Mapping": 8,
+            "Java": 9,
+            "JDBC": 8,
+            "Testing": 6
+          }
+        }
+      }
     },
     {
       "id": 7,
@@ -89,7 +557,85 @@
       "experience": 6,
       "img": "",
       "average_score": 78,
-      "email": "dmitry.popov@mail.ru"
+      "email": "dmitry.popov@mail.ru",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 8.9,
+          "children": {
+            "HTML": 10,
+            "CSS": 9,
+            "Javascript": 9,
+            "Usage of Git": 8,
+            "Package Managers": 7,
+            "Build Tools": 8,
+            "CSS Frameworks": 9
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 6.3,
+          "children": {
+            "JavaScript": 7,
+            "Python": 6,
+            "Go": 5,
+            "Usage of Git": 8,
+            "Relational Databases": 7,
+            "NoSQL databases": 4,
+            "Web Security Knowledge": 5
+          }
+        },
+        "Android Developer": {
+          "averageScore": 4.8,
+          "children": {
+            "Kotlin": 7,
+            "Usage of Git": 8,
+            "Components and their usage": 6,
+            "Application": 6,
+            "Building": 7,
+            "Testing": 7,
+            "Security": 6
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 3.6,
+          "children": {
+            "Project": 6,
+            "Management": 6,
+            "SDLC": 6,
+            "QA": 7,
+            "Manual Testing": 7,
+            "Automated Testing": 6,
+            "Non Functional Testing": 5,
+            "CI/CD": 5
+          }
+        },
+        "Go Developer": {
+          "averageScore": 5.2,
+          "children": {
+            "Building": 8,
+            "CLI Applications": 7,
+            "ORMs": 6,
+            "Web Frameworks": 7,
+            "Logging": 8,
+            "Go realtime communication": 5,
+            "API Clients": 6,
+            "Microservices": 7
+          }
+        },
+        "Java Developer": {
+          "averageScore": 6.5,
+          "children": {
+            "Generics": 7,
+            "Build": 8,
+            "Tools": 7,
+            "Web Frameworks": 8,
+            "ORM": 6,
+            "Object-Relational Mapping": 6,
+            "Java": 8,
+            "JDBC": 7,
+            "Testing": 7
+          }
+        }
+      }
     },
     {
       "id": 8,
@@ -102,7 +648,85 @@
       "experience": 3,
       "img": "",
       "average_score": 91,
-      "email": "alex.kuznetsov@gmail.com"
+      "email": "alex.kuznetsov@gmail.com",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 6.8,
+          "children": {
+            "HTML": 8,
+            "CSS": 7,
+            "Javascript": 7,
+            "Usage of Git": 5,
+            "Package Managers": 5,
+            "Build Tools": 6,
+            "CSS Frameworks": 7
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 3.9,
+          "children": {
+            "JavaScript": 7,
+            "Python": 4,
+            "Go": 2,
+            "Usage of Git": 5,
+            "Relational Databases": 5,
+            "NoSQL databases": 3,
+            "Web Security Knowledge": 3
+          }
+        },
+        "Android Developer": {
+          "averageScore": 4.3,
+          "children": {
+            "Kotlin": 6,
+            "Usage of Git": 5,
+            "Components and their usage":  6,
+            "Application": 5,
+            "Building":  5,
+            "Testing": 7,
+            "Security":  4
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 2.5,
+          "children": {
+            "Project":  3,
+            "Management": 4,
+            "SDLC":  3,
+            "QA": 4,
+            "Manual Testing":  4,
+            "Automated Testing": 3,
+            "Non Functional Testing":  3,
+            "CI/CD": 2
+          }
+        },
+        "Go Developer": {
+          "averageScore": 4.7,
+          "children": {
+            "Building":  5,
+            "CLI Applications": 5,
+            "ORMs":  6,
+            "Web Frameworks": 5,
+            "Logging":  6,
+            "Go realtime communication": 4,
+            "API Clients": 5,
+            "Microservices": 6
+          }
+        },
+        "Java Developer": {
+          "averageScore": 3.2,
+          "children": {
+            "Generics":4,
+            "Build": 3,
+            "Tools": 4,
+            "Web Frameworks": 4,
+            "ORM": 3,
+            "Object-Relational Mapping": 4,
+            "Java": 4,
+            "JDBC": 3,
+            "Testing":  3
+          }
+        }
+      }
     },
     {
       "id": 9,
@@ -115,7 +739,85 @@
       "experience": 1.5,
       "img": "",
       "average_score": 82,
-      "email": "maria.kharitonova@rambler.ru"
+      "email": "maria.kharitonova@rambler.ru",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 8.3,
+          "children": {
+            "HTML": 9,
+            "CSS": 9,
+            "Javascript": 9,
+            "Usage of Git": 8,
+            "Package Managers": 7,
+            "Build Tools": 8,
+            "CSS Frameworks": 9
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 5.8,
+          "children": {
+            "JavaScript": 7,
+            "Python": 6,
+            "Go": 5,
+            "Usage of Git": 8,
+            "Relational Databases": 7,
+            "NoSQL databases": 5,
+            "Web Security Knowledge": 6
+          }
+        },
+        "Android Developer": {
+          "averageScore": 3.6,
+          "children": {
+            "Kotlin": 5,
+            "Usage of Git": 9,
+            "Components and their usage": 3,
+            "Application": 4,
+            "Building":  4,
+            "Testing": 7,
+            "Security":  4
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 2.7,
+          "children": {
+            "Project":  4,
+            "Management": 5,
+            "SDLC":  6,
+            "QA": 5,
+            "Manual Testing":  6,
+            "Automated Testing": 4,
+            "Non Functional Testing":  3,
+            "CI/CD": 6
+          }
+        },
+        "Go Developer": {
+          "averageScore": 4.5,
+          "children": {
+            "Building":  7,
+            "CLI Applications": 8,
+            "ORMs":  5,
+            "Web Frameworks": 6,
+            "Logging":  6,
+            "Go realtime communication": 7,
+            "API Clients": 6,
+            "Microservices": 8
+          }
+        },
+        "Java Developer": {
+          "averageScore": 3.2,
+          "children": {
+            "Generics":6,
+            "Build": 7,
+            "Tools": 6,
+            "Web Frameworks": 8,
+            "ORM": 7,
+            "Object-Relational Mapping": 8,
+            "Java": 9,
+            "JDBC": 6,
+            "Testing":  6
+          }
+        }
+      }
     },
     {
       "id": 10,
@@ -128,7 +830,81 @@
       "experience": 3,
       "img": "",
       "average_score": 89,
-      "email": "marina.shcherbakova@gmail.com"
+      "email": "marina.shcherbakova@gmail.com",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 8.25,
+          "children": {
+            "HTML": 9,
+            "CSS": 9,
+            "Javascript": 9,
+            "React": 8,
+            "Vue.js": 7,
+            "Responsive Design": 9,
+            "Testing": 6
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 6.75,
+          "children": {
+            "Java": 7,
+            "Python": 6,
+            "Ruby": 5,
+            "Node.js": 8,
+            "Docker": 7,
+            "Kubernetes": 6,
+            "RESTful API": 8
+          }
+        },
+        "Android Developer": {
+          "averageScore": 4.0,
+          "children": {
+            "Kotlin": 5,
+            "Java": 6,
+            "XML": 7,
+            "Android Studio": 7,
+            "Material Design": 5,
+            "Debugging": 3,
+            "Testing": 3
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 3.25,
+          "children": {
+            "Manual Testing": 5,
+            "Automated Testing": 3,
+            "API Testing": 2,
+            "Performance Testing": 2,
+            "Security Testing": 2,
+            "Test Planning": 3,
+            "Defect Tracking": 4
+          }
+        },
+        "Go Developer": {
+          "averageScore": 5.5,
+          "children": {
+            "Go": 7,
+            "Databases": 5,
+            "RESTful API": 7,
+            "gRPC": 5,
+            "Concurrency": 6,
+            "Testing": 6,
+            "Microservices": 6
+          }
+        },
+        "Java Developer": {
+          "averageScore": 7.0,
+          "children": {
+            "Java": 9,
+            "JVM": 8,
+            "Spring Framework": 9,
+            "Hibernate": 7,
+            "Maven": 8,
+            "Jenkins": 7,
+            "Testing": 8
+          }
+        }
+      }
     },
     {
       "id": 11,
@@ -141,7 +917,85 @@
       "experience": 7,
       "img": "",
       "average_score": 76,
-      "email": "lysenko.eugene@gmail.com"
+      "email": "lysenko.eugene@gmail.com",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 6.8,
+          "children": {
+            "HTML": 7,
+            "CSS": 8,
+            "Javascript": 6,
+            "Usage of Git": 7,
+            "Package Managers": 7,
+            "Build Tools": 7,
+            "CSS Frameworks": 7
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 3.8,
+          "children": {
+            "JavaScript": 7,
+            "Python": 4,
+            "Go": 2,
+            "Usage of Git": 7,
+            "Relational Databases": 6,
+            "NoSQL databases": 3,
+            "Web Security Knowledge": 2
+          }
+        },
+        "Android Developer": {
+          "averageScore": 2.2,
+          "children": {
+            "Kotlin": 3,
+            "Usage of Git": 8,
+            "Components and their usage":  2,
+            "Application": 3,
+            "Building":  2,
+            "Testing": 5,
+            "Security":  1
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 2.6,
+          "children": {
+            "Project":  2,
+            "Management": 3,
+            "SDLC":  2,
+            "QA": 3,
+            "Manual Testing":  3,
+            "Automated Testing": 3,
+            "Non Functional Testing":  2,
+            "CI/CD": 2
+          }
+        },
+        "Go Developer": {
+          "averageScore": 3.2,
+          "children": {
+            "Building":  3,
+            "CLI Applications": 3,
+            "ORMs":  3,
+            "Web Frameworks": 3,
+            "Logging":  3,
+            "Go realtime communication": 3,
+            "API Clients": 3,
+            "Microservices": 3
+          }
+        },
+        "Java Developer": {
+          "averageScore": 1.8,
+          "children": {
+            "Generics":2,
+            "Build": 2,
+            "Tools": 2,
+            "Web Frameworks": 2,
+            "ORM": 2,
+            "Object-Relational Mapping": 2,
+            "Java": 3,
+            "JDBC": 2,
+            "Testing":  2
+          }
+        }
+      }
     },
     {
       "id": 12,
@@ -154,7 +1008,85 @@
       "experience": 6,
       "img": "",
       "average_score": 92,
-      "email": "sveta.koroleva@mail.ru"
+      "email": "sveta.koroleva@mail.ru",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 8.12,
+          "children": {
+            "HTML": 9,
+            "CSS": 8,
+            "Javascript": 9,
+            "Usage of Git": 8,
+            "Package Managers": 7,
+            "Build Tools": 7,
+            "CSS Frameworks": 9
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 6.2,
+          "children": {
+            "JavaScript": 7,
+            "Python": 8,
+            "Go": 4,
+            "Usage of Git": 8,
+            "Relational Databases": 7,
+            "NoSQL databases": 4,
+            "Web Security Knowledge": 5
+          }
+        },
+        "Android Developer": {
+          "averageScore": 3.8,
+          "children": {
+            "Kotlin": 6,
+            "Usage of Git": 8,
+            "Components and their usage": 4,
+            "Application": 4,
+            "Building": 4,
+            "Testing": 6,
+            "Security": 3
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 5.6,
+          "children": {
+            "Project": 5,
+            "Management": 6,
+            "SDLC": 7,
+            "QA": 8,
+            "Manual Testing": 7,
+            "Automated Testing": 8,
+            "Non Functional Testing": 6,
+            "CI/CD": 5
+          }
+        },
+        "Go Developer": {
+          "averageScore": 7.1,
+          "children": {
+            "Building": 8,
+            "CLI Applications": 7,
+            "ORMs": 8,
+            "Web Frameworks": 7,
+            "Logging": 8,
+            "Go realtime communication": 7,
+            "API Clients": 8,
+            "Microservices": 7
+          }
+        },
+        "Java Developer": {
+          "averageScore": 6.9,
+          "children": {
+            "Generics": 7,
+            "Build": 8,
+            "Tools": 7,
+            "Web Frameworks": 8,
+            "ORM": 7,
+            "Object-Relational Mapping": 8,
+            "Java": 7,
+            "JDBC": 8,
+            "Testing": 7
+          }
+        }
+      }
     },
     {
       "id": 13,
@@ -167,7 +1099,10 @@
       "experience": 2,
       "img": "",
       "average_score": 81,
-      "email": "denis.belousov@gmail.com"
+      "email": "denis.belousov@gmail.com",
+      "skills": {
+
+      }
     },
     {
       "id": 14,
@@ -180,7 +1115,85 @@
       "experience": 5,
       "img": "",
       "average_score": 95,
-      "email": "olga.kravtsova@yandex.ru"
+      "email": "olga.kravtsova@yandex.ru",
+      "skills": {
+        "Frontend Developer": {
+          "averageScore": 6.82,
+          "children": {
+            "HTML": 8,
+            "CSS": 7,
+            "Javascript": 7,
+            "Usage of Git": 8,
+            "Package Managers": 6,
+            "Build Tools": 6,
+            "CSS Frameworks": 8
+          }
+        },
+        "Backend Developer": {
+          "averageScore": 3.9,
+          "children": {
+            "JavaScript": 5,
+            "Python": 4,
+            "Go": 2,
+            "Usage of Git": 7,
+            "Relational Databases": 6,
+            "NoSQL databases": 3,
+            "Web Security Knowledge": 1
+          }
+        },
+        "Android Developer": {
+          "averageScore": 2.8,
+          "children": {
+            "Kotlin": 3,
+            "Usage of Git": 7,
+            "Components and their usage": 1,
+            "Application": 2,
+            "Building": 2,
+            "Testing": 5,
+            "Security": 2
+          }
+        },
+        "QA Engineer": {
+          "averageScore": 1.8,
+          "children": {
+            "Project": 1,
+            "Management": 2,
+            "SDLC": 2,
+            "QA": 2,
+            "Manual Testing": 1,
+            "Automated Testing": 2,
+            "Non Functional Testing": 2,
+            "CI/CD": 2
+          }
+        },
+        "Go Developer": {
+          "averageScore": 3.1,
+          "children": {
+            "Building": 3,
+            "CLI Applications": 2,
+            "ORMs": 3,
+            "Web Frameworks": 3,
+            "Logging": 2,
+            "Go realtime communication": 3,
+            "API Clients": 3,
+            "Microservices": 2
+          }
+        },
+        "Java Developer": {
+          "averageScore": 1.6,
+          "children": {
+            "Generics": 2,
+            "Build": 1,
+            "Tools": 2,
+            "Web Frameworks": 2,
+            "ORM": 2,
+            "Object-Relational Mapping": 1,
+            "Java": 2,
+            "JDBC": 2,
+            "Testing":  1
+          }
+        }
+      }
     }
   ]
 }

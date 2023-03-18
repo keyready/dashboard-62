@@ -66,7 +66,6 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
     const { theme } = useTheme();
 
-    const [search, setSearch] = useState<string>('');
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [wasItFiltered, setWasItFiltered] = useState<boolean>(false);
 
@@ -165,10 +164,8 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
         dispatch(CandidatesPageActions.setSelectedIds([]));
     }, [dispatch]);
 
-    // сброс фильтров
-
     return (
-        <DynamicModuleLoader reducers={reducers}>
+        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <Page className={classNames(classes.CandidatesPage, {}, [className])}>
                 <Modal show={isFocused} onHide={() => setIsFocused(false)}>
                     <Card>
@@ -233,7 +230,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 </Modal>
 
                 <PageNavbar
-                    isCandidates={selectedCandidates?.length > 1}
+                    isCandidates={selectedCandidates?.length > 1 && selectedCandidates?.length <= 4}
                     setIsFocused={setIsFocused}
                 />
                 {candidatesError && (
@@ -241,6 +238,14 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 )}
                 <div className={classes.content}>
                     <div className={classes.panelsWrapper}>
+                        {/* TODO: предупреждение о выборе больше 4 кандидатов */}
+                        {/* {candidatesIds.length >= 4 && ( */}
+                        {/*    <Alert */}
+                        {/*        variant="danger" */}
+                        {/*    > */}
+                        {/*        Можно выбрать не более 4 кандидатов */}
+                        {/*    </Alert> */}
+                        {/* )} */}
                         {candidatesIsLoading
                             ? <Card className={classes.loaderCard}><Loader /></Card>
                             : candidates.length

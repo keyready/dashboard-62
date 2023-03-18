@@ -42,7 +42,9 @@ export const MTable = memo((props: MTableProps) => {
     if (tableData.length === 0) {
         return (
             <Card className={classes.tableWrapper}>
-                <Alert variant="success">Выберите кандидатов</Alert>
+                <Alert variant="success">
+                    Выберите кандидатов (для сравнения — от 2 до 4 кандидатов)
+                </Alert>
                 <Loader />
             </Card>
         );
