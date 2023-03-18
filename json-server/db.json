@@ -42,34 +42,34 @@
           "children": {
             "Kotlin": 1,
             "Usage of Git": 6,
-            "Components and their usage":  1,
+            "Components and their usage": 1,
             "Application": 1,
-            "Building":  1,
+            "Building": 1,
             "Testing": 6,
-            "Security":  2
+            "Security": 2
           }
         },
         "QA Engineer": {
           "averageScore": 1.42,
           "children": {
-            "Project":  1,
+            "Project": 1,
             "Management": 1,
-            "SDLC":  1,
+            "SDLC": 1,
             "QA": 1,
-            "Manual Testing":  1,
+            "Manual Testing": 1,
             "Automated Testing": 1,
-            "Non Functional Testing":  1,
+            "Non Functional Testing": 1,
             "CI/CD": 3
           }
         },
         "Go Developer": {
           "averageScore": 2.7,
           "children": {
-            "Building":  2,
+            "Building": 2,
             "CLI Applications": 2,
-            "ORMs":  2,
+            "ORMs": 2,
             "Web Frameworks": 2,
-            "Logging":  2,
+            "Logging": 2,
             "Go realtime communication": 2,
             "API Clients": 2,
             "Microservices": 2
@@ -78,7 +78,7 @@
         "Java Developer": {
           "averageScore": 1.2,
           "children": {
-            "Generics":2,
+            "Generics": 2,
             "Build": 2,
             "Tools": 2,
             "Web Frameworks": 2,
@@ -86,7 +86,7 @@
             "Object-Relational Mapping": 2,
             "Java": 2,
             "JDBC": 2,
-            "Testing":  2
+            "Testing": 2
           }
         }
       }
@@ -226,32 +226,32 @@
             "Usage of Git": 7,
             "Components and their usage": 2,
             "Application": 3,
-            "Building":  2,
+            "Building": 2,
             "Testing": 7,
-            "Security":  3
+            "Security": 3
           }
         },
         "QA Engineer": {
           "averageScore": 2.73,
           "children": {
-            "Project":  2,
+            "Project": 2,
             "Management": 2,
-            "SDLC":  3,
+            "SDLC": 3,
             "QA": 3,
-            "Manual Testing":  2,
+            "Manual Testing": 2,
             "Automated Testing": 2,
-            "Non Functional Testing":  2,
+            "Non Functional Testing": 2,
             "CI/CD": 4
           }
         },
         "Go Developer": {
           "averageScore": 3.98,
           "children": {
-            "Building":  3,
+            "Building": 3,
             "CLI Applications": 3,
-            "ORMs":  4,
+            "ORMs": 4,
             "Web Frameworks": 4,
-            "Logging":  3,
+            "Logging": 3,
             "Go realtime communication": 4,
             "API Clients": 3,
             "Microservices": 4
@@ -260,7 +260,7 @@
         "Java Developer": {
           "averageScore": 2.59,
           "children": {
-            "Generics":3,
+            "Generics": 3,
             "Build": 3,
             "Tools": 3,
             "Web Frameworks": 4,
@@ -268,7 +268,7 @@
             "Object-Relational Mapping": 4,
             "Java": 3,
             "JDBC": 3,
-            "Testing":  2
+            "Testing": 2
           }
         }
       }
@@ -679,34 +679,34 @@
           "children": {
             "Kotlin": 6,
             "Usage of Git": 5,
-            "Components and their usage":  6,
+            "Components and their usage": 6,
             "Application": 5,
-            "Building":  5,
+            "Building": 5,
             "Testing": 7,
-            "Security":  4
+            "Security": 4
           }
         },
         "QA Engineer": {
           "averageScore": 2.5,
           "children": {
-            "Project":  3,
+            "Project": 3,
             "Management": 4,
-            "SDLC":  3,
+            "SDLC": 3,
             "QA": 4,
-            "Manual Testing":  4,
+            "Manual Testing": 4,
             "Automated Testing": 3,
-            "Non Functional Testing":  3,
+            "Non Functional Testing": 3,
             "CI/CD": 2
           }
         },
         "Go Developer": {
           "averageScore": 4.7,
           "children": {
-            "Building":  5,
+            "Building": 5,
             "CLI Applications": 5,
-            "ORMs":  6,
+            "ORMs": 6,
             "Web Frameworks": 5,
-            "Logging":  6,
+            "Logging": 6,
             "Go realtime communication": 4,
             "API Clients": 5,
             "Microservices": 6
@@ -715,7 +715,7 @@
         "Java Developer": {
           "averageScore": 3.2,
           "children": {
-            "Generics":4,
+            "Generics": 4,
             "Build": 3,
             "Tools": 4,
             "Web Frameworks": 4,
@@ -723,7 +723,7 @@
             "Object-Relational Mapping": 4,
             "Java": 4,
             "JDBC": 3,
-            "Testing":  3
+            "Testing": 3
           }
         }
       }
@@ -772,32 +772,32 @@
             "Usage of Git": 9,
             "Components and their usage": 3,
             "Application": 4,
-            "Building":  4,
+            "Building": 4,
             "Testing": 7,
-            "Security":  4
+            "Security": 4
           }
         },
         "QA Engineer": {
           "averageScore": 2.7,
           "children": {
-            "Project":  4,
+            "Project": 4,
             "Management": 5,
-            "SDLC":  6,
+            "SDLC": 6,
             "QA": 5,
-            "Manual Testing":  6,
+            "Manual Testing": 6,
             "Automated Testing": 4,
-            "Non Functional Testing":  3,
+            "Non Functional Testing": 3,
             "CI/CD": 6
           }
         },
         "Go Developer": {
           "averageScore": 4.5,
           "children": {
-            "Building":  7,
+            "Building": 7,
             "CLI Applications": 8,
-            "ORMs":  5,
+            "ORMs": 5,
             "Web Frameworks": 6,
-            "Logging":  6,
+            "Logging": 6,
             "Go realtime communication": 7,
             "API Clients": 6,
             "Microservices": 8
@@ -806,7 +806,7 @@
         "Java Developer": {
           "averageScore": 3.2,
           "children": {
-            "Generics":6,
+            "Generics": 6,
             "Build": 7,
             "Tools": 6,
             "Web Frameworks": 8,
@@ -814,7 +814,7 @@
             "Object-Relational Mapping": 8,
             "Java": 9,
             "JDBC": 6,
-            "Testing":  6
+            "Testing": 6
           }
         }
       }
@@ -857,7 +857,7 @@
           }
         },
         "Android Developer": {
-          "averageScore": 4.0,
+          "averageScore": 4,
           "children": {
             "Kotlin": 5,
             "Java": 6,
@@ -893,7 +893,7 @@
           }
         },
         "Java Developer": {
-          "averageScore": 7.0,
+          "averageScore": 7,
           "children": {
             "Java": 9,
             "JVM": 8,
@@ -948,34 +948,34 @@
           "children": {
             "Kotlin": 3,
             "Usage of Git": 8,
-            "Components and their usage":  2,
+            "Components and their usage": 2,
             "Application": 3,
-            "Building":  2,
+            "Building": 2,
             "Testing": 5,
-            "Security":  1
+            "Security": 1
           }
         },
         "QA Engineer": {
           "averageScore": 2.6,
           "children": {
-            "Project":  2,
+            "Project": 2,
             "Management": 3,
-            "SDLC":  2,
+            "SDLC": 2,
             "QA": 3,
-            "Manual Testing":  3,
+            "Manual Testing": 3,
             "Automated Testing": 3,
-            "Non Functional Testing":  2,
+            "Non Functional Testing": 2,
             "CI/CD": 2
           }
         },
         "Go Developer": {
           "averageScore": 3.2,
           "children": {
-            "Building":  3,
+            "Building": 3,
             "CLI Applications": 3,
-            "ORMs":  3,
+            "ORMs": 3,
             "Web Frameworks": 3,
-            "Logging":  3,
+            "Logging": 3,
             "Go realtime communication": 3,
             "API Clients": 3,
             "Microservices": 3
@@ -984,7 +984,7 @@
         "Java Developer": {
           "averageScore": 1.8,
           "children": {
-            "Generics":2,
+            "Generics": 2,
             "Build": 2,
             "Tools": 2,
             "Web Frameworks": 2,
@@ -992,7 +992,7 @@
             "Object-Relational Mapping": 2,
             "Java": 3,
             "JDBC": 2,
-            "Testing":  2
+            "Testing": 2
           }
         }
       }
@@ -1100,9 +1100,7 @@
       "img": "",
       "average_score": 81,
       "email": "denis.belousov@gmail.com",
-      "skills": {
-
-      }
+      "skills": {}
     },
     {
       "id": 14,
@@ -1190,7 +1188,7 @@
             "Object-Relational Mapping": 1,
             "Java": 2,
             "JDBC": 2,
-            "Testing":  1
+            "Testing": 1
           }
         }
       }

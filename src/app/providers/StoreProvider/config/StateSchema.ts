@@ -11,6 +11,7 @@ import { AxiosInstance } from 'axios';
 import { UISchema } from 'features/UI';
 import { CandidateSchema } from 'entities/Candidate';
 import { CandidatesPageSchema } from 'pages/CandidatesPage';
+import { UploadPageSchema } from 'pages/UploadFilesPage';
 
 export interface StateSchema {
     user: UserSchema;
@@ -20,6 +21,7 @@ export interface StateSchema {
     loginForm?: LoginSchema;
     candidate?: CandidateSchema;
     candidates?: CandidatesPageSchema;
+    filesUpload?: UploadPageSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

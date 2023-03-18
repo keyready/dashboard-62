@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { getCandidatesIds, getSelectedCandidates } from 'pages/CandidatesPage';
 import { MTable } from 'shared/UI/MTable';
 import { Alert, Button, Form } from 'react-bootstrap';
+import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import classes from './ComparisonPage.module.scss';
 
 interface ComparisonPageProps {
@@ -17,6 +18,8 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
     const {
         className,
     } = props;
+
+    const { theme } = useTheme();
 
     const [selectedTask, setSelectedTask] = useState<string>('');
 
@@ -78,6 +81,7 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
                 ))}
             </Form.Select>
             <Button
+                variant={theme === Theme.DARK ? 'info' : 'dark'}
                 disabled={!selectedTask}
                 onClick={backendComparingHandler}
             >
