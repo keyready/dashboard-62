@@ -32,20 +32,23 @@ export const CandidatesPageSlice = createSlice({
             state.selectedIdsToCompare = action.payload;
         },
 
-        setLowerAge: (state, action:PayloadAction<number>) => {
+        setLowerAge: (state, action:PayloadAction<number | undefined>) => {
             state.searchParams.lowerAge = action.payload;
         },
-        setUpperAge: (state, action:PayloadAction<number>) => {
+        setUpperAge: (state, action:PayloadAction<number | undefined>) => {
             state.searchParams.upperAge = action.payload;
         },
-        setLowerExp: (state, action:PayloadAction<number>) => {
+        setLowerExp: (state, action:PayloadAction<number | undefined>) => {
             state.searchParams.lowerExp = action.payload;
         },
-        setUpperExp: (state, action:PayloadAction<number>) => {
+        setUpperExp: (state, action:PayloadAction<number | undefined>) => {
             state.searchParams.upperExp = action.payload;
         },
-        setSearchString: (state, action:PayloadAction<string>) => {
-            state.searchParams.search = action.payload;
+        setEducationSearch: (state, action:PayloadAction<string>) => {
+            state.searchParams.education = action.payload;
+        },
+        setSpecialitySearch: (state, action:PayloadAction<string>) => {
+            state.searchParams.speciality = action.payload;
         },
     },
     extraReducers: ((builder) => {

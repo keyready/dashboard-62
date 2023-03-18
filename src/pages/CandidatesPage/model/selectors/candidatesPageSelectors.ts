@@ -14,4 +14,9 @@ export const getLowerAge = (state: StateSchema) => state.candidates?.searchParam
 export const getUpperAge = (state: StateSchema) => state.candidates?.searchParams.upperAge;
 export const getLowerExp = (state: StateSchema) => state.candidates?.searchParams.lowerExp;
 export const getUpperExp = (state: StateSchema) => state.candidates?.searchParams.upperExp;
-export const getSearchString = (state: StateSchema) => state.candidates?.searchParams.search || '';
+export const getEducationSearch = (
+    state: StateSchema,
+) => state.candidates?.searchParams.education || '';
+export const getSpecialitySearch = (
+    state: StateSchema,
+) => state.candidates?.searchParams.speciality || '';

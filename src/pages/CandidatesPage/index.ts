@@ -12,7 +12,8 @@ export {
     getUpperAge,
     getLowerExp,
     getUpperExp,
-    getSearchString,
+    getEducationSearch,
+    getSpecialitySearch,
 } from './model/selectors/candidatesPageSelectors';
 export { compareCandidatesByIds } from './model/services/compareCandidatesByIds';
 export { fetchCandidates } from './model/services/fetchCandidates';

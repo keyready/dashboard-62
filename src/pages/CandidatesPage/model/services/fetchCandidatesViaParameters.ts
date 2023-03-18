@@ -8,6 +8,7 @@ export interface searchParams {
     lowerAge?: number;
     upperAge?: number;
     education?: string;
+    speciality?: string;
 }
 
 export const fetchCandidatesViaParameters = createAsyncThunk<
@@ -22,6 +23,7 @@ export const fetchCandidatesViaParameters = createAsyncThunk<
         upperExp,
         lowerExp,
         education,
+        speciality,
     }, thunkAPI) => {
         const { extra, rejectWithValue, dispatch } = thunkAPI;
 
@@ -30,11 +32,12 @@ export const fetchCandidatesViaParameters = createAsyncThunk<
                 '/candidates',
                 {
                     params: {
-                        age_gte: lowerAge,
-                        age_lte: upperAge,
-                        experience_gte: lowerExp,
-                        experience_lte: upperExp,
-                        _q: education,
+                        age_gte: lowerAge || 0,
+                        age_lte: upperAge || 100,
+                        experience_gte: lowerExp || 0,
+                        experience_lte: upperExp || 100,
+                        education: education || '',
+                        speciality: speciality || '',
                     },
                 },
             );

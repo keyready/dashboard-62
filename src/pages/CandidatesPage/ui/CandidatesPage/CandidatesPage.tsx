@@ -17,7 +17,7 @@ import {
 } from 'react-bootstrap';
 import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import { Card } from 'shared/UI/Card';
-import { fetchCandidatesViaParameters } from 'pages/CandidatesPage/model/services/fetchCandidatesViaParameters';
+import { fetchCandidatesViaParameters } from '../../model/services/fetchCandidatesViaParameters';
 import { CandidateTabs } from '../candidatesTabs/CandidatesTabs';
 import { PageNavbar } from '../PageNavbar/PageNavbar';
 import {
@@ -28,11 +28,10 @@ import {
 import {
     getCandidatesError,
     getCandidatesIds,
-    getCandidatesIsLoading,
+    getCandidatesIsLoading, getEducationSearch,
     getLowerAge,
     getLowerExp,
-    getSearchString,
-    getSelectedCandidates,
+    getSelectedCandidates, getSpecialitySearch,
     getUpperAge,
     getUpperExp,
 } from '../../model/selectors/candidatesPageSelectors';
@@ -62,7 +61,8 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const upperAge = useSelector(getUpperAge);
     const lowerExp = useSelector(getLowerExp);
     const upperExp = useSelector(getUpperExp);
-    const searchString = useSelector(getSearchString);
+    const educationSearch = useSelector(getEducationSearch);
+    const specialitySearch = useSelector(getSpecialitySearch);
 
     const { theme } = useTheme();
 
@@ -115,8 +115,11 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
         dispatch(CandidatesPageActions.setSelectedCandidates([]));
     }, [dispatch]);
 
-    const onSearchChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(CandidatesPageActions.setSearchString(e.target.value));
+    const onEducationSearchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(CandidatesPageActions.setEducationSearch(e.target.value));
+    }, [dispatch]);
+    const onSpecialitySearchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(CandidatesPageActions.setSpecialitySearch(e.target.value));
     }, [dispatch]);
     const onLowerAgeChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         dispatch(CandidatesPageActions.setLowerAge(e.target.value as unknown as number));
@@ -134,21 +137,35 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const onSearchCandidateSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(fetchCandidatesViaParameters({
-            education: searchString,
+            education: educationSearch,
+            speciality: specialitySearch,
             lowerAge,
             upperAge,
             lowerExp,
             upperExp,
         }));
 
+        dispatch(CandidatesPageActions.setEducationSearch(''));
+        dispatch(CandidatesPageActions.setSpecialitySearch(''));
+        dispatch(CandidatesPageActions.setLowerAge(undefined));
+        dispatch(CandidatesPageActions.setUpperAge(undefined));
+        dispatch(CandidatesPageActions.setLowerExp(undefined));
+        dispatch(CandidatesPageActions.setUpperExp(undefined));
+        dispatch(CandidatesPageActions.setSelectedCandidates([]));
+        dispatch(CandidatesPageActions.setSelectedIds([]));
+
         setIsFocused(false);
         setWasItFiltered(true);
-    }, [dispatch, lowerAge, lowerExp, searchString, upperAge, upperExp]);
+    }, [dispatch, educationSearch, lowerAge, lowerExp, specialitySearch, upperAge, upperExp]);
 
     const resetFilters = useCallback(() => {
         dispatch(fetchCandidates());
         setWasItFiltered(false);
+        dispatch(CandidatesPageActions.setSelectedCandidates([]));
+        dispatch(CandidatesPageActions.setSelectedIds([]));
     }, [dispatch]);
+
+    // сброс фильтров
 
     return (
         <DynamicModuleLoader reducers={reducers}>
@@ -161,9 +178,14 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                         >
                             <InputGroup className="mb-3">
                                 <Form.Control
-                                    onChange={onSearchChangeHandler}
-                                    value={searchString}
-                                    placeholder="Поиск..."
+                                    onChange={onEducationSearchChange}
+                                    value={educationSearch}
+                                    placeholder="Поиск по ВУЗу"
+                                />
+                                <Form.Control
+                                    onChange={onSpecialitySearchChange}
+                                    value={specialitySearch}
+                                    placeholder="Поиск по специальности"
                                 />
                             </InputGroup>
 
@@ -211,9 +233,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 </Modal>
 
                 <PageNavbar
-                    isCandidates={!!candidates?.length}
-                    search={search}
-                    setSearch={setSearch}
+                    isCandidates={selectedCandidates?.length > 1}
                     setIsFocused={setIsFocused}
                 />
                 {candidatesError && (

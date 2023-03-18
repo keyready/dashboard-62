@@ -6,7 +6,9 @@ export interface SearchParams {
     lowerAge?: number;
     upperExp?: number;
     lowerExp?: number;
-    search?: string
+    education?: string;
+    speciality?: string;
+
 }
 
 export interface CandidatesPageSchema extends EntityState<Candidate> {
