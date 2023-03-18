@@ -1,7 +1,11 @@
-import { memo, useCallback } from 'react';
-import { Form, Table } from 'react-bootstrap';
+/* eslint-disable max-len */
+import { memo, useCallback, useMemo } from 'react';
+import {
+    Alert, Button, Form, Table,
+} from 'react-bootstrap';
 import { Card } from 'shared/UI/Card';
-import { Simulate } from 'react-dom/test-utils';
+import { Candidate } from 'entities/Candidate';
+import { Loader } from 'shared/UI/Loader';
 import classes from './MTable.module.scss';
 
 export interface TableDataProps {
@@ -15,39 +19,40 @@ export interface TableDataProps {
 
 interface MTableProps {
     className?: string;
-    headers: string[];
-    tableData: TableDataProps[];
-    candidates: string[];
-    setCandidates: (values: string[]) => void;
+    tableData: Candidate[];
+    isLoading?: boolean
+    clearCandidatesList?: () => void;
 }
 
 export const MTable = memo((props: MTableProps) => {
     const {
         className,
-        headers,
         tableData,
-        candidates,
-        setCandidates,
+        isLoading,
+        clearCandidatesList,
     } = props;
 
-    const changeHandler = useCallback((e) => {
-        const candidate = e.target.id;
-        const temps = candidates;
-        if (temps.includes(candidate)) {
-            temps.splice(temps.indexOf(candidate), 1);
-        } else {
-            temps.push(candidate);
-        }
+    const headers = useMemo<string[]>(
+        () => [
+            'ФИО', 'Образование', 'Специальность',
+            'Возраст', 'Опыт работы', 'Балл'],
+        [],
+    );
 
-        setCandidates(temps);
-    }, [candidates, setCandidates]);
+    if (tableData.length === 0) {
+        return (
+            <Card className={classes.tableWrapper}>
+                <Alert variant="success">Выберите кандидатов</Alert>
+                <Loader />
+            </Card>
+        );
+    }
 
     return (
         <Card className={classes.tableWrapper}>
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>мм?</th>
                         <th>#</th>
                         {headers.map((header, index) => (
                             <th key={index}>{header}</th>
@@ -55,27 +60,28 @@ export const MTable = memo((props: MTableProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {tableData.map((data, index) => (
+                    {tableData.map((candidate, index) => (
                         <tr key={index}>
-                            <td>
-                                <Form>
-                                    <Form.Check
-                                        type="checkbox"
-                                        id={data.id.toString()}
-                                        onChange={changeHandler}
-                                    />
-                                </Form>
-                            </td>
                             <td>{index + 1}</td>
-                            <td>{data.name}</td>
-                            <td>{data.education}</td>
-                            <td>{data.specialization}</td>
-                            <td>{data.age}</td>
-                            <td>{data.experience}</td>
+                            <td>
+                                {`${candidate.lastname} ${candidate.firstname} ${candidate.middlename}`}
+                            </td>
+                            <td>{candidate.education}</td>
+                            <td>{candidate.speciality}</td>
+                            <td>{candidate.age}</td>
+                            <td>{candidate.experience}</td>
+                            <td>{candidate.average_score}</td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
+            {/* TODO: очистка списка выбранных кандидатов */}
+            {/* <Button */}
+            {/*    variant="danger" */}
+            {/*    onClick={clearCandidatesList} */}
+            {/* > */}
+            {/*    Очистить */}
+            {/* </Button> */}
         </Card>
     );
 });

@@ -39,6 +39,7 @@ module.exports = {
         'import/no-unresolved': 'off',
         'no-param-reassign': 'off',
         'import/extensions': 'off',
+        'no-nested-ternary': 'off',
         'no-shadow': 'off',
         'no-undef': 'off',
         'react/jsx-props-no-spreading': 'warn',
@@ -49,5 +50,5 @@ module.exports = {
         IS_DEV: true,
         __API__: true,
         LOADING_DELAY: null,
-    }
+    },
 };

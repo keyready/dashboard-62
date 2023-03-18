@@ -8,7 +8,7 @@ interface PageNavbarProps {
     isCandidates?: boolean
     search?: string;
     setSearch?: (value: string) => void;
-    submitFormHandler?: () => void;
+    setIsFocused?: (flag: boolean) => void;
 }
 
 export const PageNavbar = memo((props: PageNavbarProps) => {
@@ -17,20 +17,20 @@ export const PageNavbar = memo((props: PageNavbarProps) => {
         isCandidates,
         search,
         setSearch,
-        submitFormHandler,
+        setIsFocused,
     } = props;
 
     return (
         <div className={classNames(classes.PageNavbar, {}, [className])}>
             <Form
-                onSubmit={submitFormHandler}
+                onSubmit={(e) => e.preventDefault()}
                 className={classes.form}
             >
                 <Form.Control
                     type="text"
                     placeholder="Поиск..."
-                    value={search}
-                    onChange={(e) => setSearch?.(e.target.value)}
+                    onClick={() => setIsFocused?.(true)}
+                    // onFocus={() => setIsFocused?.(true)}
                 />
                 <Button
                     type="submit"

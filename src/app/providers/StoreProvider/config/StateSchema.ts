@@ -9,6 +9,8 @@ import {
 } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { UISchema } from 'features/UI';
+import { CandidateSchema } from 'entities/Candidate';
+import { CandidatesPageSchema } from 'pages/CandidatesPage';
 
 export interface StateSchema {
     user: UserSchema;
@@ -16,6 +18,8 @@ export interface StateSchema {
 
     // asynchronous reducers
     loginForm?: LoginSchema;
+    candidate?: CandidateSchema;
+    candidates?: CandidatesPageSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

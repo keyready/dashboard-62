@@ -1,26 +1,36 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Candidate } from 'entities/Candidate';
 import { CandidateSchema } from '../types/CandidateSchema';
+import { fetchCandidateById } from '../services/fetchCandidateById';
 
-const initialState: CandidateSchema = {};
+const initialState: CandidateSchema = {
+    data: undefined,
+    isLoading: false,
+    error: undefined,
+};
 
 export const CandidateSlice = createSlice({
     name: 'CandidateSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setCandidateData: (state, action: PayloadAction<Candidate>) => {
+            state.data = action.payload;
+        },
+    },
     extraReducers: ((builder) => {
         builder
-            .addCase(_.pending, (state) => {
+            .addCase(fetchCandidateById.pending, (state) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(_.fulfilled, (
+            .addCase(fetchCandidateById.fulfilled, (
                 state,
                 action: PayloadAction<any>,
             ) => {
                 state.isLoading = false;
                 state.data = action.payload;
             })
-            .addCase(_.rejected, (state, action) => {
+            .addCase(fetchCandidateById.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

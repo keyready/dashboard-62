@@ -1,93 +1,186 @@
 {
-  "users": [
+  "candidates": [
     {
       "id": 1,
-      "email": "dallss13@bk.ru",
-      "password": "123",
-      "role": "admin"
-    },
-    {
-      "id": 2,
-      "email": "vip.korchak@list.ru",
-      "password": "qwerty",
-      "role": "user"
-    }
-  ],
-  "profiles": [
-    {
-      "id": 1,
-      "middlename": "Корчак",
       "firstname": "Родион",
-      "lastname": "Дмитриевич",
-      "heroes": 0
+      "middlename": "Дмитриевич",
+      "lastname": "Корчак",
+      "education": "ВКА имени А.Ф.Можайского",
+      "speciality": "Создание защищенного ПО",
+      "age": 20,
+      "experience": 1.5,
+      "img": "",
+      "average_score": 38,
+      "email": "dallss13@bk.ru"
     },
     {
       "id": 2,
-      "middlename": "Майоров",
-      "firstname": "Андрей",
-      "lastname": "Владимирович",
-      "heroes": 0
-    }
-  ],
-  "heroes": [
-    {
-      "id": 1,
-      "userId": 1,
-      "middlename": "Иванов",
-      "firstname": "Иван",
-      "lastname": "Иванович",
-      "story": [
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n"
-      ],
-      "photo": "hero1.png",
-      "rank": "полковник"
-    },
-    {
-      "id": 2,
-      "userId": 2,
-      "middlename": "Степанов",
-      "firstname": "Степан",
-      "lastname": "Степанович",
-      "story": [
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n"
-      ],
-      "photo": "hero2.png",
-      "rank": "гвардии старший лейтенант"
+      "lastname": "Иванов",
+      "firstname": "Петр",
+      "middlename": "Сергеевич",
+      "education": "Московский государственный университет",
+      "speciality": "Математика",
+      "age": 27,
+      "experience": 3.5,
+      "img": "",
+      "average_score": 91,
+      "email": "ivanovpetr27@mail.ru"
     },
     {
       "id": 3,
-      "userId": 2,
-      "middlename": "Петров",
-      "firstname": "Петр",
-      "lastname": "Петрович",
-      "story": [
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n",
-        "Эта история началась очень давно\n"
-      ],
-      "photo": "hero3.png",
-      "rank": "младший сержант"
-    }
-  ],
-  "awards": [
-    {
-      "id": 1,
-      "title": "Медаль 1",
-      "description": "Описание медали 1",
-      "image": "medal.png"
+      "lastname": "Сидоров",
+      "firstname": "Алексей",
+      "middlename": "Васильевич",
+      "education": "Санкт-Петербургский политехнический университет",
+      "speciality": "Программная инженерия",
+      "age": 24,
+      "experience": 2,
+      "img": "",
+      "average_score": 78,
+      "email": "sidorovalek24@gmail.com"
     },
     {
-      "id": 2,
-      "title": "Медаль 2",
-      "description": "Описание медали 2",
-      "image": "medal2.png"
+      "id": 4,
+      "lastname": "Петров",
+      "firstname": "Иван",
+      "middlename": "Николаевич",
+      "education": "Московский инженерно-физический институт",
+      "speciality": "Физика",
+      "age": 30,
+      "experience": 5,
+      "img": "",
+      "average_score": 85,
+      "email": "petrovivan30@mail.ru"
+    },
+    {
+      "id": 5,
+      "lastname": "Сидоров",
+      "firstname": "Иван",
+      "middlename": "Викторович",
+      "education": "Московский государственный университет",
+      "speciality": "Математика и компьютерные науки",
+      "age": 27,
+      "experience": 4.5,
+      "img": "",
+      "average_score": 89,
+      "email": "ivan.sidorov@gmail.com"
+    },
+    {
+      "id": 6,
+      "firstname": "Анна",
+      "middlename": "Петровна",
+      "lastname": "Смирнова",
+      "education": "Московский технологический институт",
+      "speciality": "Информационная безопасность",
+      "age": 24,
+      "experience": 2,
+      "img": "",
+      "average_score": 95,
+      "email": "anna.smirnova@yandex.ru"
+    },
+    {
+      "id": 7,
+      "firstname": "Дмитрий",
+      "middlename": "Александрович",
+      "lastname": "Попов",
+      "education": "Бауманский технический университет",
+      "speciality": "Программная инженерия",
+      "age": 28,
+      "experience": 6,
+      "img": "",
+      "average_score": 78,
+      "email": "dmitry.popov@mail.ru"
+    },
+    {
+      "id": 8,
+      "firstname": "Алексей",
+      "middlename": "Михайлович",
+      "lastname": "Кузнецов",
+      "education": "Московский авиационный институт",
+      "speciality": "Разработка и анализ алгоритмов",
+      "age": 26,
+      "experience": 3,
+      "img": "",
+      "average_score": 91,
+      "email": "alex.kuznetsov@gmail.com"
+    },
+    {
+      "id": 9,
+      "firstname": "Мария",
+      "middlename": "Александровна",
+      "lastname": "Харитонова",
+      "education": "Московский государственный университет",
+      "speciality": "Математика и компьютерные науки",
+      "age": 23,
+      "experience": 1.5,
+      "img": "",
+      "average_score": 82,
+      "email": "maria.kharitonova@rambler.ru"
+    },
+    {
+      "id": 10,
+      "firstname": "Марина",
+      "middlename": "Игоревна",
+      "lastname": "Щербакова",
+      "education": "Санкт-Петербургский государственный университет",
+      "speciality": "Математическая логика",
+      "age": 26,
+      "experience": 3,
+      "img": "",
+      "average_score": 89,
+      "email": "marina.shcherbakova@gmail.com"
+    },
+    {
+      "id": 11,
+      "firstname": "Евгений",
+      "middlename": "Владимирович",
+      "lastname": "Лысенко",
+      "education": "Московский государственный технический университет им. Н.Э. Баумана",
+      "speciality": "Радиоэлектроника и системы связи",
+      "age": 29,
+      "experience": 7,
+      "img": "",
+      "average_score": 76,
+      "email": "lysenko.eugene@gmail.com"
+    },
+    {
+      "id": 12,
+      "firstname": "Светлана",
+      "middlename": "Дмитриевна",
+      "lastname": "Королева",
+      "education": "МГУ им. М.В. Ломоносова",
+      "speciality": "Фундаментальная математика",
+      "age": 31,
+      "experience": 6,
+      "img": "",
+      "average_score": 92,
+      "email": "sveta.koroleva@mail.ru"
+    },
+    {
+      "id": 13,
+      "firstname": "Денис",
+      "middlename": "Андреевич",
+      "lastname": "Белоусов",
+      "education": "Санкт-Петербургский политехнический университет",
+      "speciality": "Информатика и вычислительная техника",
+      "age": 25,
+      "experience": 2,
+      "img": "",
+      "average_score": 81,
+      "email": "denis.belousov@gmail.com"
+    },
+    {
+      "id": 14,
+      "firstname": "Ольга",
+      "middlename": "Алексеевна",
+      "lastname": "Кравцова",
+      "education": "Московский физико-технический институт",
+      "speciality": "Прикладная математика",
+      "age": 28,
+      "experience": 5,
+      "img": "",
+      "average_score": 95,
+      "email": "olga.kravtsova@yandex.ru"
     }
   ]
 }

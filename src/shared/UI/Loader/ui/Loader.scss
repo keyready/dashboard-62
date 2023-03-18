@@ -1,13 +1,14 @@
 .lds-facebook {
     width: 80px;
     height: 80px;
+    margin: 0 auto;
     display: inline-block;
     position: relative;
 }
 
 .lds-facebook div {
     width: 16px;
-    background: var(--inverted-bg-color);
+    background: var(--bg-color);
     display: inline-block;
     position: absolute;
     left: 8px;
