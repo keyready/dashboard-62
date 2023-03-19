@@ -19,6 +19,65 @@ server.use(async (req, res, next) => {
 
 // server.post('/compare_candidates', (req, res) => res.status(200).json({ error: 'hello error' }));
 
+server.post('/compare_candidates', (req, res) => res.status(200).json({
+    radarDiagram: [
+        {
+            subject: 'Frontend Developer',
+            fullMark: 10,
+            candidatesScores: {
+                Корчак: 9,
+                Иванов: 7,
+                Петров: 2,
+            },
+        },
+        {
+            subject: 'Backend Developer',
+            fullMark: 10,
+            candidatesScores: {
+                Корчак: 7,
+                Иванов: 7,
+                Петров: 4,
+            },
+        },
+        {
+            subject: 'Android Developer',
+            fullMark: 10,
+            candidatesScores: {
+                Корчак: 3,
+                Иванов: 3,
+                Петров: 8,
+            },
+        },
+        {
+            subject: 'QA Engineer',
+            fullMark: 10,
+            candidatesScores: {
+                Корчак: 6,
+                Иванов: 2,
+                Петров: 9,
+            },
+        },
+        {
+            subject: 'Go Developer',
+            fullMark: 10,
+            candidatesScores: {
+                Корчак: 3,
+                Иванов: 7,
+                Петров: 5,
+            },
+        },
+        {
+            subject: 'Java Developer',
+            fullMark: 10,
+            candidatesScores: {
+                Корчак: 2,
+                Иванов: 5,
+                Петров: 9,
+            },
+        },
+    ],
+}));
+
 // Эндпоинт для логина
 server.post('/login', (req, res) => {
     try {

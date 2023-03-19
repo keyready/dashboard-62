@@ -18,44 +18,44 @@ interface MainPageProps {
 const data = [
     {
         subject: 'Frontend Developing',
-        Candidate1_Surname: 9,
-        Candidate2_Surname: 4,
-        Candidate3_Surname: 10,
+        Корчак: 1,
+        Петров: 1,
+        Иванов: 1,
         fullMark: 10,
     },
     {
         subject: 'Backend Developing',
-        Candidate1_Surname: 6,
-        Candidate2_Surname: 9,
-        Candidate3_Surname: 8,
+        Корчак: 2,
+        Петров: 2,
+        Иванов: 2,
         fullMark: 10,
     },
     {
         subject: 'Android Developing',
-        Candidate1_Surname: 1,
-        Candidate2_Surname: 2,
-        Candidate3_Surname: 6,
+        Корчак: 3,
+        Петров: 3,
+        Иванов: 3,
         fullMark: 10,
     },
     {
         subject: 'QA Engineer',
-        Candidate1_Surname: 1,
-        Candidate2_Surname: 1,
-        Candidate3_Surname: 1,
+        Корчак: 4,
+        Петров: 4,
+        Иванов: 4,
         fullMark: 10,
     },
     {
         subject: 'Java Developer',
-        Candidate1_Surname: 2,
-        Candidate2_Surname: 8,
-        Candidate3_Surname: 6,
+        Корчак: 5,
+        Петров: 5,
+        Иванов: 5,
         fullMark: 10,
     },
     {
         subject: 'Go Developer',
-        Candidate1_Surname: 5,
-        Candidate2_Surname: 8,
-        Candidate3_Surname: 8,
+        Корчак: 6,
+        Петров: 6,
+        Иванов: 6,
         fullMark: 10,
     },
 ];
@@ -114,34 +114,7 @@ const MainPage = memo((props: MainPageProps) => {
 
     return (
         <Page className={classNames(classes.MainPage, {}, [className])}>
-            <Modal
-                centered
-                fullscreen
-                show={show}
-                onHide={() => setShow(false)}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>{specializationInfo}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <BarChart
-                        width={1000}
-                        height={300}
-                        data={specData}
-                    >
-                        <CartesianGrid strokeDasharray="2 2" />
-                        <XAxis dataKey="name" />
-                        <YAxis domain={[0, 10]} />
-                        <Bar
-                            barSize={75}
-                            className={classes.bar}
-                            dataKey="score"
-                            stackId="a"
-                        />
-                    </BarChart>
-                </Modal.Body>
-            </Modal>
-
+            <Card className={classes.candidatesPhoto} />
             <Card className={classes.mainInfo}>
                 <h2>
                     Корчак Родион Дмитриевич
@@ -157,13 +130,7 @@ const MainPage = memo((props: MainPageProps) => {
             <Card className={classes.addIndo}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias culpa eligendi et, harum nam nemo nihil quas qui quidem sit.</Card>
             <Card className={classes.skills}>
                 <h2>Умения</h2>
-                <RadarDiagram
-                    onLabelClickHandler={onLabelClickHandler}
-                    names={['Rodion', 'Andrew', 'Kostya']}
-                    multiple
-                    height={350}
-                    data={data}
-                />
+
             </Card>
         </Page>
     );

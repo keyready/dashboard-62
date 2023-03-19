@@ -64,10 +64,7 @@ export const RadarDiagram = memo((props: RadarDiagramProps) => {
             width={width}
             height={height}
         >
-            <RadarChart
-                // outerRadius="80%"
-                data={data}
-            >
+            <RadarChart data={data}>
                 <PolarGrid />
                 <PolarAngleAxis dataKey="subject" />
                 <PolarRadiusAxis />

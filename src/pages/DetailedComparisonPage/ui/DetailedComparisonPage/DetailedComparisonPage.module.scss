@@ -1,0 +1,26 @@
+.DetailedComparisonPage {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 10px;
+}
+
+.candidatesPhotos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    align-content: center;
+    justify-items: center;
+
+    p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+}
+
+.candidateImg {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+}
+

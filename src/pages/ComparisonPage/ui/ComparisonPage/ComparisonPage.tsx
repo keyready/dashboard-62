@@ -11,7 +11,7 @@ import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import {
-    compareCandidates, CompareActions, CompareReducer, getComparisonError,
+    compareCandidates, CompareActions, CompareReducer, getComparisonError, getComparisonIsLoading,
 } from 'pages/ComparisonPage';
 import {
     DynamicModuleLoader,
@@ -41,6 +41,7 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
     const selectedCandidates = useSelector(getSelectedCandidates);
     const selectedCandidatesIds = useSelector(getCandidatesIds);
     const compareError = useSelector(getComparisonError);
+    const compareIsProcessing = useSelector(getComparisonIsLoading);
 
     const changeTaskHandler = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
         dispatch(CompareActions.setComparisonError(''));
@@ -116,7 +117,7 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
 
                 <Button
                     variant={theme === Theme.DARK ? 'info' : 'dark'}
-                    disabled={!selectedTask}
+                    disabled={!selectedTask || compareIsProcessing}
                     onClick={backendComparingHandler}
                 >
                     Перейти к углубленному сравнению

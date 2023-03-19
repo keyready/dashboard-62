@@ -29,7 +29,7 @@ ___
 - [ ] [Страница регистрации/авторизации](./src/pages/LoginPage/ui/LoginPage.tsx)
 - [ ] [Страница загрузки анкет на сервер](./src/pages/UploadFilesPage/ui/UploadFilesPage.tsx)
 - [ ] [Страница общего сравнения кандидатов](./src/pages/CandidatesPage/ui/CandidatesPage/CandidatesPage.tsx)
-- [ ] [Страница углубленного сравнения по выбранному критерию](./src/pages/DetailedComparisonPage/ui/DetailedComparisonPage.tsx)
+- [ ] [Страница углубленного сравнения по выбранному критерию](src/pages/DetailedComparisonPage/ui/DetailedComparisonPage/DetailedComparisonPage.tsx)
 ___
 # Приложение 1
 Пример анкеты участника после обработки и сохранения в базе данных 

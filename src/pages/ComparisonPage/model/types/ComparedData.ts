@@ -1,9 +1,11 @@
+export interface CandidatesScores {
+    surname?: string;
+    score?: number
+}
+
 export interface RadarInfo {
     subject?: string;
-    candidate1?: string;
-    candidate2?: string;
-    candidate3?: string;
-    candidate4?: string;
+    candidatesScores: CandidatesScores[];
     fullMark?: number;
 }
 
