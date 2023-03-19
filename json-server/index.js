@@ -17,6 +17,8 @@ server.use(async (req, res, next) => {
     next();
 });
 
+// server.post('/compare_candidates', (req, res) => res.status(200).json({ error: 'hello error' }));
+
 // Эндпоинт для логина
 server.post('/login', (req, res) => {
     try {

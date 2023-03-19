@@ -1,6 +1,8 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import { FormEvent, memo, useCallback } from 'react';
+import {
+    FormEvent, memo, useCallback, useState,
+} from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -9,6 +11,7 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
+import { useNavigate } from 'react-router-dom';
 import {
     getFilesUploadingError,
     getIsFilesLoading,
@@ -31,17 +34,21 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
     } = props;
 
     const { theme } = useTheme();
-
+    const navigate = useNavigate();
     const uploadError = useSelector(getFilesUploadingError);
     const isFilesUploading = useSelector(getIsFilesLoading);
-
     const dispatch = useAppDispatch();
 
-    const submitFilesHandler = useCallback((e: FormEvent<HTMLFormElement>) => {
+    const [isUploadSuccessful, setIsUploadSuccessful] = useState<boolean>(false);
+
+    const submitFilesHandler = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
 
-        dispatch(uploadFiles(formData));
+        const result = await dispatch(uploadFiles(formData));
+        if (result.meta.requestStatus === 'fulfilled') {
+            setIsUploadSuccessful(true);
+        }
     }, [dispatch]);
 
     return (
@@ -69,6 +76,16 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
                     {uploadError && (
                         <Alert variant="danger">
                             {uploadError}
+                        </Alert>
+                    )}
+                    {isUploadSuccessful && (
+                        <Alert variant="success">
+                            <Button
+                                variant={theme === Theme.LIGHT ? 'success' : 'success-dark'}
+                                onClick={() => navigate('/candidates')}
+                            >
+                                Перейти на страницу сравнения
+                            </Button>
                         </Alert>
                     )}
 
