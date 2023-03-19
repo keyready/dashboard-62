@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
-import { CandidatesPageActions } from 'pages/CandidatesPage';
 import { Candidate } from 'entities/Candidate';
 
 export const fetchCandidates = createAsyncThunk<
@@ -10,7 +9,7 @@ export const fetchCandidates = createAsyncThunk<
 >(
     'candidatesPage/fetchCandidates',
     async (_, thunkAPI) => {
-        const { extra, rejectWithValue, dispatch } = thunkAPI;
+        const { extra, rejectWithValue } = thunkAPI;
 
         try {
             const response = await extra.api.get<Candidate[]>(
@@ -25,7 +24,7 @@ export const fetchCandidates = createAsyncThunk<
             return response.data;
         } catch (e) {
             console.log(e);
-            return rejectWithValue('error');
+            return rejectWithValue('Ошибка загрузки резюме');
         }
     },
 );

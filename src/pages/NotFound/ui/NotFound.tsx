@@ -3,6 +3,7 @@ import { Page } from 'widgets/Page/Page';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Theme, useTheme } from 'app/providers/ThemeProvider';
+import LoginForm from 'features/AuthByEmail/ui/LoginForm/LoginForm';
 import classes from './NotFound.module.scss';
 
 interface NotFoundProps {
@@ -15,6 +16,7 @@ export const NotFound = ({ className }: NotFoundProps) => {
 
     return (
         <Page className={classNames(classes.NotFound, {}, [className])}>
+            <LoginForm />
             <h2>Страница не найдена</h2>
             <Button
                 variant={theme === Theme.LIGHT ? 'primary' : 'info'}

@@ -4,6 +4,7 @@ import { MainPage } from 'pages/MainPage';
 import { CandidatesPage } from 'pages/CandidatesPage';
 import { ComparisonPage } from 'pages/ComparisonPage';
 import { UploadFilesPage } from 'pages/UploadFilesPage';
+import { LoginPage } from 'pages/LoginPage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
@@ -14,6 +15,7 @@ export enum AppRoutes {
     CANDIDATES = 'candidates',
     COMPARISON = 'comparison',
     FILESUPLOAD = 'filesupload',
+    LOGINPAGE = 'loginpage',
 
     // last
     NOT_FOUND = 'not_found'
@@ -24,6 +26,7 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.MAIN]: '/',
     [AppRoutes.COMPARISON]: '/comparison',
     [AppRoutes.FILESUPLOAD]: '/files_upload',
+    [AppRoutes.LOGINPAGE]: '/login',
 
     // last
     [AppRoutes.NOT_FOUND]: '*',
@@ -37,14 +40,21 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.CANDIDATES]: {
         path: RoutePath.candidates,
         element: <CandidatesPage />,
+        authOnly: true,
     },
     [AppRoutes.COMPARISON]: {
         path: RoutePath.comparison,
         element: <ComparisonPage />,
+        authOnly: true,
     },
     [AppRoutes.FILESUPLOAD]: {
         path: RoutePath.filesupload,
         element: <UploadFilesPage />,
+        authOnly: true,
+    },
+    [AppRoutes.LOGINPAGE]: {
+        path: RoutePath.loginpage,
+        element: <LoginPage />,
     },
 
     // last

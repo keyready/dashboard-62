@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { User, userActions } from 'entities/User';
-import { USER_AUTHORIZATION_TOKEN } from 'shared/const';
+import { User } from 'entities/User';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
 
 interface RegisterByEmailProps {
@@ -22,7 +21,7 @@ export const registerByEmail = createAsyncThunk<User, RegisterByEmailProps, Thun
 
             return response.data;
         } catch (e) {
-            return rejectWithValue('login error');
+            return rejectWithValue('пользователь уже существует');
         }
     },
 );

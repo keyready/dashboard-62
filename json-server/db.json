@@ -1193,5 +1193,11 @@
         }
       }
     }
+  ],
+  "users": [
+    {
+      "login": "keyready",
+      "password": "123"
+    }
   ]
 }

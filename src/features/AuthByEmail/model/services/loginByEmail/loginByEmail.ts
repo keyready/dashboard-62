@@ -25,7 +25,7 @@ export const loginByEmail = createAsyncThunk<User, loginByEmailProps, ThunkConfi
 
             return response.data;
         } catch (e) {
-            return rejectWithValue('login error');
+            return rejectWithValue('серверная ошибка');
         }
     },
 );

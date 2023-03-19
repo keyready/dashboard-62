@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { USER_LOCALSTORAGE_KEY } from 'shared/const';
+import { USER_AUTHORIZATION_TOKEN } from 'shared/const';
 import { User, UserSchema } from '../types/user';
 
 const initialState: UserSchema = {
@@ -16,7 +16,7 @@ export const userSlice = createSlice({
         },
         initAuthData: (state) => {
             // проверить, авторизован ли пользователь (после закрытия и открытия приложения)
-            const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
+            const user = localStorage.getItem(USER_AUTHORIZATION_TOKEN);
             if (user) {
                 state.authData = JSON.parse(user);
             }
@@ -24,7 +24,7 @@ export const userSlice = createSlice({
         },
         logout: (state) => {
             // выход
-            localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+            localStorage.removeItem(USER_AUTHORIZATION_TOKEN);
             state.authData = undefined;
         },
     },
