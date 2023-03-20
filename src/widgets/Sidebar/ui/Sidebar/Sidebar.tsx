@@ -56,7 +56,7 @@ export const Sidebar = memo(({ classname }: SidebarProps) => {
                 {authData && (
                     <Button
                         onClick={userLogoutHandler}
-                        variant={theme === Theme.LIGHT ? 'dark' : 'info'}
+                        variant="danger"
                     >
                         Выйти
                     </Button>

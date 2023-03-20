@@ -7,11 +7,11 @@ export const uploadFiles = createAsyncThunk<
     ThunkConfig<string>
 >(
     'files/uploadFiles',
-    async (_, thunkAPI) => {
+    async (files, thunkAPI) => {
         const { extra, rejectWithValue } = thunkAPI;
 
         try {
-            const response = await extra.api.post<string>('/files_upload');
+            const response = await extra.api.post<string>('/files_upload', files);
 
             if (!response.data) {
                 throw new Error();

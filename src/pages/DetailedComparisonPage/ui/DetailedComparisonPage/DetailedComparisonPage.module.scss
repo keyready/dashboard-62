@@ -1,3 +1,9 @@
+p,
+h2 {
+    margin: 0;
+    padding: 0;
+}
+
 .DetailedComparisonPage {
     height: 100%;
     display: grid;
@@ -29,4 +35,16 @@
 .commonComparison {
     grid-row: 3 / span 3;
     grid-column: 1 / span 2;
+}
+
+.detailedCard {
+    margin-top: 15px;
+}
+
+.comparison {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
 }

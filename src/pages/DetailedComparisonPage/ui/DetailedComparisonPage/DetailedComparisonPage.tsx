@@ -26,6 +26,7 @@ import { Alert, OverlayTrigger, Popover } from 'react-bootstrap';
 import { Card } from 'shared/UI/Card';
 import { getComparisonData, getComparisonPurpose } from 'pages/ComparisonPage';
 import { AccordionBars } from 'pages/DetailedComparisonPage/ui/AccordionBars/AccordionBars';
+import { loginActions } from 'features/AuthByEmail';
 import classes from './DetailedComparisonPage.module.scss';
 
 interface DetailedComparisonPageProps {
@@ -46,6 +47,10 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
         '#CC3300',
         '#CC33CC',
         '#0066CC',
+        '#FF0055',
+        '#8e57ec',
+        '#fff34b',
+        '#ff4c02',
     ], []);
     const experienceData = useMemo(() => {
         const temp: any = [];
@@ -78,7 +83,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
         }),
     ), [detailedComparisonData?.radarDiagram]);
 
-    const detailedSkills = useMemo(() => {
+    const detailedSkills: any[] = useMemo(() => {
         const output: any = {};
         const input = detailedComparisonData?.barsDiagram || [];
 
@@ -95,10 +100,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
             }
         }
 
-        console.warn('output', output);
-        console.warn('output', output['Android Developer']);
-
-        return output;
+        return Object.entries(output);
     }, [detailedComparisonData?.barsDiagram]);
 
     if (!comparingPurpose) {
@@ -198,6 +200,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                     <h2>Совпадение хобби и специальности</h2>
                     <ResponsiveContainer>
                         <BarChart data={hobbySpecialityOverlap}>
+                            <Tooltip />
                             {selectedCandidates.map((candidate, index) => (
                                 <Bar
                                     key={index}
@@ -215,22 +218,34 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                     </ResponsiveContainer>
                 </Card>
             </div>
-            <Card>
-                <ResponsiveContainer height={400}>
-                    <BarChart data={detailedSkills['Android Developer']}>
-                        <CartesianGrid />
-                        <XAxis dataKey="name" />
-                        {detailedSkills['Android Developer'].map((bar: any, index: number) => (
-                            <Bar
-                                key={index}
-                                dataKey={bar}
-                                barSize={30}
-                            />
-                        ))}
-                        <YAxis />
-                    </BarChart>
-                </ResponsiveContainer>
+
+            <Card
+                className={classes.detailedCard}
+            >
+                <h2>Оценка кандидатов нашей системой:</h2>
+                {selectedCandidates.map((selectedCandidate) => (
+                    <div
+                        key={selectedCandidate.id}
+                        className={classes.comparison}
+                    >
+                        <h3>
+                            {`${selectedCandidate.lastname} ${selectedCandidate.firstname}`}
+                        </h3>
+                        <p>{`Балл - ${selectedCandidate.average_score}`}</p>
+                    </div>
+                ))}
             </Card>
+
+            {/* {detailedSkills.map((skill: any, index) => ( */}
+            {/*    <Card className={classes.detailedCard}> */}
+            {/*        <h2>{skill[0]}</h2> */}
+            {/*        {Object.entries(skill[1]).map((item: any[]) => { */}
+            {/*            Object.entries(item[1]).map((title) => ( */}
+            {/*                <h2>{title[0].toString()}</h2> */}
+            {/*            )); */}
+            {/*        })} */}
+            {/*    </Card> */}
+            {/* ))} */}
         </Page>
     );
 });

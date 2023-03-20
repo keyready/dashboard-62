@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --env port=1488",
+    "start": "webpack serve --env port=4567",
     "start:server": "nodemon ./json-server/index.js",
     "start:dev": "concurrently \"npm start\" \"npm run start:server\"",
     "build:dev": "webpack --env mode=development",
