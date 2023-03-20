@@ -6,8 +6,8 @@ export default (env: BuildEnv) => {
     const mode = env.mode || 'development';
     const isDev = mode === 'development';
     const port = env.port || 9999;
-    // const apiUrl = env.apiUrl || 'http://backend:5000';
-    const apiUrl = env.apiUrl || 'http://localhost:9999';
+    const apiUrl = env.apiUrl || 'http://backend:9999';
+    // const apiUrl = env.apiUrl || 'http://localhost:9999';
 
     return buildWebpackConfig({
         mode,
