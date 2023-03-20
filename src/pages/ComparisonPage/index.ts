@@ -6,6 +6,7 @@ export {
     getComparisonData,
     getComparisonError,
     getComparisonIsLoading,
+    getComparisonPurpose,
 } from './model/selectors/getComparisonData';
 export { CompareActions, CompareReducer } from './model/slice/CompareSlice';
 export {

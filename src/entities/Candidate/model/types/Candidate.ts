@@ -22,4 +22,6 @@ export interface Candidate {
     average_score?: number;
     skills?: Skills[];
     img?: string;
+    hobby?: string;
+    hobbySpecialityOverlap?: number;
 }

@@ -1,5 +1,7 @@
 .DetailedComparisonPage {
+    height: 100%;
     display: grid;
+    margin-top: 15px;
     grid-template-columns: 1fr 2fr;
     grid-gap: 10px;
 }
@@ -24,3 +26,7 @@
     border-radius: 15px;
 }
 
+.commonComparison {
+    grid-row: 3 / span 3;
+    grid-column: 1 / span 2;
+}

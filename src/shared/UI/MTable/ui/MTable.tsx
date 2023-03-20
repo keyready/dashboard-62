@@ -33,7 +33,7 @@ export const MTable = memo((props: MTableProps) => {
     const headers = useMemo<string[]>(
         () => [
             'ФИО', 'Образование', 'Специальность',
-            'Возраст', 'Опыт работы', 'Балл'],
+            'Возраст', 'Опыт работы', 'Хобби'],
         [],
     );
 
@@ -70,7 +70,7 @@ export const MTable = memo((props: MTableProps) => {
                             <td>{candidate.speciality}</td>
                             <td>{candidate.age}</td>
                             <td>{candidate.experience}</td>
-                            <td>{candidate.average_score}</td>
+                            <td>{candidate.hobby}</td>
                         </tr>
                     ))}
                 </tbody>

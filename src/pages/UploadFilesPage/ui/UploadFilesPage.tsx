@@ -12,6 +12,7 @@ import {
     ReducersList,
 } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
 import { useNavigate } from 'react-router-dom';
+import { ButtonLoader } from 'shared/UI/ButtonLoader';
 import {
     getFilesUploadingError,
     getIsFilesLoading,

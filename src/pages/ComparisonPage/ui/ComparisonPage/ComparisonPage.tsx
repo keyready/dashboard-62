@@ -1,23 +1,27 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import {
-    ChangeEvent, memo, useCallback, useMemo, useState,
-} from 'react';
+import { ChangeEvent, memo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { getCandidatesIds, getSelectedCandidates } from 'pages/CandidatesPage';
 import { MTable } from 'shared/UI/MTable';
-import { Alert, Button, Form } from 'react-bootstrap';
+import {
+    Alert, Button, Form, OverlayTrigger, Tooltip,
+} from 'react-bootstrap';
 import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import {
-    compareCandidates, CompareActions, CompareReducer, getComparisonError, getComparisonIsLoading,
-} from 'pages/ComparisonPage';
-import {
     DynamicModuleLoader,
     ReducersList,
 } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
+import {
+    getComparisonError,
+    getComparisonIsLoading,
+    getComparisonPurpose,
+} from '../../model/selectors/getComparisonData';
 import classes from './ComparisonPage.module.scss';
+import { CompareActions, CompareReducer } from '../../model/slice/CompareSlice';
+import { compareCandidates } from '../../model/services/compareCandidates';
 
 interface ComparisonPageProps {
     className?: string;
@@ -36,16 +40,15 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const [selectedTask, setSelectedTask] = useState<string>('');
-
+    const selectedTask = useSelector(getComparisonPurpose);
     const selectedCandidates = useSelector(getSelectedCandidates);
     const selectedCandidatesIds = useSelector(getCandidatesIds);
     const compareError = useSelector(getComparisonError);
     const compareIsProcessing = useSelector(getComparisonIsLoading);
 
-    const changeTaskHandler = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    const changeTaskHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         dispatch(CompareActions.setComparisonError(''));
-        setSelectedTask(e.target.value);
+        dispatch(CompareActions.setComparingPurpose(e.target.value));
     }, [dispatch]);
 
     const backendComparingHandler = useCallback(async () => {
@@ -60,17 +63,6 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
             console.log('Что-то пошло не так во время сравнения кандидатов');
         }
     }, [dispatch, navigate, selectedCandidatesIds, selectedTask]);
-
-    const tasksTypes = useMemo<string[]>(() => [
-        'Создание лендинг-страницы',
-        'Разработка Frontend-части приложения',
-        'Разработка Backend-части приложения',
-        'Разработка Fullstack-приложения',
-        'Разработка ПО для OC Windows',
-        'Разработка ПО для OC Linux',
-        'Анализ уязвимости приложения',
-        'Дебажинг и тесты приложения',
-    ], []);
 
     if (!selectedCandidates.length) {
         return (
@@ -96,32 +88,51 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
             <Page className={classNames(classes.ComparisonPage, {}, [className])}>
                 <h2 className={classes.header}>Выбранные кандидаты</h2>
                 <MTable tableData={selectedCandidates} />
-                <Form.Select
-                    className={classes.select}
-                    onChange={changeTaskHandler}
-                    value={selectedTask || ''}
-                >
-                    <option disabled>Выберите цель рекрутинга кандидатов</option>
-                    {tasksTypes.map((tasksType) => (
-                        <option key={tasksType}>
-                            {tasksType}
-                        </option>
-                    ))}
-                </Form.Select>
 
-                {compareError && (
-                    <Alert variant="danger">
-                        {compareError}
-                    </Alert>
-                )}
+                <Form>
+                    <Form.Control
+                        onChange={changeTaskHandler}
+                        value={selectedTask}
+                        className={classes.select}
+                        placeholder="Введите задачу, для которой надо найти кандидатов"
+                    />
 
-                <Button
-                    variant={theme === Theme.DARK ? 'info' : 'dark'}
-                    disabled={!selectedTask || compareIsProcessing}
-                    onClick={backendComparingHandler}
-                >
-                    Перейти к углубленному сравнению
-                </Button>
+                    {compareError && (
+                        <Alert variant="danger">
+                            {compareError}
+                        </Alert>
+                    )}
+
+                    {selectedTask.length < 10 || compareIsProcessing
+                        ? (
+                            <OverlayTrigger
+                                placement="right"
+                                delay={{ show: 100, hide: 500 }}
+                                overlay={(
+                                    <Tooltip>Введите не менее 10 символов</Tooltip>
+                                )}
+                            >
+                                <span>
+                                    <Button
+                                        variant={theme === Theme.DARK ? 'info' : 'dark'}
+                                        disabled={selectedTask.length < 10 || compareIsProcessing}
+                                    >
+                                        Перейти к углубленному сравнению
+                                    </Button>
+                                </span>
+                            </OverlayTrigger>
+                        )
+                        : (
+                            <Button
+                                type="submit"
+                                variant={theme === Theme.DARK ? 'info' : 'dark'}
+                                disabled={selectedTask.length < 10 || compareIsProcessing}
+                                onClick={backendComparingHandler}
+                            >
+                                Перейти к углубленному сравнению
+                            </Button>
+                        )}
+                </Form>
             </Page>
         </DynamicModuleLoader>
     );

@@ -36,8 +36,8 @@ export const fetchCandidatesViaParameters = createAsyncThunk<
                         age_lte: upperAge || 100,
                         experience_gte: lowerExp || 0,
                         experience_lte: upperExp || 100,
-                        // education: education || '',
-                        // speciality: speciality || '',
+                        education: education || '',
+                        speciality: speciality || '',
                     },
                 },
             );

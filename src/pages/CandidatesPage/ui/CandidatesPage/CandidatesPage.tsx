@@ -240,14 +240,6 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 )}
                 <div className={classes.content}>
                     <div className={classes.panelsWrapper}>
-                        {/* TODO: предупреждение о выборе больше 4 кандидатов */}
-                        {/* {candidatesIds.length >= 4 && ( */}
-                        {/*    <Alert */}
-                        {/*        variant="danger" */}
-                        {/*    > */}
-                        {/*        Можно выбрать не более 4 кандидатов */}
-                        {/*    </Alert> */}
-                        {/* )} */}
                         {candidatesIsLoading
                             ? <Card className={classes.loaderCard}><Loader /></Card>
                             : candidates.length

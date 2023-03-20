@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { getSelectedCandidates } from 'pages/CandidatesPage';
 import {
     Bar,
-    BarChart,
+    BarChart, CartesianGrid, LabelList,
     Legend,
     PolarAngleAxis,
     PolarGrid,
@@ -22,9 +22,10 @@ import {
     XAxis,
     YAxis,
 } from 'recharts';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { Alert, OverlayTrigger, Popover } from 'react-bootstrap';
 import { Card } from 'shared/UI/Card';
-import { getComparisonData } from 'pages/ComparisonPage';
+import { getComparisonData, getComparisonPurpose } from 'pages/ComparisonPage';
+import { AccordionBars } from 'pages/DetailedComparisonPage/ui/AccordionBars/AccordionBars';
 import classes from './DetailedComparisonPage.module.scss';
 
 interface DetailedComparisonPageProps {
@@ -38,10 +39,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
     const selectedCandidates = useSelector(getSelectedCandidates);
     const detailedComparisonData = useSelector(getComparisonData);
-
-    useEffect(() => {
-        console.log(detailedComparisonData);
-    }, [detailedComparisonData]);
+    const comparingPurpose = useSelector(getComparisonPurpose);
 
     const colors = useMemo(() => [
         '#CC9900',
@@ -60,6 +58,17 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
         });
         return temp;
     }, [selectedCandidates]);
+    const hobbySpecialityOverlap = useMemo(() => {
+        const temp: any = [];
+        selectedCandidates.forEach((candidate) => {
+            const name: string = candidate.lastname || '';
+            temp.push({
+                name: candidate.lastname,
+                [name]: candidate.hobbySpecialityOverlap,
+            });
+        });
+        return temp;
+    }, [selectedCandidates]);
 
     const skillsData = useMemo(() => detailedComparisonData?.radarDiagram?.map(
         ({ subject, fullMark, candidatesScores }) => ({
@@ -69,72 +78,155 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
         }),
     ), [detailedComparisonData?.radarDiagram]);
 
+    const detailedSkills = useMemo(() => {
+        const output: any = {};
+        const input = detailedComparisonData?.barsDiagram || [];
+
+        for (const [name, developer] of Object.entries(input)) {
+            for (const [role, skills] of Object.entries(developer)) {
+                if (!output[role]) {
+                    output[role] = [];
+                }
+                const developerSkills: Record<string, any> = { name };
+                for (const [skill, score] of Object.entries(skills)) {
+                    developerSkills[skill] = score;
+                }
+                output[role].push(developerSkills);
+            }
+        }
+
+        console.warn('output', output);
+        console.warn('output', output['Android Developer']);
+
+        return output;
+    }, [detailedComparisonData?.barsDiagram]);
+
+    if (!comparingPurpose) {
+        return (
+            <Page className={classNames(classes.ComparisonPage, {}, [className])}>
+                <Alert
+                    variant="warning"
+                >
+                    Похоже, Вы попали на эту страницу по ошибке.
+                    Вернитесь на
+                    {' '}
+                    <Alert.Link href="/">главную</Alert.Link>
+                    {' '}
+                    или
+                    {' '}
+                    <Alert.Link href="/candidates">на страницу сравнения кандидатов</Alert.Link>
+                </Alert>
+            </Page>
+        );
+    }
+
     return (
-        <Page className={classNames(classes.DetailedComparisonPage, {}, [className])}>
-            <Card className={classes.candidatesPhotos}>
-                {selectedCandidates.map((candidate, index) => (
-                    <OverlayTrigger
-                        key={candidate.id}
-                        trigger="hover"
-                        placement="right"
-                        overlay={(
-                            <Popover>
-                                <Popover.Header as="h3">
-                                    {`${candidate.lastname} ${candidate.firstname}`}
-                                </Popover.Header>
-                                <Popover.Body>
-                                    <p>{candidate.education}</p>
-                                    <p>{candidate.speciality}</p>
-                                </Popover.Body>
-                            </Popover>
-                        )}
-                    >
-                        <div>
-                            <img
-                                alt=""
-                                src={`https://i.pravatar.cc/?img=${index}`}
-                                className={classes.candidateImg}
-                            />
-                            <p>{candidate.lastname}</p>
-                            <p>{candidate.firstname}</p>
-                        </div>
-                    </OverlayTrigger>
-                ))}
-            </Card>
+        <Page className={classNames('', {}, [className])}>
+            <h2>{`Задача: ${comparingPurpose}`}</h2>
+            <div
+                className={classes.DetailedComparisonPage}
+            >
+                <Card className={classes.candidatesPhotos}>
+                    {selectedCandidates.map((candidate, index) => (
+                        <OverlayTrigger
+                            key={candidate.id}
+                            trigger="hover"
+                            placement="right"
+                            overlay={(
+                                <Popover>
+                                    <Popover.Header as="h3">
+                                        {`${candidate.lastname} ${candidate.firstname}`}
+                                    </Popover.Header>
+                                    <Popover.Body>
+                                        <p>{candidate.education}</p>
+                                        <p>{`${candidate.speciality} — ${candidate.hobby}`}</p>
+                                    </Popover.Body>
+                                </Popover>
+                            )}
+                        >
+                            <div>
+                                <img
+                                    alt=""
+                                    src={`https://i.pravatar.cc/?img=${index}`}
+                                    className={classes.candidateImg}
+                                />
+                                <p>{candidate.lastname}</p>
+                                <p>{candidate.firstname}</p>
+                            </div>
+                        </OverlayTrigger>
+                    ))}
+                </Card>
+                <Card>
+                    <ResponsiveContainer>
+                        <RadarChart data={skillsData}>
+                            <PolarGrid />
+                            <PolarAngleAxis dataKey="subject" />
+                            <PolarRadiusAxis />
+                            {selectedCandidates.map((candidate, index) => (
+                                <Radar
+                                    key={index}
+                                    name=""
+                                    dataKey={candidate.lastname || ''}
+                                    stroke={colors[index]}
+                                    fill={colors[index]}
+                                    fillOpacity={0.5}
+                                />
+                            ))}
+                            <Legend />
+                            <Tooltip />
+                        </RadarChart>
+                    </ResponsiveContainer>
+                </Card>
+                <Card>
+                    <h2>Опыт работы</h2>
+                    <ResponsiveContainer>
+                        <BarChart data={experienceData}>
+                            {selectedCandidates.map((candidate, index) => (
+                                <Bar
+                                    key={index}
+                                    barSize={30}
+                                    dataKey={candidate.lastname || ''}
+                                    fill={colors[index]}
+                                />
+                            ))}
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </Card>
+                <Card>
+                    <h2>Совпадение хобби и специальности</h2>
+                    <ResponsiveContainer>
+                        <BarChart data={hobbySpecialityOverlap}>
+                            {selectedCandidates.map((candidate, index) => (
+                                <Bar
+                                    key={index}
+                                    barSize={30}
+                                    dataKey={candidate.lastname || ''}
+                                    fill={candidate.hobbySpecialityOverlap
+                                        ? candidate.hobbySpecialityOverlap < 1.5 ? 'red' : 'green'
+                                        : 'red'}
+                                />
+                            ))}
+                            <CartesianGrid strokeDasharray="0.1 2" />
+                            <XAxis domain={[1, 2]} dataKey="name" />
+                            <YAxis />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </Card>
+            </div>
             <Card>
-                <ResponsiveContainer>
-                    <RadarChart data={skillsData}>
-                        <PolarGrid />
-                        <PolarAngleAxis dataKey="subject" />
-                        <PolarRadiusAxis />
-                        {selectedCandidates.map((candidate, index) => (
-                            <Radar
-                                key={index}
-                                name=""
-                                dataKey={candidate.lastname || ''}
-                                stroke={colors[index]}
-                                fill={colors[index]}
-                                fillOpacity={0.5}
-                            />
-                        ))}
-                        <Legend />
-                        <Tooltip />
-                    </RadarChart>
-                </ResponsiveContainer>
-            </Card>
-            <Card>
-                <h2>Опыт работы</h2>
-                <ResponsiveContainer>
-                    <BarChart data={experienceData}>
-                        {selectedCandidates.map((candidate, index) => (
+                <ResponsiveContainer height={400}>
+                    <BarChart data={detailedSkills['Android Developer']}>
+                        <CartesianGrid />
+                        <XAxis dataKey="name" />
+                        {detailedSkills['Android Developer'].map((bar: any, index: number) => (
                             <Bar
                                 key={index}
+                                dataKey={bar}
                                 barSize={30}
-                                dataKey={candidate.lastname || ''}
-                                fill={colors[index]}
                             />
                         ))}
-                        <XAxis dataKey="name" />
                         <YAxis />
                     </BarChart>
                 </ResponsiveContainer>

@@ -108,7 +108,7 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                             <p>{`Образование: ${candidate.education}`}</p>
                             <p>{`Специальность: ${candidate.speciality}`}</p>
                             <p>{`Опыт работы: ${candidate.experience}`}</p>
-                            <p>О себе: lorem10</p>
+                            <p>{`Хобби: ${candidate.hobby}`}</p>
                         </div>
                     </Disclosure.Panel>
                 </>

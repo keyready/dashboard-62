@@ -21,6 +21,7 @@ export interface ComparedData {
 
 export interface ComparedDataSchema {
     data?: ComparedData;
+    comparingPurpose: string;
     error?: string;
     isLoading: boolean;
 }

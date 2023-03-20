@@ -6,6 +6,7 @@ const initialState: ComparedDataSchema = {
     data: {},
     isLoading: false,
     error: '',
+    comparingPurpose: '',
 };
 
 export const CompareSlice = createSlice({
@@ -17,6 +18,9 @@ export const CompareSlice = createSlice({
         },
         setComparisonError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
+        },
+        setComparingPurpose: (state, action: PayloadAction<string>) => {
+            state.comparingPurpose = action.payload;
         },
     },
     extraReducers: ((builder) => {
