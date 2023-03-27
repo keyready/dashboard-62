@@ -1,6 +1,8 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import { ChangeEvent, memo, useCallback } from 'react';
+import {
+    ChangeEvent, memo, useCallback,
+} from 'react';
 import { useSelector } from 'react-redux';
 import { getCandidatesIds, getSelectedCandidates } from 'pages/CandidatesPage';
 import { MTable } from 'shared/UI/MTable';

@@ -12,9 +12,14 @@ server.use(jsonServer.bodyParser);
 // Нужно для небольшой задержки, чтобы запрос проходил не мгновенно, имитация реального апи
 server.use(async (req, res, next) => {
     await new Promise((res) => {
-        setTimeout(res, 800);
+        setTimeout(res, 500);
     });
     next();
+});
+
+server.use('/files_upload', (req, res) => {
+    const { files } = req;
+    res.json({ message: 'Успешно загружено' });
 });
 
 // server.post('/compare_candidates', (req, res) => res.status(200).json({ error: 'hello error' }));

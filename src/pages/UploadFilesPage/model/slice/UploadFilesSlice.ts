@@ -9,7 +9,14 @@ const initialState: UploadPageSchema = {
 export const UploadFilesSlice = createSlice({
     name: 'UploadFilesSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setTotalFileSize: (state, action: PayloadAction<number>) => {
+            state.totalFileSize = action.payload;
+        },
+        setCurrentlyUploaded: (state, action: PayloadAction<number>) => {
+            state.currentlyUploaded = action.payload;
+        },
+    },
     extraReducers: ((builder) => {
         builder
             .addCase(uploadFiles.pending, (state) => {

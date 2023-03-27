@@ -3,7 +3,9 @@ import { Page } from 'widgets/Page/Page';
 import {
     FormEvent, memo, useCallback, useState,
 } from 'react';
-import { Alert, Button, Form } from 'react-bootstrap';
+import {
+    Alert, Button, Form, ProgressBar,
+} from 'react-bootstrap';
 import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { useSelector } from 'react-redux';
@@ -12,10 +14,11 @@ import {
     ReducersList,
 } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
 import { useNavigate } from 'react-router-dom';
-import { ButtonLoader } from 'shared/UI/ButtonLoader';
 import {
+    getCurrentlyUploaded,
     getFilesUploadingError,
     getIsFilesLoading,
+    getTotalSize,
 } from '../model/selectors/getUploadfilesPageData';
 import { UploadFilesReducer } from '../model/slice/UploadFilesSlice';
 import classes from './UploadFilesPage.module.scss';
@@ -38,6 +41,8 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
     const navigate = useNavigate();
     const uploadError = useSelector(getFilesUploadingError);
     const isFilesUploading = useSelector(getIsFilesLoading);
+    const currentlyUploaded = useSelector(getCurrentlyUploaded);
+    const totalSize = useSelector(getTotalSize);
     const dispatch = useAppDispatch();
 
     const [isUploadSuccessful, setIsUploadSuccessful] = useState<boolean>(false);
@@ -62,7 +67,7 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
                     <h2>Загрузка новых данных о кандидатах</h2>
                     <Form.Group controlId="formFile" className="mb-3">
                         <Form.Label>
-                            Выберите архив с анкетами. Допустимые форматы анкет: .xml, .json
+                            Выберите архив с анкетами.
                         </Form.Label>
                         <Form.Control
                             disabled={isFilesUploading}
@@ -73,6 +78,16 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
                             type="file"
                         />
                     </Form.Group>
+
+                    {isFilesUploading && (
+                        <ProgressBar
+                            className={classes.progress}
+                            animated
+                            variant="success"
+                            label={`${(currentlyUploaded / totalSize * 100).toFixed(2)}%`}
+                            now={currentlyUploaded / totalSize * 100}
+                        />
+                    )}
 
                     {uploadError && (
                         <Alert variant="danger">
@@ -90,13 +105,15 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
                         </Alert>
                     )}
 
-                    <Button
-                        disabled={isFilesUploading}
-                        type="submit"
-                        variant={theme === Theme.DARK ? 'info' : 'dark'}
-                    >
-                        Отправить анкеты
-                    </Button>
+                    {!isFilesUploading && !isUploadSuccessful && (
+                        <Button
+                            disabled={isFilesUploading}
+                            type="submit"
+                            variant={theme === Theme.DARK ? 'info' : 'dark'}
+                        >
+                            Отправить анкеты
+                        </Button>
+                    )}
                 </Form>
             </Page>
         </DynamicModuleLoader>
