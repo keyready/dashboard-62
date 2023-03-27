@@ -1,7 +1,7 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
 import {
-    ChangeEvent, memo, useCallback,
+    ChangeEvent, memo, useCallback, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
 import { getCandidatesIds, getSelectedCandidates } from 'pages/CandidatesPage';
@@ -16,6 +16,7 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
+import { Loader } from 'shared/UI/Loader';
 import {
     getComparisonError,
     getComparisonIsLoading,
@@ -47,6 +48,8 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
     const selectedCandidatesIds = useSelector(getCandidatesIds);
     const compareError = useSelector(getComparisonError);
     const compareIsProcessing = useSelector(getComparisonIsLoading);
+
+    const [isWarningShown, setIsWarningShown] = useState<boolean>(true);
 
     const changeTaskHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         dispatch(CompareActions.setComparisonError(''));
@@ -134,6 +137,23 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
                                 Перейти к углубленному сравнению
                             </Button>
                         )}
+                    {compareIsProcessing && (
+                        <div className={classes.loaderWrapper}>
+                            <Alert
+                                className={classes.alert}
+                                show={isWarningShown}
+                                onClose={() => setIsWarningShown(false)}
+                                dismissible
+                                variant="warning"
+                            >
+                                <Alert.Heading>Обработка данных</Alert.Heading>
+                                Обработка данных может занять какое-то время.
+                                Пожалуйста, ожидайте окончания процесса, не перезагружайте страницу.
+                                По окончании Вы будете автоматически перенаправлены на другую страницу
+                            </Alert>
+                            <Loader />
+                        </div>
+                    )}
                 </Form>
             </Page>
         </DynamicModuleLoader>
