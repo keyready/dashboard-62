@@ -19,7 +19,7 @@ server.use(async (req, res, next) => {
 
 server.use('/files_upload', (req, res) => {
     const { files } = req;
-    res.json({ message: 'Успешно загружено' });
+    res.json({ message: '4 анкеты не были добавлены, так как уже существуют в нашей базе данных' });
 });
 
 // server.post('/compare_candidates', (req, res) => res.status(200).json({ error: 'hello error' }));

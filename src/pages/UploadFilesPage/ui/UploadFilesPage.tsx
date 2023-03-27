@@ -46,6 +46,7 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
     const dispatch = useAppDispatch();
 
     const [isUploadSuccessful, setIsUploadSuccessful] = useState<boolean>(false);
+    const [hasDuplicates, setHasDuplicates] = useState<string>('');
 
     const submitFilesHandler = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -54,6 +55,11 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
         const result = await dispatch(uploadFiles(formData));
         if (result.meta.requestStatus === 'fulfilled') {
             setIsUploadSuccessful(true);
+            // @ts-ignore
+            if (result?.payload?.message?.includes('существуют')) {
+                // @ts-ignore
+                setHasDuplicates(result?.payload?.message);
+            }
         }
     }, [dispatch]);
 
@@ -95,7 +101,14 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
                         </Alert>
                     )}
                     {isUploadSuccessful && (
-                        <Alert variant="success">
+                        <Alert
+                            variant={hasDuplicates ? 'warning' : 'success'}
+                        >
+                            {hasDuplicates
+                                ? (
+                                    <p>{hasDuplicates}</p>
+                                )
+                                : (<p>Все анкеты успешно добавлены</p>)}
                             <Button
                                 variant={theme === Theme.LIGHT ? 'success' : 'success-dark'}
                                 onClick={() => navigate('/candidates')}
