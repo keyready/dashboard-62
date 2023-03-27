@@ -13,19 +13,16 @@ export const loginByEmail = createAsyncThunk<User, loginByEmailProps, ThunkConfi
     async (authData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
 
-        try {
-            const response = await extra.api.post<User>('/login', authData);
+        const response = await extra.api.post<User>('/login', authData);
 
-            if (!response.data) {
-                throw new Error();
-            }
-
-            localStorage.setItem(USER_AUTHORIZATION_TOKEN, JSON.stringify(response.data));
-            dispatch(userActions.setAuthData(response.data));
-
-            return response.data;
-        } catch (e) {
-            return rejectWithValue('серверная ошибка');
+        if (!response.data) {
+            console.warn(response.statusText);
+            throw new Error();
         }
+
+        localStorage.setItem(USER_AUTHORIZATION_TOKEN, JSON.stringify(response.data));
+        dispatch(userActions.setAuthData(response.data));
+
+        return response.data;
     },
 );

@@ -32,9 +32,9 @@ export const loginSlice = createSlice({
             .addCase(loginByEmail.fulfilled, (state) => {
                 state.isLoading = false;
             })
-            .addCase(loginByEmail.rejected, (state, action) => {
+            .addCase(loginByEmail.rejected, (state, { error }) => {
                 state.isLoading = false;
-                state.error = action.payload;
+                state.error = error.message;
             })
 
             .addCase(registerByEmail.pending, (state) => {

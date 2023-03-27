@@ -79,7 +79,7 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                                 <Avatar
                                     alt={`${candidate.lastname} ${candidate.firstname}`}
                                     size={35}
-                                    src={`https://i.pravatar.cc/${randomInteger(1, 1000)}`}
+                                    src={candidate.img}
                                 />
                             )}
                             <p className={classes.names}>
@@ -101,7 +101,7 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                         <Avatar
                             alt={`${candidate.lastname} ${candidate.firstname}`}
                             size={75}
-                            src={`https://i.pravatar.cc/${randomInteger(1, 1000)}`}
+                            src={candidate.img}
                         />
                         <div className={classes.info}>
                             <p>{`Возраст: ${candidate.age}`}</p>

@@ -149,7 +149,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                             <div>
                                 <img
                                     alt=""
-                                    src={`https://i.pravatar.cc/?img=${index}`}
+                                    src={candidate.img}
                                     className={classes.candidateImg}
                                 />
                                 <p>{candidate.lastname}</p>
