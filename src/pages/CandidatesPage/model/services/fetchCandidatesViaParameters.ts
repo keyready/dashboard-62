@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
 import { Candidate } from 'entities/Candidate';
+import { getPage } from '../selectors/candidatesPageSelectors';
 
 export interface searchParams {
     lowerExp?: number;
@@ -25,7 +26,9 @@ export const fetchCandidatesViaParameters = createAsyncThunk<
         education,
         speciality,
     }, thunkAPI) => {
-        const { extra, rejectWithValue, dispatch } = thunkAPI;
+        const { extra, rejectWithValue, getState } = thunkAPI;
+
+        const page = getPage(getState());
 
         try {
             const response = await extra.api.get<Candidate[]>(
@@ -38,6 +41,8 @@ export const fetchCandidatesViaParameters = createAsyncThunk<
                         experience_lte: upperExp || 100,
                         education: education || '',
                         speciality: speciality || '',
+                        limit: 10,
+                        page,
                     },
                 },
             );

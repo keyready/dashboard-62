@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { memo, useMemo } from 'react';
-import { Alert, Table } from 'react-bootstrap';
+import { Alert, Pagination, Table } from 'react-bootstrap';
 import { Card } from 'shared/UI/Card';
 import { Candidate } from 'entities/Candidate';
 import { Loader } from 'shared/UI/Loader';
@@ -75,13 +75,6 @@ export const MTable = memo((props: MTableProps) => {
                     ))}
                 </tbody>
             </Table>
-            {/* TODO: очистка списка выбранных кандидатов */}
-            {/* <Button */}
-            {/*    variant="danger" */}
-            {/*    onClick={clearCandidatesList} */}
-            {/* > */}
-            {/*    Очистить */}
-            {/* </Button> */}
         </Card>
     );
 });

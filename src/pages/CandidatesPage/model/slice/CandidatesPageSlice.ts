@@ -23,6 +23,7 @@ export const CandidatesPageSlice = createSlice({
         isLoading: false,
         error: '',
         searchParams: {},
+        hasMore: true,
     }),
     reducers: {
         setSelectedCandidates: (state, action: PayloadAction<Candidate[]>) => {
@@ -30,6 +31,10 @@ export const CandidatesPageSlice = createSlice({
         },
         setSelectedIds: (state, action: PayloadAction<number[]>) => {
             state.selectedIdsToCompare = action.payload;
+        },
+
+        setPage: (state, action: PayloadAction<number>) => {
+            state.searchParams.page = action.payload;
         },
 
         setLowerAge: (state, action:PayloadAction<number | undefined>) => {
@@ -78,6 +83,7 @@ export const CandidatesPageSlice = createSlice({
                 action: PayloadAction<any>,
             ) => {
                 state.isLoading = false;
+                state.hasMore = action.payload.length >= 10;
                 candidatesAdapter.setAll(state, action.payload);
             })
             .addCase(fetchCandidates.rejected, (state, action) => {

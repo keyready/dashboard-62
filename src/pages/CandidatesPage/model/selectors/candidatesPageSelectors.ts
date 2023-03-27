@@ -20,3 +20,5 @@ export const getEducationSearch = (
 export const getSpecialitySearch = (
     state: StateSchema,
 ) => state.candidates?.searchParams.speciality || '';
+export const getPage = (state: StateSchema) => state.candidates?.searchParams.page || 1;
+export const getHasMore = (state: StateSchema) => state.candidates?.hasMore;

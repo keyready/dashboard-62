@@ -13,7 +13,7 @@ import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { Loader } from 'shared/UI/Loader';
 import {
-    Alert, Button, Form, InputGroup, Modal,
+    Alert, Button, Form, InputGroup, Modal, Pagination,
 } from 'react-bootstrap';
 import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import { Card } from 'shared/UI/Card';
@@ -28,9 +28,9 @@ import {
 import {
     getCandidatesError,
     getCandidatesIds,
-    getCandidatesIsLoading, getEducationSearch,
+    getCandidatesIsLoading, getEducationSearch, getHasMore,
     getLowerAge,
-    getLowerExp,
+    getLowerExp, getPage,
     getSelectedCandidates, getSpecialitySearch,
     getUpperAge,
     getUpperExp,
@@ -61,6 +61,8 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const upperAge = useSelector(getUpperAge);
     const lowerExp = useSelector(getLowerExp);
     const upperExp = useSelector(getUpperExp);
+    const page = useSelector(getPage);
+    const hasMore = useSelector(getHasMore);
     const educationSearch = useSelector(getEducationSearch);
     const specialitySearch = useSelector(getSpecialitySearch);
 
@@ -115,6 +117,18 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
         dispatch(CandidatesPageActions.setSelectedIds([]));
         dispatch(CandidatesPageActions.setSelectedCandidates([]));
     }, [dispatch]);
+
+    const getPreviousPage = useCallback(() => {
+        if (page > 1) {
+            dispatch(CandidatesPageActions.setPage(page - 1));
+            dispatch(fetchCandidates());
+        }
+    }, [dispatch, page]);
+
+    const getNextPage = useCallback(() => {
+        dispatch(CandidatesPageActions.setPage(page + 1));
+        dispatch(fetchCandidates());
+    }, [dispatch, page]);
 
     const onEducationSearchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         dispatch(CandidatesPageActions.setEducationSearch(e.target.value));
@@ -243,13 +257,31 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                         {candidatesIsLoading
                             ? <Card className={classes.loaderCard}><Loader /></Card>
                             : candidates.length
-                                ? candidates.map((candidate) => (
-                                    <CandidateTabs
-                                        candidate={candidate}
-                                        key={candidate.id}
-                                        setSelectedId={idsSetterHandler}
-                                    />
-                                ))
+                                ? (
+                                    <Card className={classes.tabsCard}>
+                                        {candidates.map((candidate) => (
+                                            <CandidateTabs
+                                                candidate={candidate}
+                                                key={candidate.id}
+                                                setSelectedId={idsSetterHandler}
+                                            />
+                                        ))}
+
+                                        <Pagination className={classes.paginationWrapper}>
+                                            <Pagination.Prev
+                                                disabled={page === 1}
+                                                onClick={getPreviousPage}
+                                            />
+                                            <Pagination.Item>
+                                                {page}
+                                            </Pagination.Item>
+                                            <Pagination.Next
+                                                disabled={!hasMore}
+                                                onClick={getNextPage}
+                                            />
+                                        </Pagination>
+                                    </Card>
+                                )
                                 : (
                                     <Card className={classes.loaderCard}>
                                         Никого не найдено

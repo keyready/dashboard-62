@@ -7,6 +7,7 @@ export interface SearchParams {
     upperExp?: number;
     lowerExp?: number;
     education?: string;
+    page?: number;
     speciality?: string;
 
 }
@@ -17,4 +18,5 @@ export interface CandidatesPageSchema extends EntityState<Candidate> {
     error?: string;
     isLoading?: boolean
     searchParams: SearchParams;
+    hasMore?: boolean;
 }

@@ -1,14 +1,33 @@
+.CandidatesPage {
+    display: flex;
+    flex-direction: column;
+}
+
 .loaderCard {
     height: calc(100vh - 140px);
 }
 
 .content {
+    height: 100%;
     display: grid;
     gap: 10px;
     grid-template-columns: 1fr 3fr;
 }
 
+.tabsCard {
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.paginationWrapper {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
 .panelsWrapper {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
