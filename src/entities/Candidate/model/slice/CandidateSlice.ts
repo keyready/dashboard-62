@@ -4,7 +4,7 @@ import { CandidateSchema } from '../types/CandidateSchema';
 import { fetchCandidateById } from '../services/fetchCandidateById';
 
 const initialState: CandidateSchema = {
-    data: undefined,
+    data: {},
     isLoading: false,
     error: undefined,
 };

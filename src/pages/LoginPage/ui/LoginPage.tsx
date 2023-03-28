@@ -50,7 +50,6 @@ const LoginPage = memo((props: LoginPageProps) => {
                 >
                     <LoginForm
                         type={AuthType.REGISTER}
-                        onSuccess={() => navigate('/candidates')}
                     />
                 </Tab>
             </Tabs>

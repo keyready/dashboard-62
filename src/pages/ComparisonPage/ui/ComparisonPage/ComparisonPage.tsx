@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import {
+import React, {
     ChangeEvent, memo, useCallback, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
@@ -70,6 +70,9 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
     }, [dispatch, navigate, selectedCandidatesIds, selectedTask]);
 
     if (!selectedCandidates.length) {
+        setTimeout(() => {
+            navigate('/candidates');
+        }, 2500);
         return (
             <Page className={classNames(classes.ComparisonPage, {}, [className])}>
                 <Alert
@@ -82,7 +85,9 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
                     {' '}
                     или
                     {' '}
-                    <Alert.Link href="/candidates">на страницу сравнения кандидатов</Alert.Link>
+                    <Alert.Link href="/candidates">на страницу сравнения кандидатов.</Alert.Link>
+                    {' '}
+                    Редирект произойдет через 2.5 секунды
                 </Alert>
             </Page>
         );

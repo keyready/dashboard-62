@@ -45,6 +45,7 @@ export const PageNavbar = memo((props: PageNavbarProps) => {
                     >
                         <span className="d-inline-block">
                             <Button
+                                className={classes.button}
                                 disabled={!isCandidates}
                                 variant="warning"
                                 onClick={redirectHandler}
@@ -56,6 +57,7 @@ export const PageNavbar = memo((props: PageNavbarProps) => {
                 )
                 : (
                     <Button
+                        className={classes.button}
                         disabled={!isCandidates}
                         variant="warning"
                         onClick={redirectHandler}

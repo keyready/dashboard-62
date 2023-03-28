@@ -6,7 +6,9 @@
 
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useEffect, useMemo } from 'react';
+import React, {
+    memo, useCallback, useEffect, useMemo,
+} from 'react';
 import { useSelector } from 'react-redux';
 import { getSelectedCandidates } from 'pages/CandidatesPage';
 import {
@@ -27,6 +29,8 @@ import { Card } from 'shared/UI/Card';
 import { getComparisonData, getComparisonPurpose } from 'pages/ComparisonPage';
 import { AccordionBars } from 'pages/DetailedComparisonPage/ui/AccordionBars/AccordionBars';
 import { loginActions } from 'features/AuthByEmail';
+import { Candidate, CandidateCard, CardStyle } from 'entities/Candidate';
+import { useNavigate } from 'react-router-dom';
 import classes from './DetailedComparisonPage.module.scss';
 
 interface DetailedComparisonPageProps {
@@ -38,9 +42,13 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
         className,
     } = props;
 
+    const navigate = useNavigate();
+
     const selectedCandidates = useSelector(getSelectedCandidates);
     const detailedComparisonData = useSelector(getComparisonData);
     const comparingPurpose = useSelector(getComparisonPurpose);
+
+    const winnerMapper = useMemo<CardStyle[]>(() => ['winner', 'awardeeF', 'awardeeS', 'awardeeTh'], []);
 
     const colors = useMemo(() => [
         '#CC9900',
@@ -86,6 +94,9 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     ), [detailedComparisonData?.radarDiagram]);
 
     if (!comparingPurpose) {
+        setTimeout(() => {
+            navigate('/candidates');
+        }, 1000);
         return (
             <Page className={classNames(classes.ComparisonPage, {}, [className])}>
                 <Alert
@@ -98,7 +109,9 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                     {' '}
                     или
                     {' '}
-                    <Alert.Link href="/candidates">на страницу сравнения кандидатов</Alert.Link>
+                    <Alert.Link href="/candidates">на страницу сравнения кандидатов.</Alert.Link>
+                    {' '}
+                    Редирект произойдет через 2.5 секунды
                 </Alert>
             </Page>
         );
@@ -196,22 +209,25 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                 </Card>
             </div>
 
-            TODO: сделать норм карточки лидеров
             <Card
                 className={classes.detailedCard}
             >
-                <h2>Оценка кандидатов нашей системой:</h2>
-                {selectedCandidates.map((selectedCandidate) => (
-                    <div
-                        key={selectedCandidate.id}
-                        className={classes.comparison}
-                    >
-                        <h3>
-                            {`${selectedCandidate.lastname} ${selectedCandidate.firstname}`}
-                        </h3>
-                        <h3>{`Балл - ${selectedCandidate.average_score}`}</h3>
-                    </div>
-                ))}
+                <h2>Оценка кандидатов нашей системой</h2>
+                <div className={classes.candidatesCards}>
+                    {[...selectedCandidates]
+                        .sort(
+                            (a, b) => (b.average_score || 0) - (a.average_score || 0),
+                        )
+                        .map((selectedCandidate, index) => (
+                            <CandidateCard
+                                className={classes.candidateCard}
+                                key={selectedCandidate.id}
+                                candidate={selectedCandidate}
+                                totalScore={selectedCandidate.average_score || 0}
+                                cardStyle={winnerMapper[index]}
+                            />
+                        ))}
+                </div>
             </Card>
         </Page>
     );

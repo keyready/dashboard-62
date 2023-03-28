@@ -10,3 +10,5 @@ export {
     getCandidateIsLoading,
     getCandidateError,
 } from './model/selectors/CandidateSelector';
+
+export { CandidateCard, CardStyle } from './ui/CandidateCard';
