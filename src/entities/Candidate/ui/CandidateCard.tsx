@@ -41,8 +41,8 @@ export const CandidateCard = memo((props: CandidateCardProps) => {
         <div className={classNames(classes.CandidateCard, {}, [className, cardClasses])}>
             <img
                 className={classes.img}
-                // src={candidate?.img}
-                src="https://i.pravatar.cc/300"
+                src={candidate?.img}
+                // src="https://i.pravatar.cc/300"
                 alt={`${candidate?.lastname}`}
             />
             <h2>{candidate?.lastname}</h2>

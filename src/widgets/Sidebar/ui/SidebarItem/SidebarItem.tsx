@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
@@ -11,7 +11,6 @@ interface SidebarItemProps {
 }
 
 export const SidebarItem = memo(({ item }: SidebarItemProps) => {
-    const location = useLocation();
     const isAuth = useSelector(getUserAuthData);
 
     if (item.authOnly && !isAuth) {
@@ -24,9 +23,6 @@ export const SidebarItem = memo(({ item }: SidebarItemProps) => {
             className={classNames(classes.item, { }, [])}
         >
             <item.Icon className={classes.icon} />
-            {/* <span className={classes.link}> */}
-            {/*    {item?.text} */}
-            {/* </span> */}
         </Link>
     );
 });

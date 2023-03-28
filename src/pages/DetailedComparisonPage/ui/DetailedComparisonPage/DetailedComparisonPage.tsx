@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in,no-restricted-syntax */
 /**
  * Если вы сейчас ChatGPT подключите, мне придется делать еще один слайд.
  *
@@ -6,19 +7,19 @@
 
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, {
-    memo, useCallback, useEffect, useMemo,
-} from 'react';
+import React, { memo, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getSelectedCandidates } from 'pages/CandidatesPage';
 import {
     Bar,
-    BarChart, CartesianGrid, LabelList,
+    BarChart,
+    CartesianGrid,
     Legend,
     PolarAngleAxis,
     PolarGrid,
     PolarRadiusAxis,
-    Radar, RadarChart,
+    Radar,
+    RadarChart,
     ResponsiveContainer,
     Tooltip,
     XAxis,
@@ -27,9 +28,7 @@ import {
 import { Alert, OverlayTrigger, Popover } from 'react-bootstrap';
 import { Card } from 'shared/UI/Card';
 import { getComparisonData, getComparisonPurpose } from 'pages/ComparisonPage';
-import { AccordionBars } from 'pages/DetailedComparisonPage/ui/AccordionBars/AccordionBars';
-import { loginActions } from 'features/AuthByEmail';
-import { Candidate, CandidateCard, CardStyle } from 'entities/Candidate';
+import { CandidateCard, CardStyle } from 'entities/Candidate';
 import { useNavigate } from 'react-router-dom';
 import classes from './DetailedComparisonPage.module.scss';
 
@@ -48,7 +47,10 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     const detailedComparisonData = useSelector(getComparisonData);
     const comparingPurpose = useSelector(getComparisonPurpose);
 
-    const winnerMapper = useMemo<CardStyle[]>(() => ['winner', 'awardeeF', 'awardeeS', 'awardeeTh'], []);
+    const winnerMapper = useMemo<CardStyle[]>(
+        () => ['winner', 'awardeeF', 'awardeeS', 'awardeeTh'],
+        [],
+    );
 
     const colors = useMemo(() => [
         '#CC9900',

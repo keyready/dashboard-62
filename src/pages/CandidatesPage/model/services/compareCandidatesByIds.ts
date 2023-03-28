@@ -6,7 +6,6 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
-import { CandidatesPageActions } from 'pages/CandidatesPage';
 import { Candidate } from 'entities/Candidate';
 
 export const compareCandidatesByIds = createAsyncThunk<
@@ -16,7 +15,7 @@ export const compareCandidatesByIds = createAsyncThunk<
 >(
     'candidatesPage/compareCandidates',
     async (candidatesIds, thunkAPI) => {
-        const { extra, rejectWithValue, dispatch } = thunkAPI;
+        const { extra, rejectWithValue } = thunkAPI;
 
         try {
             const response = await extra.api.post<Candidate[]>(

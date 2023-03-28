@@ -1,6 +1,5 @@
-/* eslint-disable max-len */
 import { memo, useMemo } from 'react';
-import { Alert, Pagination, Table } from 'react-bootstrap';
+import { Alert, Table } from 'react-bootstrap';
 import { Card } from 'shared/UI/Card';
 import { Candidate } from 'entities/Candidate';
 import { Loader } from 'shared/UI/Loader';
@@ -16,18 +15,12 @@ export interface TableDataProps {
 }
 
 interface MTableProps {
-    className?: string;
     tableData: Candidate[];
-    isLoading?: boolean
-    clearCandidatesList?: () => void;
 }
 
 export const MTable = memo((props: MTableProps) => {
     const {
-        className,
         tableData,
-        isLoading,
-        clearCandidatesList,
     } = props;
 
     const headers = useMemo<string[]>(

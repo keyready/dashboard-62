@@ -260,7 +260,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                 ? (
                                     <Card className={classes.tabsCard}>
                                         {candidates.map((candidate) => (
-                                            <Card className={classes.cardTab}>
+                                            <Card key={candidate.id} className={classes.cardTab}>
                                                 <CandidateTabs
                                                     candidate={candidate}
                                                     key={candidate.id}
@@ -302,7 +302,6 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                     {selectedCandidates && (
                         <MTable
                             tableData={selectedCandidates}
-                            clearCandidatesList={clearCandidatesList}
                         />
                     )}
                 </div>

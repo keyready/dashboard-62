@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
-import { UploadFilesActions, UploadFilesSlice } from '../slice/UploadFilesSlice';
+import { UploadFilesActions } from '../slice/UploadFilesSlice';
 
 export const uploadFiles = createAsyncThunk<
     string,

@@ -11,12 +11,11 @@ interface loginByEmailProps {
 export const loginByEmail = createAsyncThunk<User, loginByEmailProps, ThunkConfig<string>>(
     'login/loginByEmail',
     async (authData, thunkAPI) => {
-        const { extra, dispatch, rejectWithValue } = thunkAPI;
+        const { extra, dispatch } = thunkAPI;
 
         const response = await extra.api.post<User>('/login', authData);
 
         if (!response.data) {
-            console.warn(response.statusText);
             throw new Error();
         }
 

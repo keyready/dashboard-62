@@ -64,8 +64,6 @@ const ComparisonPage = memo((props: ComparisonPageProps) => {
 
         if (result.meta.requestStatus === 'fulfilled') {
             navigate('/detailed_comparison');
-        } else {
-            console.log('Что-то пошло не так во время сравнения кандидатов');
         }
     }, [dispatch, navigate, selectedCandidatesIds, selectedTask]);
 

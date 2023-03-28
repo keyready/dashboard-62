@@ -12,20 +12,16 @@ import { Loader } from 'shared/UI/Loader';
 import classes from './CandidateTabs.module.scss';
 
 interface CandidateTabsProps {
-    className?: string;
     candidate: Candidate;
     setSelectedId?: (id: number) => void;
     isLoading?: boolean
-    isSelectingAvailable?: boolean
 }
 
 export const CandidateTabs = memo((props: CandidateTabsProps) => {
     const {
-        className,
         candidate,
         setSelectedId,
         isLoading,
-        isSelectingAvailable,
     } = props;
 
     const { theme } = useTheme();
@@ -97,8 +93,8 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                         <Avatar
                             alt={`${candidate.lastname} ${candidate.firstname}`}
                             size={75}
-                            // src={candidate.img}
-                            src="https://i.pravatar.cc/75"
+                            src={candidate.img}
+                            // src="https://i.pravatar.cc/75"
                         />
                         <div className={classes.info}>
                             <p>{`Возраст: ${candidate.age}`}</p>

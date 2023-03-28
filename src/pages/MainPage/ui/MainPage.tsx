@@ -1,7 +1,7 @@
+/* eslint-disable max-len */
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
 import React, { memo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import classes from './MainPage.module.scss';
 
 interface MainPageProps {
