@@ -14,9 +14,15 @@ export interface BarsInfo {
     score?: number;
 }
 
+export interface HobbyOverlap {
+    surname?: string;
+    score?: number;
+}
+
 export interface ComparedData {
     radarDiagram?: RadarInfo[];
     barsDiagram?: BarsInfo[];
+    hobbyOverlap?: HobbyOverlap[];
 }
 
 export interface ComparedDataSchema {

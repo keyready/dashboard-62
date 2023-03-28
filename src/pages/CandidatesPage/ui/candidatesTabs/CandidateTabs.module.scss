@@ -1,22 +1,23 @@
 .accordionButton {
-    padding: 10px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    text-align: left;
-
-    .names {
-        margin: 0;
-        padding: 0;
-        font-weight: bold;
-    }
+    gap: 10px;
 }
 
 .infoWrapper {
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
     gap: 10px;
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 .icon {
@@ -31,21 +32,23 @@
 }
 
 .accordionBody {
-    padding: 10px;
+    padding: 2px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .info {
     p {
         margin: 0;
         padding: 0;
+        text-align: justify;
     }
 }
 
 .loaderCard {
-    background: red;
     height: 100px;
+    background: red;
 }

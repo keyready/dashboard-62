@@ -260,11 +260,13 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                 ? (
                                     <Card className={classes.tabsCard}>
                                         {candidates.map((candidate) => (
-                                            <CandidateTabs
-                                                candidate={candidate}
-                                                key={candidate.id}
-                                                setSelectedId={idsSetterHandler}
-                                            />
+                                            <Card className={classes.cardTab}>
+                                                <CandidateTabs
+                                                    candidate={candidate}
+                                                    key={candidate.id}
+                                                    setSelectedId={idsSetterHandler}
+                                                />
+                                            </Card>
                                         ))}
 
                                         <Pagination className={classes.paginationWrapper}>

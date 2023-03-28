@@ -32,11 +32,6 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
 
     const [isCurrentSelected, setIsCurrentSelected] = useState<boolean>(false);
 
-    const randomInteger = useCallback((min: number, max: number) => {
-        const rand = min - 0.5 + Math.random() * (max - min + 1);
-        return Math.round(rand);
-    }, []);
-
     const checkboxHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         e.stopPropagation();
 
@@ -64,6 +59,7 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                         className={classes.accordionButton}
                     >
                         <Form
+                            className={classes.form}
                             onClick={(e) => e.stopPropagation()}
                         >
                             <Form.Check
@@ -78,7 +74,7 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                             {!open && (
                                 <Avatar
                                     alt={`${candidate.lastname} ${candidate.firstname}`}
-                                    size={35}
+                                    size={50}
                                     src={candidate.img}
                                 />
                             )}
@@ -101,7 +97,8 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                         <Avatar
                             alt={`${candidate.lastname} ${candidate.firstname}`}
                             size={75}
-                            src={candidate.img}
+                            // src={candidate.img}
+                            src="https://i.pravatar.cc/75"
                         />
                         <div className={classes.info}>
                             <p>{`Возраст: ${candidate.age}`}</p>

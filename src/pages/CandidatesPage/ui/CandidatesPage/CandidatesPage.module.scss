@@ -11,7 +11,7 @@
     height: 100%;
     display: grid;
     gap: 10px;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 2fr;
 }
 
 .tabsCard {
@@ -24,6 +24,7 @@
 .paginationWrapper {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
+    text-align: center;
 }
 
 .panelsWrapper {
@@ -35,4 +36,8 @@
     gap: 10px;
     max-height: calc(100vh - 140px);
     overflow-y: auto;
+}
+
+.cardTab {
+    padding: 0;
 }

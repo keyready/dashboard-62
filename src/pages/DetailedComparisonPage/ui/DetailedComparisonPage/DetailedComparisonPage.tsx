@@ -65,15 +65,17 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     }, [selectedCandidates]);
     const hobbySpecialityOverlap = useMemo(() => {
         const temp: any = [];
-        selectedCandidates.forEach((candidate) => {
-            const name: string = candidate.lastname || '';
-            temp.push({
-                name: candidate.lastname,
-                [name]: candidate.hobbySpecialityOverlap,
-            });
-        });
+
+        for (const key in detailedComparisonData?.hobbyOverlap) {
+            const newObj: {name?: string, Overlap?: number} = {};
+            newObj.name = key;
+            // @ts-ignore
+            newObj.Overlap = detailedComparisonData?.hobbyOverlap[key];
+            temp.push(newObj);
+        }
+
         return temp;
-    }, [selectedCandidates]);
+    }, [detailedComparisonData?.hobbyOverlap]);
 
     const skillsData = useMemo(() => detailedComparisonData?.radarDiagram?.map(
         ({ subject, fullMark, candidatesScores }) => ({
@@ -82,26 +84,6 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
             ...Object.fromEntries(Object.entries(candidatesScores)),
         }),
     ), [detailedComparisonData?.radarDiagram]);
-
-    const detailedSkills: any[] = useMemo(() => {
-        const output: any = {};
-        const input = detailedComparisonData?.barsDiagram || [];
-
-        for (const [name, developer] of Object.entries(input)) {
-            for (const [role, skills] of Object.entries(developer)) {
-                if (!output[role]) {
-                    output[role] = [];
-                }
-                const developerSkills: Record<string, any> = { name };
-                for (const [skill, score] of Object.entries(skills)) {
-                    developerSkills[skill] = score;
-                }
-                output[role].push(developerSkills);
-            }
-        }
-
-        return Object.entries(output);
-    }, [detailedComparisonData?.barsDiagram]);
 
     if (!comparingPurpose) {
         return (
@@ -201,16 +183,11 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                     <ResponsiveContainer>
                         <BarChart data={hobbySpecialityOverlap}>
                             <Tooltip />
-                            {selectedCandidates.map((candidate, index) => (
-                                <Bar
-                                    key={index}
-                                    barSize={30}
-                                    dataKey={candidate.lastname || ''}
-                                    fill={candidate.hobbySpecialityOverlap
-                                        ? candidate.hobbySpecialityOverlap < 1.5 ? 'red' : 'green'
-                                        : 'red'}
-                                />
-                            ))}
+                            <Bar
+                                barSize={30}
+                                dataKey="Overlap"
+                                fill="#8e57ec"
+                            />
                             <CartesianGrid strokeDasharray="0.1 2" />
                             <XAxis domain={[1, 2]} dataKey="name" />
                             <YAxis />
@@ -219,6 +196,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                 </Card>
             </div>
 
+            TODO: сделать норм карточки лидеров
             <Card
                 className={classes.detailedCard}
             >
@@ -231,21 +209,10 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                         <h3>
                             {`${selectedCandidate.lastname} ${selectedCandidate.firstname}`}
                         </h3>
-                        <p>{`Балл - ${selectedCandidate.average_score}`}</p>
+                        <h3>{`Балл - ${selectedCandidate.average_score}`}</h3>
                     </div>
                 ))}
             </Card>
-
-            {/* {detailedSkills.map((skill: any, index) => ( */}
-            {/*    <Card className={classes.detailedCard}> */}
-            {/*        <h2>{skill[0]}</h2> */}
-            {/*        {Object.entries(skill[1]).map((item: any[]) => { */}
-            {/*            Object.entries(item[1]).map((title) => ( */}
-            {/*                <h2>{title[0].toString()}</h2> */}
-            {/*            )); */}
-            {/*        })} */}
-            {/*    </Card> */}
-            {/* ))} */}
         </Page>
     );
 });
