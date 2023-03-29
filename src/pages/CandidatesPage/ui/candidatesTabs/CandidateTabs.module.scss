@@ -32,19 +32,18 @@
 }
 
 .accordionBody {
-    padding: 2px;
-    display: flex;
-    flex-direction: row;
+    padding: 5px;
+    display: grid;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    grid-template-columns: 1fr 2fr;
+    justify-items: center;
 }
 
 .info {
     p {
         margin: 0;
         padding: 0;
-        text-align: justify;
+        text-align: left;
     }
 }
 
