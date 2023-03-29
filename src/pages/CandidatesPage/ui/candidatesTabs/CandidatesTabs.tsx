@@ -93,6 +93,7 @@ export const CandidateTabs = memo((props: CandidateTabsProps) => {
                         <Avatar
                             alt={`${candidate.lastname} ${candidate.firstname}`}
                             size={75}
+                            rounded={25}
                             src={candidate.img}
                             // src="https://i.pravatar.cc/75"
                         />
