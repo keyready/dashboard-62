@@ -11,9 +11,16 @@ export const App = () => {
     const dispatch = useDispatch();
     const inited = useSelector(getUserInited);
 
-    // проверить, был ли авторизован пользователь перед закрытием вкладки
     useEffect(() => {
+        // проверить, был ли авторизован пользователь перед закрытием вкладки
         dispatch(userActions.initAuthData());
+
+        // TODO: переключатель предпочитаемой темы приложения
+        // if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        //     setTheme?.(Theme.DARK);
+        // } else {
+        //     setTheme?.(Theme.LIGHT);
+        // }
     }, [dispatch]);
 
     return (

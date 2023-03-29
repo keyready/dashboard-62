@@ -43,3 +43,29 @@
     transition: 200ms;
     fill: var(--inverted-primary-color);
 }
+
+.settingsIcon {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    fill: var(--inverted-primary-color);
+}
+
+.clear {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    outline: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        outline: none;
+    }
+}
