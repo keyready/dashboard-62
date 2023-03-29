@@ -54,12 +54,12 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
 
         const result = await dispatch(uploadFiles(formData));
         if (result.meta.requestStatus === 'fulfilled') {
-            setIsUploadSuccessful(true);
             // @ts-ignore
-            if (result?.payload?.message?.includes('существуют')) {
+            if (result?.payload?.message?.includes('являются дубликатами')) {
                 // @ts-ignore
                 setHasDuplicates(result?.payload?.message);
             }
+            setIsUploadSuccessful(true);
         }
     }, [dispatch]);
 

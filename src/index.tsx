@@ -1,15 +1,19 @@
-// "сижу на твоем пиздаблядском сайте"
-
 import 'app/styles/index.scss';
 import { ThemeProvider } from 'app/providers/ThemeProvider';
 import { BrowserRouter } from 'react-router-dom';
-import { render } from 'react-dom';
 import { App } from 'app/App';
+import { createRoot } from 'react-dom/client';
 
 import { ErrorBoundary } from 'app/providers/ErrorBoundary';
 import { StoreProvider } from 'app/providers/StoreProvider';
 
-render(
+const container = document.getElementById('root');
+if (!container) {
+    throw new Error('Не удалось вмонтировать приложение');
+}
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+
+root.render(
     <BrowserRouter>
         <StoreProvider>
             <ErrorBoundary>
@@ -19,5 +23,4 @@ render(
             </ErrorBoundary>
         </StoreProvider>
     </BrowserRouter>,
-    document.getElementById('root'),
 );

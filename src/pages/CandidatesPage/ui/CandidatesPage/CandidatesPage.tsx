@@ -7,15 +7,13 @@ import { MTable } from 'shared/UI/MTable';
 import {
     DynamicModuleLoader,
     ReducersList,
-}
-    from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
+} from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { Loader } from 'shared/UI/Loader';
 import {
     Alert, Button, Form, InputGroup, Modal, Pagination,
 } from 'react-bootstrap';
-import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import { Card } from 'shared/UI/Card';
 import { fetchCandidatesViaParameters } from '../../model/services/fetchCandidatesViaParameters';
 import { CandidateTabs } from '../candidatesTabs/CandidatesTabs';
@@ -28,10 +26,14 @@ import {
 import {
     getCandidatesError,
     getCandidatesIds,
-    getCandidatesIsLoading, getEducationSearch, getHasMore,
+    getCandidatesIsLoading,
+    getEducationSearch,
+    getHasMore,
     getLowerAge,
-    getLowerExp, getPage,
-    getSelectedCandidates, getSpecialitySearch,
+    getLowerExp,
+    getPage,
+    getSelectedCandidates,
+    getSpecialitySearch,
     getUpperAge,
     getUpperExp,
 } from '../../model/selectors/candidatesPageSelectors';
@@ -65,8 +67,6 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const hasMore = useSelector(getHasMore);
     const educationSearch = useSelector(getEducationSearch);
     const specialitySearch = useSelector(getSpecialitySearch);
-
-    const { theme } = useTheme();
 
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [wasItFiltered, setWasItFiltered] = useState<boolean>(false);
@@ -116,6 +116,11 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const clearCandidatesList = useCallback(() => {
         dispatch(CandidatesPageActions.setSelectedIds([]));
         dispatch(CandidatesPageActions.setSelectedCandidates([]));
+    }, [dispatch]);
+
+    const getFirstPage = useCallback(() => {
+        dispatch(CandidatesPageActions.setPage(1));
+        dispatch(fetchCandidates());
     }, [dispatch]);
 
     const getPreviousPage = useCallback(() => {
@@ -270,6 +275,10 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                         ))}
 
                                         <Pagination className={classes.paginationWrapper}>
+                                            <Pagination.First
+                                                disabled={page === 1}
+                                                onClick={getFirstPage}
+                                            />
                                             <Pagination.Prev
                                                 disabled={page === 1}
                                                 onClick={getPreviousPage}

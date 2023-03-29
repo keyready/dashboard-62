@@ -37,6 +37,7 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'no-underscore-dangle': 'off',
         'import/no-unresolved': 'off',
+        'no-mixed-operators': 'off',
         'no-param-reassign': 'off',
         'import/extensions': 'off',
         'no-nested-ternary': 'off',
