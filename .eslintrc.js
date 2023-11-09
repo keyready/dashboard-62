@@ -2,12 +2,8 @@ module.exports = {
     env: {
         browser: true,
         es2021: true,
-        jest: true,
     },
-    extends: [
-        'plugin:react/recommended',
-        'airbnb',
-    ],
+    extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
@@ -20,14 +16,13 @@ module.exports = {
     rules: {
         'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.tsx'] }],
         'max-len': ['error', { ignoreComments: true, code: 100 }],
-        'react/jsx-indent-props': [2, 4],
-        'react/jsx-indent': [2, 4],
-        indent: [2, 4],
         'react-hooks/exhaustive-deps': 'error',
         'react-hooks/rules-of-hooks': 'error',
+        'react/jsx-max-props-per-line': [`error`, { maximum: 3 }],
         'jsx-a11y/no-static-element-interactions': 'off',
         'jsx-a11y/label-has-associated-control': 'off',
         'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/no-autofocus': 'off',
         'react/jsx-no-useless-fragment': 'off',
         'react/function-component-definition': 'off',
         'import/no-extraneous-dependencies': 'off',
@@ -37,19 +32,22 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'no-underscore-dangle': 'off',
         'import/no-unresolved': 'off',
-        'no-mixed-operators': 'off',
         'no-param-reassign': 'off',
+        '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
         'import/extensions': 'off',
-        'no-nested-ternary': 'off',
         'no-shadow': 'off',
         'no-undef': 'off',
-        'react/jsx-props-no-spreading': 'warn',
+        'no-bitwise': 'off',
+        'react/jsx-props-no-spreading': 'off',
         'no-return-await': 'warn',
         'no-unused-vars': 'warn',
     },
-    globals: {
-        IS_DEV: true,
-        __API__: true,
-        LOADING_DELAY: null,
-    },
+    overrides: [
+        {
+            files: ['./server/**'],
+            rules: {
+                camelcase: 'off',
+            },
+        },
+    ],
 };

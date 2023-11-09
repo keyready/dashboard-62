@@ -1,0 +1,9 @@
+# Ignore artifacts:
+build
+/client/node_modules
+/server/node_modules
+.idea
+*.css
+*.scss
+*.html
+public

@@ -1,8 +1,7 @@
-/node_modules
 /.idea
-/dist
-/extractedTranslations
-/storybook-static
+/node_modules
+/.env
 
-.loki/report.html
-.loki/report.json
+/client/node_modules
+
+/server/node_modules
