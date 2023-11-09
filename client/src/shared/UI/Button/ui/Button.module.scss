@@ -1,0 +1,98 @@
+.Button {
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: var(--bg-color);
+    background: #b6f09c;
+    font: var(--font-m);
+    font-weight: bold;
+    transition: 200ms;
+
+    &:hover {
+        filter: brightness(1.2);
+    }
+
+    &:active {
+        outline: 1px solid var(--primary-color);
+    }
+
+    &:focus {
+        box-shadow: 1px 1px 4px black;
+    }
+}
+
+.inverted {
+    color: var(--primary-color);
+    background: var(--bg-color);
+
+    &:active {
+        outline: 1px solid var(--primary-color);
+    }
+
+    &:hover {
+        filter: grayscale(0.6);
+    }
+
+    &:focus {
+        box-shadow: 1px 1px 4px black;
+    }
+}
+
+.outlined {
+    background: none;
+    outline: 2px solid var(--navbar-bg);
+
+    &:hover {
+        background: var(--navbar-bg);
+    }
+
+    &:active {
+        outline: 2px solid var(--primary-color);
+    }
+
+    &:focus {
+        box-shadow: 1px 1px 4px black;
+    }
+}
+
+.clear {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    outline: none;
+
+    &:hover {
+        background: none;
+    }
+
+    &:active {
+        outline: none;
+    }
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.disabled {
+    cursor: not-allowed;
+    background: var(--card-bg);
+    outline: 2px solid var(--primary-color);
+
+    &:hover {
+        background: var(--card-bg);
+        outline: 2px solid var(--primary-color);
+    }
+}
+
+.danger {
+    border-radius: 8px;
+    background: #fc3030;
+    transition: 100ms;
+
+    &:hover {
+        background: rgb(252 48 48 / 80%);
+    }
+}

@@ -1,0 +1,19 @@
+:root {
+    // background
+    --bg-color: #131619;
+    --modal-bg-color: rgb(200 226 252 / 50%);
+
+    // текст
+    --primary-color: #fff;
+    --secondary-color: #686b6e;
+    --text-color: #c8e2fc;
+    --accent-gradient: linear-gradient(95deg, #b6f09c 0%, #82dbf7 100%);
+
+    // skeleton
+    --skeleton-shadow: #275594;
+    --skeleton-color: #0e0e75;
+
+    // card
+    --card-bg: linear-gradient(94deg, #302f2f -2.56%, rgb(48 47 47 / 0%) 103.51%);
+    --card-shadow: #3e3e3e;
+}

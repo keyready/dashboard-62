@@ -1,0 +1,26 @@
+.wrapper {
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: #1a1d21;
+    outline: 1px solid var(--secondary-color);
+}
+
+.Input {
+    width: 100%;
+    border: none;
+    color: var(--secondary-color);
+    background: #1a1d21;
+    font-size: 16px;
+    transition: 200ms;
+    outline: none;
+    text-align: left;
+
+    &:active,
+    &:focus {
+        border-bottom: 2px solid var(--inverted-bg-color);
+    }
+}
+
+.active {
+    color: var(--primary-color);
+}

@@ -1,0 +1,23 @@
+.options {
+    border-radius: 8px;
+    background: var(--listox-bg);
+    min-width: 250px;
+    position: absolute;
+    z-index: 10000;
+    box-shadow: 4px 4px 8px var(--inverted-bg-color);
+}
+
+.item {
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+.selected {
+    background: var(--bg-color);
+}
+
+.icon {
+    width: 15px;
+    height: 15px;
+    fill: var(--bg-color);
+}

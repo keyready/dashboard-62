@@ -1,0 +1,33 @@
+.Navbar {
+    height: var(--navbar-heigth);
+    padding: 33px;
+    border-bottom: 3px solid var(--secondary-color);
+
+    h1,
+    p {
+        margin: 0;
+        text-indent: 0;
+    }
+}
+
+.link {
+    .icon {
+        color: var(--secondary-color);
+        transition: 100ms ease-in-out;
+        stroke: var(--secondary-color);
+    }
+
+    p {
+        transition: 100ms ease-in-out;
+    }
+
+    &:hover {
+        p {
+            color: var(--primary-color);
+        }
+
+        .icon {
+            color: var(--primary-color);
+        }
+    }
+}
