@@ -31,3 +31,18 @@
         }
     }
 }
+
+.active {
+    padding: 10px 25px;
+    border-radius: 8px;
+    outline: var(--secondary-color) 2px solid;
+
+    p {
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+
+    .icon {
+        color: var(--primary-color);
+    }
+}
