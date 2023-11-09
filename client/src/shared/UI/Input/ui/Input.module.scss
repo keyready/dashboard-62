@@ -6,6 +6,7 @@
 }
 
 .Input {
+    width: 100%;
     border: none;
     color: var(--secondary-color);
     background: #1a1d21;
@@ -13,7 +14,6 @@
     transition: 200ms;
     outline: none;
     text-align: left;
-    width: 100%;
 
     &:active,
     &:focus {

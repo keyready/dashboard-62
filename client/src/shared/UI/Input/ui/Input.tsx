@@ -33,7 +33,8 @@ export const Input = memo((props: InputProps) => {
     };
 
     return (
-        <HStack gap="8" maxW justify="start" className={classes.wrapper}>
+        <HStack gap="8" maxW justify="start"
+className={classes.wrapper}>
             {icon && <Icon Svg={icon} />}
             <input
                 ref={ref}
