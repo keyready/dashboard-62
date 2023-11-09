@@ -1,5 +1,5 @@
 .Page {
-    height: 100vh;
+    height: calc(100vh - var(--navbar-heigth));
     padding: 40px 105px;
     background: var(--bg-color);
     overflow-y: auto;
