@@ -1,7 +1,9 @@
-/* eslint-disable max-len */
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
+import { Text } from 'shared/UI/Text';
+import { HStack, VStack } from 'shared/UI/Stack';
+import { Card } from 'shared/UI/Card';
 import classes from './MainPage.module.scss';
 
 interface MainPageProps {
@@ -11,55 +13,65 @@ interface MainPageProps {
 const MainPage = memo((props: MainPageProps) => {
     const { className } = props;
 
-    useEffect(() => {
-        document.title = 'Хакатон 62 курс | 1 кейс';
-    }, []);
-
     return (
         <Page className={classNames(classes.MainPage, {}, [className])}>
-            <h2>
-                Разработка средства интерактивной визуализации компетенции выпускника высшего
-                учебного заведения (dashboard)
-            </h2>
-            <p>
-                Задача подбора кадров по описаниям компетенций, представляемым в резюме соискателей
-                требует от лица, производящего отбор, удерживать в памяти большой объем информации и
-                выполнять множество сравнений, что, в конечном счете, может привести к выбору
-                неоптимальной кандидатуры. В целях повышения качества работы отдела рекрутинга
-                используются автоматизированные системы отслеживания кандидатов (ATS, Applicant
-                Tracking System).
-            </p>
-            <h2>
-                Решение команды <i>M1l1t4ry_Ac4d3my</i>
-            </h2>
-            <h2>Состав команды:</h2>
-            <ul>
-                <li>
-                    <a href="//t.me/VALI666KO" target="_blank" rel="noreferrer">
-                        Кофанов Валентин (Backend-developer)
-                    </a>
-                </li>
-                <li>
-                    <a href="//t.me/G_Rosman" target="_blank" rel="noreferrer">
-                        Яроцкий Глеб (Backend-developer)
-                    </a>
-                </li>
-                <li>
-                    <a href="//t.me/Tokumura" target="_blank" rel="noreferrer">
-                        Терещенко Антон (ML Specialist)
-                    </a>
-                </li>
-                <li>
-                    <a href="//t.me/operculum" target="_blank" rel="noreferrer">
-                        Поляков Дмитрий (UI/UX designer)
-                    </a>
-                </li>
-                <li>
-                    <a href="//t.me/keyrea_dy" target="_blank" rel="noreferrer">
-                        Корчак Родион (Frontend-developer)
-                    </a>
-                </li>
-            </ul>
+            <HStack justify="start">
+                <Card className={classes.card}>
+                    <Text
+                        align="left"
+                        size="large"
+                        className={classes.textBlock}
+                        title="О проекте"
+                    />
+                </Card>
+            </HStack>
+
+            <VStack maxW gap="16">
+                <div className={classes.descriptionTable}>
+                    <Text align="left" title="Тема" size="medium" />
+                    <Text
+                        text="Система ранжирования выпускников факультета (Академии) на основе их компетенций с использованием нейросетей"
+                        size="medium"
+                    />
+                </div>
+                <div className={classes.descriptionTable}>
+                    <Text align="left" title="Задача" size="medium" />
+                    <Text
+                        text="Задача подбора кадров по описаниям компетенций требует от лица, производящего отбор, удерживать в памяти большой объем информации и выполнять множество сравнений. В целях повышения качества работы отдела рекрутинга используются автоматизированные системы отслеживания кандидатов. Результатом проекта является модуль системы, позволяющий повысить эффективность рекрутинга за счет автоматического расчетаитогового показателя компетенций и одновременного отображения компетенций сразу нескольких кандидатов на одном элементе управления."
+                        size="medium"
+                    />
+                </div>
+
+                <div className={classes.descriptionTable}>
+                    <Text align="left" title="Команда" size="medium" />
+                    <VStack maxW>
+                        <a
+                            className={classes.link}
+                            href="//t.me/VALI666KO"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Кофанов Валентин (Backend-developer)
+                        </a>
+                        <a
+                            className={classes.link}
+                            href="//t.me/operculum"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Поляков Дмитрий (UI/UX designer)
+                        </a>
+                        <a
+                            className={classes.link}
+                            href="//t.me/keyrea_dy"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Корчак Родион (Frontend-developer)
+                        </a>
+                    </VStack>
+                </div>
+            </VStack>
         </Page>
     );
 });

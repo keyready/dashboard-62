@@ -1,6 +1,7 @@
 .Page {
     height: 100vh;
-    padding: 30px;
+    padding: 40px 105px;
+    background: var(--bg-color);
     overflow-y: auto;
     flex-shrink: 100;
     flex-grow: 1;

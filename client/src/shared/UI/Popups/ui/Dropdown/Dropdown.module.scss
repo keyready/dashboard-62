@@ -1,0 +1,24 @@
+.items {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: absolute;
+    min-width: 250px;
+}
+
+.item {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    color: var(--primary-color);
+    background: var(--card-bg);
+    transition: 200ms;
+}
+
+.link {
+    padding: 0;
+}

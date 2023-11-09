@@ -1,0 +1,40 @@
+.Popover {
+    position: relative;
+}
+
+.panel {
+    padding: 20px;
+    border-radius: 8px;
+    background: var(--card-bg);
+    position: absolute;
+    z-index: 10000;
+    outline: 3px solid var(--inverted-primary-color);
+}
+
+.enter {
+    transition: ease-in-out 200ms;
+}
+
+.enterFrom {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.enterTo {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.leave {
+    transition: ease-in-out 75ms;
+}
+
+.leaveFrom {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.leaveTo {
+    opacity: 0;
+    transform: scale(0.95);
+}

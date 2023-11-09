@@ -1,0 +1,17 @@
+.Input {
+    width: 100%;
+    padding: 5px 10px;
+    border: none;
+    color: inherit;
+    background: transparent;
+    font: var(--font-m);
+    transition: 200ms;
+    margin-bottom: 5px;
+    border-bottom: 2px solid var(--card-bg);
+    outline: none;
+
+    &:active,
+    &:focus {
+        border-bottom: 2px solid var(--inverted-bg-color);
+    }
+}

@@ -1,15 +1,6 @@
 .Card {
-    padding: 10px;
-    border-radius: 5px;
-    background: var(--inverted-bg-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    outline: 2px solid var(--secondary-color);
-}
-
-.table-bordered {
-    vertical-align: middle;
+    padding: 15px 20px;
+    border-radius: 16px;
+    background: var(--card-bg);
+    box-shadow: 0 -2px 0 0 var(--card-shadow);
 }

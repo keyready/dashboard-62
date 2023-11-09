@@ -1,11 +1,6 @@
 @import "reset";
 @import "./variables/globals";
-@import "./variables/custom";
 @import "./themes/normal";
-@import "./themes/dark";
-@import "bootstrap/scss/bootstrap";
-
-$dark-mode: false;
 
 .app,
 .app_modal {

@@ -1,0 +1,100 @@
+.large {
+    h1 {
+        margin: 20px 0 0;
+        color: transparent !important;
+        font: var(--font-xl);
+        font-weight: bold;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        background-image: var(--accent-gradient) !important;
+    }
+
+    p {
+        margin: 5px 0;
+        color: var(--secondary-color);
+        font: var(--font-l);
+        text-indent: 20px;
+    }
+}
+
+.medium {
+    h2 {
+        margin: 20px 0 0;
+        color: var(--primary-color) !important;
+        font: var(--font-l);
+        font-weight: bold;
+    }
+
+    p {
+        margin: 5px 0;
+        color: var(--secondary-color);
+        font: var(--font-m);
+        text-indent: 20px;
+    }
+}
+
+.small {
+    h3 {
+        margin: 20px 0 0;
+        color: var(--primary-color);
+        font: var(--font-m);
+        font-weight: bold;
+    }
+
+    p {
+        margin: 5px 0;
+        color: var(--secondary-color);
+        font: var(--font-s);
+        text-indent: 20px;
+    }
+}
+
+.extrasmall {
+    h4 {
+        margin: 20px 0 0;
+        color: var(--primary-color);
+        font: var(--font-s);
+        font-weight: bold;
+    }
+
+    p {
+        margin: 5px 0;
+        color: var(--secondary-color);
+        font: var(--font-s);
+        text-indent: 20px;
+    }
+}
+
+.error {
+    .text,
+    .title {
+        color: red;
+    }
+}
+
+.center {
+    .text,
+    .title {
+        text-align: center;
+    }
+}
+
+.left {
+    .text,
+    .title {
+        text-align: left;
+    }
+}
+
+.right {
+    .text,
+    .title {
+        text-align: right;
+    }
+}
+
+.justify {
+    .text {
+        text-align: justify;
+    }
+}

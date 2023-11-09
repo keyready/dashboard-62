@@ -4,6 +4,7 @@
     "stylelint-order"
   ],
   "rules": {
+    "property-no-vendor-prefix": null,
     "indentation": [
       4
     ],

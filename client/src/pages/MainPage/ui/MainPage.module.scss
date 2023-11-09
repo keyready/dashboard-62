@@ -1,21 +1,34 @@
-.MainPage {
-    * { text-align: left; }
+.card {
+    width: 340px;
+    margin: 40px 0;
 }
 
-h2 {
-    margin-top: 30px;
-
-    &:first-child {
-        margin-top: 0;
+.textBlock {
+    h1 {
+        margin: 0;
     }
 }
 
-p {
-    text-indent: 20px;
+.descriptionTable {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-gap: 10px;
+
+    p {
+        color: var(--text-color);
+        text-indent: 0;
+    }
 }
 
-a {
-    color: var(--primary-color);
-    font-size: 1.5em;
-    text-decoration: none;
+.link {
+    &:visited,
+    &:link {
+        color: var(--text-color);
+        transition: 100ms ease-in-out;
+    }
+
+    &:hover {
+        color: var(--primary-color);
+    }
 }

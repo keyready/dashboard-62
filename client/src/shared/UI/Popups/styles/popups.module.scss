@@ -1,0 +1,71 @@
+.active {
+    color: var(--inverted-primary-color);
+    background: var(--inverted-bg-color);
+}
+
+.popup {
+    position: relative;
+    z-index: 1000000;
+}
+
+.trigger {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.disabled {
+    cursor: auto;
+    opacity: 0.6;
+}
+
+.directionBottomLeft {
+    top: 100%;
+    right: 0;
+}
+
+.directionsTopLeft {
+    bottom: 100%;
+    right: 0;
+}
+
+.directionBottomRight {
+    top: 100%;
+    left: 0;
+}
+
+.directionsTopRight {
+    bottom: 100%;
+    left: 0;
+}
+
+.enter {
+    transition: 100ms ease-out;
+}
+
+.enterFrom {
+    transform: scale(0.7);
+    opacity: 0;
+}
+
+.enterTo {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.leave {
+    transition: 100ms ease-out;
+}
+
+.leaveFrom {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.leaveTo {
+    transform: scale(0.7);
+    opacity: 0;
+}

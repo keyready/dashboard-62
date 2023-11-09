@@ -11,7 +11,6 @@ ___
 
 ## Состав команды:
 ###### - [Кофанов Валентин Сергеевич](https://t.me/VALI666KO) (Backend-developer)
-###### - [Терещенко Антон Алексеевич](https://t.me/Tokumura) (Backend-developer)
 ###### - [Поляков Дмитрий Сергеевич](https://t.me/operculum) (UI/UX дизайнер)
 ###### - [Корчак Родион Дмитриевич](https://t.me/keyrea_dy) (Frontend-developer, капитан команды)
 
