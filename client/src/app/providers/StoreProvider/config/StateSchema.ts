@@ -17,9 +17,9 @@ import { ComparedDataSchema } from 'pages/ComparisonPage';
 export interface StateSchema {
     user: UserSchema;
     ui: UISchema;
+    loginForm: LoginSchema;
 
     // asynchronous reducers
-    loginForm?: LoginSchema;
     candidate?: CandidateSchema;
     candidates?: CandidatesPageSchema;
     filesUpload?: UploadPageSchema;
@@ -48,4 +48,8 @@ export interface ThunkConfig<T> {
     rejectValue: T;
     extra: ThunkExtraArg;
     state: StateSchema;
+}
+
+export interface ThunkError {
+    message: string;
 }

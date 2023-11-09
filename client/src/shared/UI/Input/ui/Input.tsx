@@ -1,4 +1,7 @@
 import React, { InputHTMLAttributes, memo, useEffect, useRef } from 'react';
+import { HStack } from 'shared/UI/Stack';
+import { Icon } from 'shared/UI/Icon/Icon';
+import { classNames } from 'shared/lib/classNames/classNames';
 import classes from './Input.module.scss';
 
 type HTMLInputProps = Omit<
@@ -12,11 +15,12 @@ interface InputProps extends HTMLInputProps {
     autoFocus?: boolean;
     readonly?: boolean;
     onChange?: (value: string) => void;
+    icon: React.VFC<React.SVGProps<SVGSVGElement>>;
 }
 
 export const Input = memo((props: InputProps) => {
     const ref = useRef<HTMLInputElement>(null);
-    const { value, onChange, type = 'text', autoFocus, readonly, ...otherProps } = props;
+    const { icon, value, onChange, type = 'text', autoFocus, readonly, ...otherProps } = props;
 
     useEffect(() => {
         if (autoFocus) {
@@ -29,14 +33,17 @@ export const Input = memo((props: InputProps) => {
     };
 
     return (
-        <input
-            ref={ref}
-            value={value || ''}
-            onChange={onChangeHandler}
-            className={classes.Input}
-            type={type}
-            readOnly={readonly}
-            {...otherProps}
-        />
+        <HStack gap="8" maxW justify="start" className={classes.wrapper}>
+            {icon && <Icon Svg={icon} />}
+            <input
+                ref={ref}
+                value={value || ''}
+                onChange={onChangeHandler}
+                className={classNames(classes.Input, { [classes.active]: value !== '' })}
+                type={type}
+                readOnly={readonly}
+                {...otherProps}
+            />
+        </HStack>
     );
 });

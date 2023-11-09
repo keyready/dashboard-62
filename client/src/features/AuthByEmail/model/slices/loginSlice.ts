@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ThunkError } from 'app/providers/StoreProvider/config/StateSchema';
 import { registerByEmail } from '../services/registerByEmail/registerByEmail';
 import { LoginSchema } from '../types/loginSchema';
 import { loginByEmail } from '../services/loginByEmail/loginByEmail';
 
 const initialState: LoginSchema = {
-    username: '',
+    mail: '',
     password: '',
     isLoading: false,
 };
@@ -13,14 +14,16 @@ export const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-        setUsername: (state, action: PayloadAction<string>) => {
-            state.username = action.payload;
+        setEmail: (state, action: PayloadAction<string>) => {
+            state.error = '';
+            state.mail = action.payload;
         },
         setPassword: (state, action: PayloadAction<string>) => {
+            state.error = '';
             state.password = action.payload;
         },
-        setError: (state, action: PayloadAction<string>) => {
-            state.error = action.payload;
+        setError: (state, action: PayloadAction<ThunkError>) => {
+            state.error = action.payload.message;
         },
     },
     extraReducers: (builder) => {
@@ -31,10 +34,12 @@ export const loginSlice = createSlice({
             })
             .addCase(loginByEmail.fulfilled, (state) => {
                 state.isLoading = false;
+                state.error = undefined;
             })
-            .addCase(loginByEmail.rejected, (state, { error }) => {
+            .addCase(loginByEmail.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = error.message;
+                state.password = '';
+                state.error = action.payload?.message;
             })
 
             .addCase(registerByEmail.pending, (state) => {
@@ -43,10 +48,12 @@ export const loginSlice = createSlice({
             })
             .addCase(registerByEmail.fulfilled, (state) => {
                 state.isLoading = false;
+                state.error = undefined;
             })
             .addCase(registerByEmail.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload;
+                state.password = '';
+                state.error = action.payload?.message;
             });
     },
 });

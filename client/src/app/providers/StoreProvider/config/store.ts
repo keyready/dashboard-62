@@ -2,6 +2,7 @@ import { configureStore, ReducersMapObject } from '@reduxjs/toolkit';
 import { userReducer } from 'entities/User';
 import { $api } from 'shared/api/api';
 import { UIReducer } from 'features/UI';
+import { loginReducer } from 'features/AuthByEmail';
 import { createReducerManager } from './reducerManager';
 import { StateSchema } from './StateSchema';
 
@@ -13,6 +14,7 @@ export function CreateReduxStore(
         ...lazyReducers,
         user: userReducer,
         ui: UIReducer,
+        loginForm: loginReducer,
     };
 
     const reducerManager = createReducerManager(rootReducers);

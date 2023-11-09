@@ -1,5 +1,10 @@
-export { LoginModal } from './ui/LoginModal/LoginModal';
 export { LoginSchema } from './model/types/loginSchema';
-export { LoginFormLazy as LoginForm } from './ui/LoginForm/LoginForm.lazy';
-export { AuthType } from './ui/LoginForm/LoginForm';
 export { loginActions, loginReducer } from './model/slices/loginSlice';
+export {
+    getLoginError,
+    getLoginIsLoading,
+    getLoginPassword,
+    getLoginEmail,
+} from './model/selectors/getAuthSelectors';
+
+export { AuthModal } from './ui/AuthModal/AuthModal';

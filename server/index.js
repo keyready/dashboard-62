@@ -14,7 +14,7 @@ app.use(
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    return res.status(200).json({ login: 'ghbdtn' });
+    return res.status(200).json({ id: 1, email });
 });
 
 app.listen(9999);

@@ -1,0 +1,62 @@
+.overlay {
+    cursor: pointer;
+    background: rgb(0 0 0 / 70%);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.Panel {
+    padding: 30px 35px;
+    border-radius: 20px;
+    background: var(--bg-color);
+    outline: 2px solid var(--secondary-color);
+}
+
+.title {
+    h1 {
+        margin: 0;
+    }
+}
+
+.enter {
+    transition: 200ms ease;
+}
+
+.enterFrom {
+    transform: scale(0.95);
+    opacity: 0;
+}
+
+.enterTo {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.leave {
+    transition: 200ms ease;
+}
+
+.leaveFrom {
+    transform: scale(1);
+}
+
+.leaveTo {
+    transform: scale(0.95);
+}
+

@@ -1,17 +1,26 @@
+.wrapper {
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: #1a1d21;
+    outline: 1px solid var(--secondary-color);
+}
+
 .Input {
-    width: 100%;
-    padding: 5px 10px;
     border: none;
-    color: inherit;
-    background: transparent;
-    font: var(--font-m);
+    color: var(--secondary-color);
+    background: #1a1d21;
+    font-size: 16px;
     transition: 200ms;
-    margin-bottom: 5px;
-    border-bottom: 2px solid var(--card-bg);
     outline: none;
+    text-align: left;
+    width: 100%;
 
     &:active,
     &:focus {
         border-bottom: 2px solid var(--inverted-bg-color);
     }
+}
+
+.active {
+    color: var(--primary-color);
 }

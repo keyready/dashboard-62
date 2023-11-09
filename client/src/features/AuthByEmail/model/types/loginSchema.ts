@@ -1,8 +1,6 @@
-// тут описываются используемые в фиче/сущности типы
-
 export interface LoginSchema {
-    username: string;
+    mail: string;
     password: string;
     isLoading: boolean;
-    error?: any;
+    error?: string;
 }
