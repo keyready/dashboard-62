@@ -1,0 +1,53 @@
+.p-fileupload-buttonbar {
+    padding: 10px 20px;
+}
+
+.p-fileupload.p-fileupload-advanced.p-component {
+    min-width: 50vw;
+}
+
+.p-fileupload-row {
+    width: 100%;
+    padding: 10px 20px;
+
+    &:not(&:last-child) {
+        border-bottom: 2px solid rgb(177 157 247 / 16%);
+    }
+}
+
+div[data-pc-section="details"] {
+    width: 100%;
+}
+
+.p-badge-warning {
+    height: 100%;
+    padding: 2px 7px;
+}
+
+span[data-pc-section="filesize"] {
+    margin-right: 10px;
+}
+
+img[role="presentation"] {
+    margin-right: 20px;
+}
+
+div[data-pc-section="actions"] {
+    width: 20px;
+}
+
+.p-fileupload-buttonbar {
+    position: sticky;
+    top: -40px;
+    z-index: 100;
+
+    .p-button {
+        padding: 3px 15px;
+        background: #82dbf7;
+    }
+}
+
+.p-button-label {
+    margin-left: 5px;
+    font: var(--font-s);
+}

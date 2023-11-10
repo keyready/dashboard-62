@@ -36,5 +36,13 @@ export function buildRules(options: BuildOptions): webpack.RuleSetRule[] {
         babelLoader,
         typescriptLoader,
         sassLoader,
+        {
+            rules: [
+                {
+                    test: /\.css$/i,
+                    use: ['style-loader', 'css-loader'],
+                },
+            ],
+        },
     ];
 }
