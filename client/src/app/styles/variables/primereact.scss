@@ -48,6 +48,41 @@ div[data-pc-section="actions"] {
 }
 
 .p-button-label {
-    margin-left: 5px;
     font: var(--font-s);
+    margin-left: 5px;
+}
+
+// таблицы
+.p-column-title {
+    margin-right: 5px;
+}
+
+.p-datatable-wrapper {
+    border-radius: 5px;
+}
+
+// дисклошуре
+.p-accordion-header-link {
+    padding: 10px 20px;
+    gap: 10px;
+    font: var(--font-m);
+    font-weight: bold;
+}
+
+.p-accordion-content {
+    padding: 20px;
+
+    p {
+        text-align: left;
+    }
+}
+
+// сплиттер
+.p-splitter-gutter {
+    align-self: stretch;
+}
+
+.p-splitter-gutter-handle {
+    height: auto;
+    align-self: stretch;
 }

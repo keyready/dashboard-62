@@ -1,46 +1,35 @@
-.CandidatesPage {
-    display: flex;
-    flex-direction: column;
-}
-
-.loaderCard {
-    height: calc(100vh - 140px);
-}
-
-.content {
-    height: 100%;
-    display: grid;
-    gap: 10px;
-    grid-template-columns: 1fr 2fr;
-}
-
-.tabsCard {
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: 10px;
-    flex-grow: 1;
-}
-
-.paginationWrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr 4fr 2fr;
-
-    * {
-        text-align: center;
+.textBlock {
+    h1,
+    h2,
+    h3,
+    h4 {
+        margin: 0;
     }
 }
 
-.panelsWrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: 10px;
-    max-height: calc(100vh - 140px);
-    overflow-y: auto;
+.deleteBtn {
+    margin-bottom: 20px;
 }
 
-.cardTab {
-    padding: 0;
+.img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: red;
+}
+
+.contentWrapper {
+    background: transparent;
+    display: flex;
+    align-items: start;
+    position: relative;
+	gap: 10px;
+}
+
+.accordion {
+}
+
+.tableWrapper {
+    position: sticky;
+    top: -20px;
 }
