@@ -6,6 +6,12 @@
     min-width: 50vw;
 }
 
+.p-fileupload-content {
+    * {
+        text-align: left;
+    }
+}
+
 .p-fileupload-row {
     width: 100%;
     padding: 10px 20px;
