@@ -11,6 +11,12 @@ app.use(
     }),
 );
 
+app.post('/api/upload', (req, res) => {
+    console.log(req);
+
+    setInterval(() => res.status(200).json(), 2000);
+});
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 

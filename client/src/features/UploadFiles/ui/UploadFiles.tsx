@@ -7,6 +7,7 @@ import {
     FileUploadSelectEvent,
 } from 'primereact/fileupload';
 import { HStack } from 'shared/UI/Stack';
+import { pluralize } from 'shared/lib/pluralize/pluralize';
 import classes from './UploadFiles.module.scss';
 
 interface UploadFilesProps {
@@ -20,8 +21,8 @@ export const UploadFiles = memo((props: UploadFilesProps) => {
     const [totalFiles, setTotalFiles] = useState<number>(0);
 
     const onTemplateSelect = (e: FileUploadSelectEvent) => {
-        let _totalSize = totalSize;
-        let _totalFiles = totalFiles;
+        let _totalSize = 0;
+        let _totalFiles = 0;
         const { files } = e;
 
         for (let i = 0; i < files.length; i += 1) {
@@ -46,7 +47,8 @@ export const UploadFiles = memo((props: UploadFilesProps) => {
 
                 <div>
                     <h2>
-                        Вы выбрали {totalFiles} файлов на {(totalSize / 1000000).toFixed(1)} МБ
+                        Вы выбрали {pluralize(totalFiles)} файлов на{' '}
+                        {(totalSize / 1000000).toFixed(1)} МБ
                     </h2>
                 </div>
             </div>
