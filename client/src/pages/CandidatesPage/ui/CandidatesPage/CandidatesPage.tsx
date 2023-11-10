@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import {
     DynamicModuleLoader,
     ReducersList,
@@ -13,6 +13,8 @@ import { Card } from 'shared/UI/Card';
 import { Text } from 'shared/UI/Text';
 import { Disclosure } from 'shared/UI/Disclosure';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
+import { useSearchParams } from 'react-router-dom';
+import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
 
@@ -26,6 +28,7 @@ const reducers: ReducersList = {
 
 const data: TableData[] = [
     {
+        id: 0,
         name: 'Родион',
         HES: 'ВКА',
         speciality: 'Создание защищенного ПО',
@@ -33,6 +36,7 @@ const data: TableData[] = [
         hobby: 'Frontend-разработка',
     },
     {
+        id: 1,
         name: 'Димка',
         HES: 'ВКА',
         speciality: 'Создание защищенного ПО',
@@ -40,6 +44,7 @@ const data: TableData[] = [
         hobby: 'UI/UX дизайнер',
     },
     {
+        id: 2,
         name: 'Валя',
         HES: 'ВКА',
         speciality: 'Создание защищенного ПО',
@@ -47,6 +52,7 @@ const data: TableData[] = [
         hobby: 'Backend-разработка',
     },
     {
+        id: 3,
         name: 'Миша',
         HES: 'Политех имени Петра Великого',
         speciality: 'Что-то там с процессорами',
@@ -54,6 +60,7 @@ const data: TableData[] = [
         hobby: 'Cybersport',
     },
     {
+        id: 4,
         name: 'Вася',
         HES: 'Московский государственный университет',
         speciality: 'Информатика',
@@ -61,6 +68,7 @@ const data: TableData[] = [
         hobby: 'Чтение',
     },
     {
+        id: 5,
         name: 'Петя',
         HES: 'Санкт-Петербургский государственный университет',
         speciality: 'Математика',
@@ -68,6 +76,7 @@ const data: TableData[] = [
         hobby: 'Футбол',
     },
     {
+        id: 6,
         name: 'Света',
         HES: 'Новосибирский государственный университет',
         speciality: 'Физика',
@@ -75,6 +84,7 @@ const data: TableData[] = [
         hobby: 'Кино',
     },
     {
+        id: 7,
         name: 'Иван',
         HES: 'Политех имени Петра Великого',
         speciality: 'Что-то там с процессорами',
@@ -82,6 +92,7 @@ const data: TableData[] = [
         hobby: 'Cybersport',
     },
     {
+        id: 8,
         name: 'Анна',
         HES: 'Московский государственный университет',
         speciality: 'Информатика',
@@ -89,6 +100,7 @@ const data: TableData[] = [
         hobby: 'Чтение',
     },
     {
+        id: 9,
         name: 'Дмитрий',
         HES: 'Санкт-Петербургский государственный университет',
         speciality: 'Математика',
@@ -96,6 +108,7 @@ const data: TableData[] = [
         hobby: 'Футбол',
     },
     {
+        id: 10,
         name: 'Елена',
         HES: 'Новосибирский государственный университет',
         speciality: 'Физика',
@@ -103,6 +116,7 @@ const data: TableData[] = [
         hobby: 'Кино',
     },
     {
+        id: 11,
         name: 'Александр',
         HES: 'Политех имени Петра Великого',
         speciality: 'Что-то там с процессорами',
@@ -110,6 +124,7 @@ const data: TableData[] = [
         hobby: 'Cybersport',
     },
     {
+        id: 12,
         name: 'София',
         HES: 'Московский государственный университет',
         speciality: 'Информатика',
@@ -117,6 +132,7 @@ const data: TableData[] = [
         hobby: 'Чтение',
     },
     {
+        id: 13,
         name: 'Никита',
         HES: 'Санкт-Петербургский государственный университет',
         speciality: 'Математика',
@@ -124,6 +140,7 @@ const data: TableData[] = [
         hobby: 'Футбол',
     },
     {
+        id: 14,
         name: 'Алексей',
         HES: 'Новосибирский государственный университет',
         speciality: 'Физика',
@@ -131,6 +148,7 @@ const data: TableData[] = [
         hobby: 'Кино',
     },
     {
+        id: 15,
         name: 'Даша',
         HES: 'Политех имени Петра Великого',
         speciality: 'Что-то там с процессорами',
@@ -138,6 +156,7 @@ const data: TableData[] = [
         hobby: 'Cybersport',
     },
     {
+        id: 16,
         name: 'Маша',
         HES: 'Московский государственный университет',
         speciality: 'Информатика',
@@ -145,6 +164,7 @@ const data: TableData[] = [
         hobby: 'Чтение',
     },
     {
+        id: 17,
         name: 'Владимир',
         HES: 'Санкт-Петербургский государственный университет',
         speciality: 'Математика',
@@ -156,7 +176,30 @@ const data: TableData[] = [
 const CandidatesPage = memo((props: CandidatesPageProps) => {
     const { className } = props;
 
+    const { addSearchParams, deleteSearchParams, getSearchParams } = useURLParams();
+
     const [selected, setSelected] = useState<TableData[]>([]);
+    const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
+
+    useEffect(() => {
+        const params = getSearchParams();
+        if (params.length) {
+            setSelectedIdsFromUrl(params[0].value.split(',').map(Number));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        setSelected(data.filter((user) => selectedIdsFromUrl.includes(user.id)));
+    }, [selectedIdsFromUrl]);
+
+    useEffect(() => {
+        if (selected.length) {
+            addSearchParams({
+                selected: selected.map((user) => user.id.toString()).join(','),
+            });
+        }
+    }, [selected]);
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
@@ -179,6 +222,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                         disabled={!selected.length}
                         onClick={() => {
                             setSelected([]);
+                            deleteSearchParams('selected');
                         }}
                     >
                         Очистить выбор
@@ -189,7 +233,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                     <SplitterPanel size={40} className={classes.accordion}>
                         <Disclosure
                             titles={data.map((user) => (
-                                <HStack maxW justify="start" gap="16" key={user.name}>
+                                <HStack maxW justify="start" gap="16" key={user.id}>
                                     <Checkbox
                                         onChange={(event) => {
                                             event.stopPropagation();
@@ -199,7 +243,6 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                                 );
                                                 return;
                                             }
-
                                             setSelected((prev) => [...prev, user]);
                                         }}
                                         checked={selected.includes(user)}

@@ -5,6 +5,7 @@ import { Column } from 'primereact/column';
 import classes from './Table.module.scss';
 
 export interface TableData {
+    id: number;
     name: string;
     HES: string;
     speciality: string;

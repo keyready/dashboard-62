@@ -14,11 +14,7 @@ export const Disclosure = memo((props: DisclosureProps) => {
     const { className, multiple = false, titles, paragraphs } = props;
 
     return (
-        <Accordion
-            multiple={multiple}
-            activeIndex={0}
-            className={classNames(classes.accordion, {}, [className])}
-        >
+        <Accordion multiple={multiple} className={classNames(classes.accordion, {}, [className])}>
             {titles.map((title, index) => (
                 <AccordionTab key={index} header={title}>
                     {paragraphs[index]}
