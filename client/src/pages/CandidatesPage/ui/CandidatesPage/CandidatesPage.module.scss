@@ -45,13 +45,31 @@
     gap: 10px;
 }
 
+.input {
+    margin-top: 20px;
+}
+
 .detailedComparisonLinkWrapper {
-    cursor: pointer;
+    cursor: not-allowed;
     margin: 20px;
 }
 
 .detailedComparisonLink {
     h3 {
         margin: 0;
+        color: rgb(100 100 100 / 70%);
+    }
+}
+
+.active {
+    cursor: pointer;
+
+    h3 {
+        color: transparent !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        background-image: var(--accent-gradient) !important;
+        font: var(--font-m);
+        font-weight: bold;
     }
 }

@@ -18,14 +18,9 @@ import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Icon } from 'shared/UI/Icon/Icon';
 import ChevronIcon from 'shared/assests/icons/chevron-down.svg';
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import {
-    CandidatesPageActions,
-    CandidatesPageReducer,
-} from '../../model/slice/CandidatesPageSlice';
+import { Input } from 'shared/UI/Input';
+import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
-import { getSelectedCandidates } from '../../model/selectors/candidatesPageSelector';
 
 interface CandidatesPageProps {
     className?: string;
@@ -187,10 +182,9 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
     const { addSearchParams, deleteSearchParams, getSearchParams } = useURLParams();
 
-    const getSelectedFromStore = useSelector(getSelectedCandidates);
-
     const [selected, setSelected] = useState<TableData[]>([]);
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
+    const [taskValue, setTaskValue] = useState<string>('');
 
     const navigate = useNavigate();
 
@@ -199,7 +193,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
         if (params.length) {
             setSelectedIdsFromUrl(params[0].value.split(',').map(Number));
         }
-    }, [getSelectedFromStore]);
+    }, []);
 
     useEffect(() => {
         if (selectedIdsFromUrl.length) {
@@ -216,12 +210,31 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     }, [selected]);
 
     const handleComparisonClick = useCallback(() => {
-        navigate(
-            `${RoutePath.comparison}?selected=${selected
-                .map((user) => user.id.toString())
-                .join(',')}`,
-        );
-    }, [navigate, selected]);
+        if (taskValue.length >= 10)
+            navigate(
+                `${RoutePath.comparison}?selected=${selected
+                    .map((user) => user.id.toString())
+                    .join(',')}`,
+            );
+    }, [navigate, selected, taskValue]);
+
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (event.key === 'Enter' && taskValue.length >= 10) {
+                navigate(
+                    `${RoutePath.comparison}?selected=${selected
+                        .map((user) => user.id.toString())
+                        .join(',')}`,
+                );
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [navigate, selected, taskValue]);
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
@@ -302,18 +315,27 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
                     <SplitterPanel size={60} className={classes.tableWrapper}>
                         <Table data={selected} />
+                        <Input
+                            className={classes.input}
+                            value={taskValue}
+                            onChange={setTaskValue}
+                            placeholder="Введите задачу, которую необходимо решить"
+                        />
                         <HStack
                             maxW
                             justify="end"
-                            className={classes.detailedComparisonLinkWrapper}
+                            className={classNames(classes.detailedComparisonLinkWrapper, {
+                                [classes.active]: taskValue.length >= 10,
+                            })}
+                            onClick={handleComparisonClick}
                         >
                             <Text
-                                onClick={handleComparisonClick}
-                                accent
                                 title="Перейти к подробному сравнению"
                                 size="small"
                                 align="right"
-                                className={classes.detailedComparisonLink}
+                                className={classNames(classes.detailedComparisonLink, {
+                                    [classes.active]: taskValue.length >= 10,
+                                })}
                             />
                             <Icon Svg={ChevronIcon} />
                         </HStack>
