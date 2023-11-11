@@ -98,3 +98,20 @@
         text-align: justify;
     }
 }
+
+.accent {
+    .title {
+        color: transparent !important;
+        font: var(--font-xl);
+        font-weight: bold;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        background-image: var(--accent-gradient) !important;
+        font: var(--font-m);
+        font-weight: bold;
+    }
+}
+
+.clickable {
+    cursor: pointer;
+}

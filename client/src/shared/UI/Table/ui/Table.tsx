@@ -43,7 +43,6 @@ export const Table = memo((props: TableProps) => {
             emptyMessage="Выберите от 2 до 4 выпускников, чтобы перейти к углубленному сравнению"
             // onSelectionChange={handleTableSelectionChange}
         >
-            <Column style={{ height: 50 }} selectionMode="multiple" />
             <Column alignHeader="center" dataType="text" field="name" header="ФИО" sortable />
             <Column alignHeader="center" dataType="text" field="HES" header="ВУЗ" sortable />
             <Column

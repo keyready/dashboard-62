@@ -60,11 +60,21 @@ div[data-pc-section="actions"] {
 
 // таблицы
 .p-column-title {
+    text-align: center;
     margin-right: 5px;
 }
 
 .p-datatable-wrapper {
     border-radius: 5px;
+}
+
+.p-datatable-thead {
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.p-selectable-row {
+    text-align: center;
 }
 
 // дисклошуре

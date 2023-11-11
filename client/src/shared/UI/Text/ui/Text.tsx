@@ -11,6 +11,8 @@ interface TextProps {
     align?: TextAlign;
     size?: TextSize;
     variant?: TextVariant;
+    accent?: boolean;
+    clickable?: boolean;
     onClick?: () => void;
 }
 
@@ -23,6 +25,8 @@ export const Text = memo((props: TextProps) => {
         size = 'medium',
         variant = 'primary',
         onClick,
+        clickable,
+        accent = false,
     } = props;
 
     const variantsClasses = variantsMapper[variant];
@@ -33,7 +37,17 @@ export const Text = memo((props: TextProps) => {
     const add = [className, variantsClasses, alignsClasses, sizeClasses];
 
     return (
-        <div onClick={onClick} className={classNames(classes.Text, {}, add)}>
+        <div
+            onClick={onClick}
+            className={classNames(
+                classes.Text,
+                {
+                    [classes.accent]: accent,
+                    [classes.clickable]: clickable,
+                },
+                add,
+            )}
+        >
             {title && <HeaderTag className={classes.title}>{title}</HeaderTag>}
             {text && <p className={classes.text}>{text}</p>}
         </div>

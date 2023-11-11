@@ -8,7 +8,11 @@ const initialState: CandidatesPageSchema = {};
 export const CandidatesPageSlice = createSlice({
     name: 'CandidatesPageSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setSelected(state, action: PayloadAction<number[]>) {
+            state.selected = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchCandidates.pending, (state) => {

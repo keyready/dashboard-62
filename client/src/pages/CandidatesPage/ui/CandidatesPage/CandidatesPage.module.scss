@@ -7,6 +7,13 @@
     }
 }
 
+.p-datatable-wrapper {
+    * {
+        text-align: center;
+        align-self: center;
+    }
+}
+
 .deleteBtn {
     margin-bottom: 20px;
 }
@@ -28,10 +35,23 @@
 	gap: 10px;
 }
 
-.accordion {
-}
-
 .tableWrapper {
     position: sticky;
     top: -20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.detailedComparisonLinkWrapper {
+    cursor: pointer;
+    margin: 20px;
+}
+
+.detailedComparisonLink {
+    h3 {
+        margin: 0;
+    }
 }

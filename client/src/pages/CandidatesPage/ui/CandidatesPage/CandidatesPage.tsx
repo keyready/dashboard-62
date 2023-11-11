@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import {
     DynamicModuleLoader,
     ReducersList,
@@ -13,10 +13,19 @@ import { Card } from 'shared/UI/Card';
 import { Text } from 'shared/UI/Text';
 import { Disclosure } from 'shared/UI/Disclosure';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
-import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
+import { RoutePath } from 'shared/config/routeConfig/routeConfig';
+import { Icon } from 'shared/UI/Icon/Icon';
+import ChevronIcon from 'shared/assests/icons/chevron-down.svg';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import {
+    CandidatesPageActions,
+    CandidatesPageReducer,
+} from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
+import { getSelectedCandidates } from '../../model/selectors/candidatesPageSelector';
 
 interface CandidatesPageProps {
     className?: string;
@@ -178,19 +187,24 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
     const { addSearchParams, deleteSearchParams, getSearchParams } = useURLParams();
 
+    const getSelectedFromStore = useSelector(getSelectedCandidates);
+
     const [selected, setSelected] = useState<TableData[]>([]);
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const params = getSearchParams();
         if (params.length) {
             setSelectedIdsFromUrl(params[0].value.split(',').map(Number));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [getSelectedFromStore]);
 
     useEffect(() => {
-        setSelected(data.filter((user) => selectedIdsFromUrl.includes(user.id)));
+        if (selectedIdsFromUrl.length) {
+            setSelected(data.filter((user) => selectedIdsFromUrl.includes(user.id)));
+        }
     }, [selectedIdsFromUrl]);
 
     useEffect(() => {
@@ -200,6 +214,14 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
             });
         }
     }, [selected]);
+
+    const handleComparisonClick = useCallback(() => {
+        navigate(
+            `${RoutePath.comparison}?selected=${selected
+                .map((user) => user.id.toString())
+                .join(',')}`,
+        );
+    }, [navigate, selected]);
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
@@ -280,6 +302,21 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
                     <SplitterPanel size={60} className={classes.tableWrapper}>
                         <Table data={selected} />
+                        <HStack
+                            maxW
+                            justify="end"
+                            className={classes.detailedComparisonLinkWrapper}
+                        >
+                            <Text
+                                onClick={handleComparisonClick}
+                                accent
+                                title="Перейти к подробному сравнению"
+                                size="small"
+                                align="right"
+                                className={classes.detailedComparisonLink}
+                            />
+                            <Icon Svg={ChevronIcon} />
+                        </HStack>
                     </SplitterPanel>
                 </Splitter>
             </Page>
