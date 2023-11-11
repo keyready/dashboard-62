@@ -1,68 +1,48 @@
-p,
-h2 {
-    margin: 0;
-    padding: 0;
-}
-
-.DetailedComparisonPage {
-    height: 100%;
-    display: grid;
-    margin-top: 15px;
-    grid-template-columns: 1fr 2fr;
-    grid-gap: 10px;
-}
-
-.candidatesPhotos {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-    align-content: center;
-    justify-items: center;
-
-    p {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-}
-
-.candidateImg {
-    width: 100px;
-    height: 100px;
-    border-radius: 15px;
-}
-
-.commonComparison {
-    grid-row: 3 / span 3;
-    grid-column: 1 / span 2;
-}
-
-.detailedCard {
-    padding: 20px;
-    margin-top: 15px;
-}
-
-.candidatesCards {
+.card {
+    min-height: 460px;
     display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
+    align-items: start;
+    justify-content: center;
+}
+
+.title {
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.best {
     margin-top: 20px;
 }
 
-.candidateCard {
-    position: relative;
-    margin-right: -30px;
+.scoreWrapper {
 
-    &:last-child {
-        left: 0;
-        margin-right: 0;
+}
+
+.gradCard {
+    margin-bottom: 20px;
+}
+
+.textBlock {
+    h1,
+    h2,
+    h3,
+    h4 {
+        margin: 0;
     }
 }
 
-.comparison {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
+.radar {
+    height: 314px;
+}
+
+.firstLine {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 15px;
+}
+
+.secondLine {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-gap: 15px;
 }

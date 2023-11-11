@@ -12,7 +12,6 @@ import { UISchema } from 'features/UI';
 import { CandidateSchema } from 'entities/Candidate';
 import { CandidatesPageSchema } from 'pages/CandidatesPage';
 import { UploadPageSchema } from 'pages/UploadFilesPage';
-import { ComparedDataSchema } from 'pages/ComparisonPage';
 
 export interface StateSchema {
     user: UserSchema;
@@ -23,7 +22,6 @@ export interface StateSchema {
     candidate?: CandidateSchema;
     candidates?: CandidatesPageSchema;
     filesUpload?: UploadPageSchema;
-    comparisonData?: ComparedDataSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

@@ -2,7 +2,6 @@ import { RouteProps } from 'react-router-dom';
 import { NotFound } from 'pages/NotFound';
 import { MainPage } from 'pages/MainPage';
 import { CandidatesPage } from 'pages/CandidatesPage';
-import { ComparisonPage } from 'pages/ComparisonPage';
 import { UploadFilesPage } from 'pages/UploadFilesPage';
 import { DetailedComparisonPage } from 'pages/DetailedComparisonPage';
 import { LoginPage } from 'pages/LoginPage';
@@ -14,7 +13,6 @@ export type AppRoutesProps = RouteProps & {
 export enum AppRoutes {
     MAIN = 'main',
     CANDIDATES = 'candidates',
-    COMPARISON = 'comparison',
     DETAILEDCOMPARISON = 'detailedcomparison',
     FILESUPLOAD = 'filesupload',
     LOGINPAGE = 'loginpage',
@@ -26,7 +24,6 @@ export enum AppRoutes {
 export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.CANDIDATES]: '/candidates',
     [AppRoutes.MAIN]: '/',
-    [AppRoutes.COMPARISON]: '/comparison',
     [AppRoutes.DETAILEDCOMPARISON]: '/detailed_comparison',
     [AppRoutes.FILESUPLOAD]: '/files_upload',
     [AppRoutes.LOGINPAGE]: '/login',
@@ -43,11 +40,6 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.CANDIDATES]: {
         path: RoutePath.candidates,
         element: <CandidatesPage />,
-        authOnly: true,
-    },
-    [AppRoutes.COMPARISON]: {
-        path: RoutePath.comparison,
-        element: <ComparisonPage />,
         authOnly: true,
     },
     [AppRoutes.DETAILEDCOMPARISON]: {

@@ -192,6 +192,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
         const params = getSearchParams();
         if (params.length) {
             setSelectedIdsFromUrl(params[0].value.split(',').map(Number));
+            setTaskValue(params[1].value);
         }
     }, []);
 
@@ -210,21 +211,30 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     }, [selected]);
 
     const handleComparisonClick = useCallback(() => {
-        if (taskValue.length >= 10)
+        if (taskValue.length >= 10 && selected.length >= 2 && selected.length <= 4)
             navigate(
-                `${RoutePath.comparison}?selected=${selected
+                `${RoutePath.detailedcomparison}?selected=${selected
                     .map((user) => user.id.toString())
-                    .join(',')}`,
+                    .join(',')}&task=${taskValue}`,
             );
     }, [navigate, selected, taskValue]);
 
     useEffect(() => {
+        addSearchParams({ task: taskValue });
+    }, [taskValue]);
+
+    useEffect(() => {
         const handleKeyPress = (event: KeyboardEvent) => {
-            if (event.key === 'Enter' && taskValue.length >= 10) {
+            if (
+                event.key === 'Enter' &&
+                taskValue.length >= 10 &&
+                selected.length >= 2 &&
+                selected.length <= 4
+            ) {
                 navigate(
-                    `${RoutePath.comparison}?selected=${selected
+                    `${RoutePath.detailedcomparison}?selected=${selected
                         .map((user) => user.id.toString())
-                        .join(',')}`,
+                        .join(',')}&task=${taskValue}`,
                 );
             }
         };
@@ -325,7 +335,10 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                             maxW
                             justify="end"
                             className={classNames(classes.detailedComparisonLinkWrapper, {
-                                [classes.active]: taskValue.length >= 10,
+                                [classes.active]:
+                                    taskValue.length >= 10 &&
+                                    selected.length >= 2 &&
+                                    selected.length <= 4,
                             })}
                             onClick={handleComparisonClick}
                         >
@@ -334,7 +347,10 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                 size="small"
                                 align="right"
                                 className={classNames(classes.detailedComparisonLink, {
-                                    [classes.active]: taskValue.length >= 10,
+                                    [classes.active]:
+                                        taskValue.length >= 10 &&
+                                        selected.length >= 2 &&
+                                        selected.length <= 4,
                                 })}
                             />
                             <Icon Svg={ChevronIcon} />
