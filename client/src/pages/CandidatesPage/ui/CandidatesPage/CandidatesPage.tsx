@@ -6,7 +6,7 @@ import {
     ReducersList,
 } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
 import { Checkbox } from 'primereact/checkbox';
-import { Table, TableData } from 'shared/UI/Table';
+import { Table } from 'shared/UI/Table';
 import { HStack, VStack } from 'shared/UI/Stack';
 import { Button } from 'shared/UI/Button';
 import { Card } from 'shared/UI/Card';
@@ -19,6 +19,8 @@ import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Icon } from 'shared/UI/Icon/Icon';
 import ChevronIcon from 'shared/assests/icons/chevron-down.svg';
 import { Input } from 'shared/UI/Input';
+import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
+import { Candidate } from 'entities/Candidate';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
 
@@ -30,177 +32,39 @@ const reducers: ReducersList = {
     candidates: CandidatesPageReducer,
 };
 
-const data: TableData[] = [
-    {
-        id: 0,
-        name: 'Родион',
-        HES: 'ВКА',
-        speciality: 'Создание защищенного ПО',
-        age: '20',
-        hobby: 'Frontend-разработка',
-    },
-    {
-        id: 1,
-        name: 'Димка',
-        HES: 'ВКА',
-        speciality: 'Создание защищенного ПО',
-        age: '20',
-        hobby: 'UI/UX дизайнер',
-    },
-    {
-        id: 2,
-        name: 'Валя',
-        HES: 'ВКА',
-        speciality: 'Создание защищенного ПО',
-        age: '20',
-        hobby: 'Backend-разработка',
-    },
-    {
-        id: 3,
-        name: 'Миша',
-        HES: 'Политех имени Петра Великого',
-        speciality: 'Что-то там с процессорами',
-        age: '20',
-        hobby: 'Cybersport',
-    },
-    {
-        id: 4,
-        name: 'Вася',
-        HES: 'Московский государственный университет',
-        speciality: 'Информатика',
-        age: '21',
-        hobby: 'Чтение',
-    },
-    {
-        id: 5,
-        name: 'Петя',
-        HES: 'Санкт-Петербургский государственный университет',
-        speciality: 'Математика',
-        age: '22',
-        hobby: 'Футбол',
-    },
-    {
-        id: 6,
-        name: 'Света',
-        HES: 'Новосибирский государственный университет',
-        speciality: 'Физика',
-        age: '23',
-        hobby: 'Кино',
-    },
-    {
-        id: 7,
-        name: 'Иван',
-        HES: 'Политех имени Петра Великого',
-        speciality: 'Что-то там с процессорами',
-        age: '24',
-        hobby: 'Cybersport',
-    },
-    {
-        id: 8,
-        name: 'Анна',
-        HES: 'Московский государственный университет',
-        speciality: 'Информатика',
-        age: '25',
-        hobby: 'Чтение',
-    },
-    {
-        id: 9,
-        name: 'Дмитрий',
-        HES: 'Санкт-Петербургский государственный университет',
-        speciality: 'Математика',
-        age: '26',
-        hobby: 'Футбол',
-    },
-    {
-        id: 10,
-        name: 'Елена',
-        HES: 'Новосибирский государственный университет',
-        speciality: 'Физика',
-        age: '27',
-        hobby: 'Кино',
-    },
-    {
-        id: 11,
-        name: 'Александр',
-        HES: 'Политех имени Петра Великого',
-        speciality: 'Что-то там с процессорами',
-        age: '28',
-        hobby: 'Cybersport',
-    },
-    {
-        id: 12,
-        name: 'София',
-        HES: 'Московский государственный университет',
-        speciality: 'Информатика',
-        age: '29',
-        hobby: 'Чтение',
-    },
-    {
-        id: 13,
-        name: 'Никита',
-        HES: 'Санкт-Петербургский государственный университет',
-        speciality: 'Математика',
-        age: '30',
-        hobby: 'Футбол',
-    },
-    {
-        id: 14,
-        name: 'Алексей',
-        HES: 'Новосибирский государственный университет',
-        speciality: 'Физика',
-        age: '31',
-        hobby: 'Кино',
-    },
-    {
-        id: 15,
-        name: 'Даша',
-        HES: 'Политех имени Петра Великого',
-        speciality: 'Что-то там с процессорами',
-        age: '32',
-        hobby: 'Cybersport',
-    },
-    {
-        id: 16,
-        name: 'Маша',
-        HES: 'Московский государственный университет',
-        speciality: 'Информатика',
-        age: '33',
-        hobby: 'Чтение',
-    },
-    {
-        id: 17,
-        name: 'Владимир',
-        HES: 'Санкт-Петербургский государственный университет',
-        speciality: 'Математика',
-        age: '34',
-        hobby: 'Футбол',
-    },
-];
-
 const CandidatesPage = memo((props: CandidatesPageProps) => {
     const { className } = props;
 
     const { addSearchParams, deleteSearchParams, getSearchParams } = useURLParams();
 
-    const [selected, setSelected] = useState<TableData[]>([]);
+    const [selected, setSelected] = useState<Candidate[]>([]);
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
     const [taskValue, setTaskValue] = useState<string>('');
+    const [page, setPage] = useState<number>(1);
 
     const navigate = useNavigate();
 
+    const { data: candidates, isLoading: isCandidatesLoading } = useCandidates(page);
+
     useEffect(() => {
         const params = getSearchParams();
+
+        if (!params.length) return;
+
+        const urlTask = params[0].param === 'task' ? params[0].value : params[1].value;
+        const urlSelected = params[1].param === 'selected' ? params[1].value : params[0].value;
+
         if (params.length) {
-            setSelectedIdsFromUrl(params[0].value.split(',').map(Number));
-            setTaskValue(params[1].value);
+            setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
+            setTaskValue(urlTask);
         }
     }, []);
 
     useEffect(() => {
-        if (selectedIdsFromUrl.length) {
-            setSelected(data.filter((user) => selectedIdsFromUrl.includes(user.id)));
+        if (selectedIdsFromUrl.length && candidates) {
+            setSelected(candidates.filter((user) => selectedIdsFromUrl.includes(user.id)));
         }
-    }, [selectedIdsFromUrl]);
+    }, [candidates, selectedIdsFromUrl]);
 
     useEffect(() => {
         if (selected.length) {
@@ -246,6 +110,26 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
         };
     }, [navigate, selected, taskValue]);
 
+    if (isCandidatesLoading) {
+        return (
+            <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+                <Page className={classNames(classes.CandidatesPage, {}, [className])}>
+                    <h2>Идет загрузка</h2>
+                </Page>
+            </DynamicModuleLoader>
+        );
+    }
+
+    if (!candidates?.length && !isCandidatesLoading) {
+        return (
+            <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+                <Page className={classNames(classes.CandidatesPage, {}, [className])}>
+                    <h2>ничего не нашли</h2>
+                </Page>
+            </DynamicModuleLoader>
+        );
+    }
+
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <Page className={classNames(classes.CandidatesPage, {}, [className])}>
@@ -277,49 +161,53 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 <Splitter className={classes.contentWrapper}>
                     <SplitterPanel size={40} className={classes.accordion}>
                         <Disclosure
-                            titles={data.map((user) => (
-                                <HStack maxW justify="start" gap="16" key={user.id}>
-                                    <Checkbox
-                                        onChange={(event) => {
-                                            event.stopPropagation();
-                                            if (selected.includes(user)) {
-                                                setSelected((prev) =>
-                                                    prev.filter((item) => item !== user),
-                                                );
-                                                return;
-                                            }
-                                            setSelected((prev) => [...prev, user]);
-                                        }}
-                                        checked={selected.includes(user)}
-                                    />
-                                    <div className={classes.img} />
-                                    <Text
-                                        className={classes.textBlock}
-                                        size="extrasmall"
-                                        title={user.name}
-                                    />
-                                </HStack>
-                            ))}
-                            paragraphs={data.map((user) => (
-                                <VStack maxW gap="0" key={user.name}>
-                                    <HStack maxW>
-                                        <b>Возраст:</b>
-                                        <p>{user.age}</p>
+                            titles={
+                                candidates?.map((candidate) => (
+                                    <HStack maxW justify="start" gap="16" key={candidate.id}>
+                                        <Checkbox
+                                            onChange={(event) => {
+                                                event.stopPropagation();
+                                                if (selected.includes(candidate)) {
+                                                    setSelected((prev) =>
+                                                        prev.filter((item) => item !== candidate),
+                                                    );
+                                                    return;
+                                                }
+                                                setSelected((prev) => [...prev, candidate]);
+                                            }}
+                                            checked={selected.includes(candidate)}
+                                        />
+                                        <div className={classes.img} />
+                                        <Text
+                                            className={classes.textBlock}
+                                            size="extrasmall"
+                                            title={candidate.firstname}
+                                        />
                                     </HStack>
-                                    <HStack maxW>
-                                        <b>ВУЗ:</b>
-                                        <p>{user.HES}</p>
-                                    </HStack>
-                                    <HStack maxW>
-                                        <b>Специальность:</b>
-                                        <p>{user.speciality}</p>
-                                    </HStack>
-                                    <HStack maxW>
-                                        <b>Хобби:</b>
-                                        <p>{user.hobby}</p>
-                                    </HStack>
-                                </VStack>
-                            ))}
+                                )) || [<p>ничего</p>]
+                            }
+                            paragraphs={
+                                candidates?.map((user) => (
+                                    <VStack maxW gap="0" key={user.id}>
+                                        <HStack maxW>
+                                            <b>Возраст:</b>
+                                            <p>{user.age}</p>
+                                        </HStack>
+                                        <HStack maxW>
+                                            <b>ВУЗ:</b>
+                                            <p>{user.HES}</p>
+                                        </HStack>
+                                        <HStack maxW>
+                                            <b>Специальность:</b>
+                                            <p>{user.department}</p>
+                                        </HStack>
+                                        <HStack maxW>
+                                            <b>Хобби:</b>
+                                            <p>{user.hobby}</p>
+                                        </HStack>
+                                    </VStack>
+                                )) || [<p>ничего</p>]
+                            }
                         />
                     </SplitterPanel>
 

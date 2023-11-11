@@ -8,7 +8,7 @@ export const fetchCandidates = createAsyncThunk<Candidate[], void, ThunkConfig<s
         const { extra, rejectWithValue } = thunkAPI;
 
         try {
-            const response = await extra.api.get<Candidate[]>('/candidates', {
+            const response = await extra.api.get<Candidate[]>('/api/candidates', {
                 params: {
                     limit: 10,
                     page: 1,

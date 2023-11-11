@@ -1,5 +1,7 @@
+import { Candidate } from 'entities/Candidate';
+
 export interface CandidatesPageSchema {
-    selected?: number[];
+    candidates?: Candidate[];
     error?: string;
     isLoading?: boolean;
 }

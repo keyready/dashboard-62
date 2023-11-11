@@ -12,11 +12,13 @@ import { UISchema } from 'features/UI';
 import { CandidateSchema } from 'entities/Candidate';
 import { CandidatesPageSchema } from 'pages/CandidatesPage';
 import { UploadPageSchema } from 'pages/UploadFilesPage';
+import { rtkApi } from 'shared/api/rtkApi';
 
 export interface StateSchema {
     user: UserSchema;
     ui: UISchema;
     loginForm: LoginSchema;
+    [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
     // asynchronous reducers
     candidate?: CandidateSchema;

@@ -1,35 +1,27 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { memo, useCallback } from 'react';
-import { DataTable, DataTableSelectionSingleChangeEvent } from 'primereact/datatable';
+import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Candidate } from 'entities/Candidate';
 import classes from './Table.module.scss';
-
-export interface TableData {
-    id: number;
-    name: string;
-    HES: string;
-    speciality: string;
-    age: string;
-    hobby: string;
-}
 
 interface TableProps {
     className?: string;
-    data: TableData[];
+    data: Candidate[];
     multiple?: boolean;
-    selectedValues?: TableData[];
-    setSelectedValues?: (value: TableData[]) => void;
+    // selectedValues?: Candidate[];
+    // setSelectedValues?: (value: Candidate[]) => void;
 }
 
 export const Table = memo((props: TableProps) => {
-    const { className, data, setSelectedValues, selectedValues, multiple = false } = props;
-
-    const handleTableSelectionChange = useCallback(
-        (event: any) => {
-            setSelectedValues?.(event.value);
-        },
-        [setSelectedValues],
-    );
+    const { className, data, multiple = false } = props;
+    //
+    // const handleTableSelectionChange = useCallback(
+    //     (event: any) => {
+    //         setSelectedValues?.(event.value);
+    //     },
+    //     [setSelectedValues],
+    // );
 
     return (
         <DataTable
@@ -43,12 +35,12 @@ export const Table = memo((props: TableProps) => {
             emptyMessage="Выберите от 2 до 4 выпускников, чтобы перейти к углубленному сравнению"
             // onSelectionChange={handleTableSelectionChange}
         >
-            <Column alignHeader="center" dataType="text" field="name" header="ФИО" sortable />
+            <Column alignHeader="center" dataType="text" field="firstname" header="ФИО" sortable />
             <Column alignHeader="center" dataType="text" field="HES" header="ВУЗ" sortable />
             <Column
                 alignHeader="center"
                 dataType="text"
-                field="speciality"
+                field="department"
                 header="Специальность"
                 sortable
             />

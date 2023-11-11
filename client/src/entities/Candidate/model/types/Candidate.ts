@@ -4,22 +4,21 @@ export interface SubjectsEstimation {
 }
 
 export interface Candidate {
-    id?: number;
-    img?: string;
-    email?: string;
+    id: number;
+    img: string;
+    email: string;
 
-    firstname?: string;
-    middlename?: string;
-    lastname?: string;
+    firstname: string;
+    middlename: string;
+    lastname: string;
 
-    hobby?: string;
+    hobby: string;
 
-    age?: number;
-    HES?: string;
-    speciality?: string;
-    faculty?: string;
-    department?: string;
-    averageSubjectsScore?: number;
+    age: number;
+    HES: string;
+    faculty: string;
+    department: string;
+    averageSubjectsScore: number;
 
-    subjectsEstimation?: SubjectsEstimation[];
+    subjectsEstimation: SubjectsEstimation[];
 }

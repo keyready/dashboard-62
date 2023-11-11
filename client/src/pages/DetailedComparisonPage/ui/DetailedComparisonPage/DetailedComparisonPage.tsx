@@ -4,12 +4,12 @@ import { Page } from 'widgets/Page/Page';
 import React, { memo, ReactNode, useEffect, useMemo, useState } from 'react';
 import { Chart } from 'primereact/chart';
 import { HStack, VStack } from 'shared/UI/Stack';
-import { TableData } from 'shared/UI/Table';
 import { Text } from 'shared/UI/Text';
 import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
 import { Card as GradientCard } from 'shared/UI/Card';
 import StarIcon from 'shared/assests/icons/star-circle.svg';
 import { Icon } from 'shared/UI/Icon/Icon';
+import { Candidate } from 'entities/Candidate';
 import classes from './DetailedComparisonPage.module.scss';
 import cardClasses from './card.module.scss';
 
@@ -17,29 +17,29 @@ interface DetailedComparisonPageProps {
     className?: string;
 }
 
-const users: TableData[] = [
+const users: Partial<Candidate>[] = [
     {
         id: 0,
-        name: 'Родион',
+        firstname: 'Родион',
         HES: 'ВКА',
-        speciality: 'Создание защищенного ПО',
-        age: '20',
+        department: 'Создание защищенного ПО',
+        age: 20,
         hobby: 'Frontend-разработка',
     },
     {
         id: 1,
-        name: 'Димка',
+        firstname: 'Димка',
         HES: 'ВКА',
-        speciality: 'Создание защищенного ПО',
-        age: '20',
+        department: 'Создание защищенного ПО',
+        age: 20,
         hobby: 'UI/UX дизайнер',
     },
     {
         id: 2,
-        name: 'Валя',
+        firstname: 'Валя',
         HES: 'ВКА',
-        speciality: 'Создание защищенного ПО',
-        age: '20',
+        department: 'Создание защищенного ПО',
+        age: 20,
         hobby: 'Backend-разработка',
     },
 ];
@@ -137,10 +137,10 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                                     />
                                     <div>
                                         <Text
-                                            text={`${user.name} ${user.name}`}
+                                            text={`${user.lastname} ${user.firstname}`}
                                             size="extrasmall"
                                         />
-                                        <Text text={user.name} size="extrasmall" />
+                                        <Text text={user.middlename} size="extrasmall" />
                                     </div>
                                 </HStack>
                             ))}
