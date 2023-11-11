@@ -75,7 +75,7 @@ export const UploadFiles = memo((props: UploadFilesProps) => {
             uploadLabel="Загрузить"
             cancelLabel="Отменить"
             mode="advanced"
-            name="demo[]"
+            name="archives"
             url="http://localhost:9999/api/upload"
             accept="application/zip,application/x-rar-compressed,application/x-tar,application/gzip,application/x-bzip2"
             multiple
