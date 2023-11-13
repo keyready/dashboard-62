@@ -85,12 +85,13 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
             <VStack maxW gap="32">
                 <div className={classes.firstLine}>
-                    <Card>
+                    <Card className={classes.candidatesCard}>
                         <h3 className={classes.title}>Специалисты</h3>
 
-                        <VStack maxW align="start">
+                        <VStack maxW align="start" className={classes.candidatesFrame}>
                             {compareResult?.comparedCandidates.map((user) => (
-                                <HStack maxW align="center" justify="start" gap="8" key={user.id}>
+                                <HStack maxW align="center" justify="start"
+gap="8" key={user.id}>
                                     <div
                                         style={{
                                             width: 100,
@@ -139,10 +140,11 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                         />
                     </Card>
 
-                    <Card>
+                    <Card className={classes.cardStack}>
                         <h3 className={classes.title}>Лучший</h3>
 
-                        <VStack maxW justify="center" align="center" className={classes.best}>
+                        <VStack maxW justify="center" align="center"
+className={classes.best}>
                             {/* TODO это фотка тут должна быть */}
                             <div
                                 style={{

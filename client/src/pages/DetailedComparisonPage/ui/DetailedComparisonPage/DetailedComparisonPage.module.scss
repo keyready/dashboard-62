@@ -8,14 +8,11 @@
 .title {
     text-transform: uppercase;
     margin-bottom: 20px;
+    justify-self: start;
 }
 
 .best {
-    margin-top: 20px;
-}
-
-.scoreWrapper {
-
+    height: 100%;
 }
 
 .gradCard {
@@ -38,9 +35,21 @@
     grid-gap: 15px;
 }
 
+.candidatesFrame {
+    overflow-y: auto;
+    max-height: 550px;
+}
+
 .secondLine {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
+}
+
+.cardStack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

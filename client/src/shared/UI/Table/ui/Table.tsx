@@ -11,10 +11,11 @@ interface TableProps {
     multiple?: boolean;
     // selectedValues?: Candidate[];
     // setSelectedValues?: (value: Candidate[]) => void;
+    onRowDelete?: (data: Candidate) => void;
 }
 
 export const Table = memo((props: TableProps) => {
-    const { className, data, multiple = false } = props;
+    const { className, data, multiple = false, onRowDelete } = props;
     //
     // const handleTableSelectionChange = useCallback(
     //     (event: any) => {
@@ -34,6 +35,7 @@ export const Table = memo((props: TableProps) => {
             sortOrder={1}
             emptyMessage="Выберите от 2 до 4 выпускников, чтобы перейти к углубленному сравнению"
             // onSelectionChange={handleTableSelectionChange}
+            onRowClick={(event) => onRowDelete?.(event.data as Candidate)}
         >
             <Column alignHeader="center" dataType="text" field="firstname"
 header="ФИО" sortable />

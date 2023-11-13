@@ -16,7 +16,7 @@ export function useURLParams() {
     }
 
     function getSearchParams(): { param: string; value: string }[] {
-        return Array.from(searchParams.entries()).map(([param, value]) => ({ param, value }));
+        return Array.from(searchParams.entries()).map(([param, value]) => ({ param, value })) || [];
     }
 
     return { addSearchParams, deleteSearchParams, getSearchParams };

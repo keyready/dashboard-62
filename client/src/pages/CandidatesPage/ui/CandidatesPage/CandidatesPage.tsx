@@ -50,12 +50,16 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     useEffect(() => {
         const params = getSearchParams();
 
-        if (!params.length) return;
+        if (params?.length !== 2) {
+            deleteSearchParams('selected');
+            deleteSearchParams('task');
+            return;
+        }
 
-        const urlTask = params[0].param === 'task' ? params[0].value : params[1].value;
-        const urlSelected = params[1].param === 'selected' ? params[1].value : params[0].value;
+        const urlTask = params[0]?.param === 'task' ? params[0]?.value : params[1]?.value;
+        const urlSelected = params[1]?.param === 'selected' ? params[1]?.value : params[0]?.value;
 
-        if (params.length) {
+        if (params?.length) {
             setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
             setTaskValue(urlTask);
         }
@@ -85,8 +89,12 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     }, [navigate, selected, taskValue]);
 
     useEffect(() => {
-        addSearchParams({ task: taskValue });
+        if (taskValue) addSearchParams({ task: taskValue });
     }, [taskValue]);
+
+    const handleRowDelete = useCallback((candForDelete: Candidate) => {
+        setSelected((prevState) => prevState.filter((cand) => cand.id !== candForDelete.id));
+    }, []);
 
     useEffect(() => {
         const handleKeyPress = (event: KeyboardEvent) => {
@@ -94,7 +102,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 event.key === 'Enter' &&
                 taskValue.length >= 10 &&
                 selected.length >= 2 &&
-                selected.length <= 4
+                selected.length <= 6
             ) {
                 navigate(
                     `${RoutePath.detailedcomparison}?selected=${selected
@@ -182,6 +190,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                         onClick={() => {
                             setSelected([]);
                             deleteSearchParams('selected');
+                            deleteSearchParams('task');
                         }}
                     >
                         Очистить выбор
@@ -243,7 +252,7 @@ key={candidate.id}>
                     </SplitterPanel>
 
                     <SplitterPanel size={60} className={classes.tableWrapper}>
-                        <Table data={selected} />
+                        <Table data={selected} onRowDelete={handleRowDelete} />
                         <Input
                             className={classes.input}
                             value={taskValue}
@@ -257,7 +266,7 @@ key={candidate.id}>
                                 [classes.active]:
                                     taskValue.length >= 10 &&
                                     selected.length >= 2 &&
-                                    selected.length <= 4,
+                                    selected.length <= 6,
                             })}
                             onClick={handleComparisonClick}
                         >
@@ -269,7 +278,7 @@ key={candidate.id}>
                                     [classes.active]:
                                         taskValue.length >= 10 &&
                                         selected.length >= 2 &&
-                                        selected.length <= 4,
+                                        selected.length <= 6,
                                 })}
                             />
                             <Icon Svg={ChevronIcon} />
