@@ -9,7 +9,8 @@
         "lint:project": "concurrently -n ESLINT,PRETTIER,STYLELINT -c blue,green,orange \"npm run eslint\" \"npm run prettier\" \"cd ./client && npm run stylelint\"",
         "eslint": "eslint \"**/*.{ts,tsx}\" --fix",
         "prettier": "npx prettier --write **/*.{js,jsx,ts,tsx}",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "save": "git add . && git commit -m \"$npm_config_m\" && git push"
     },
     "keywords": [],
     "author": "NexusX Team",
