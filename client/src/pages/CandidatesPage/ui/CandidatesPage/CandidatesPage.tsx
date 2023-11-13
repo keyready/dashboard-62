@@ -26,6 +26,8 @@ import { useSelector } from 'react-redux';
 import { getTotalCandidates } from 'pages/CandidatesPage/model/selectors/candidatesPageSelector';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { fetchTotalCandidates } from 'pages/CandidatesPage';
+import { Modal } from 'shared/UI/Modal';
+import { CandidatesFilterModal, FilterOptions } from 'widgets/CandidatesFilterModal';
 import { QueryProps, useCandidates } from '../../api/fetchCandidatesApi';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
@@ -48,6 +50,8 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const [taskValue, setTaskValue] = useState<string>('');
     const [page, setPage] = useState<number>(0);
     const [limit, setLimit] = useState<number>(10);
+    const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+    const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
 
     const navigate = useNavigate();
     const totalCandidates = useSelector(getTotalCandidates);
@@ -181,6 +185,12 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <Page className={classNames(classes.CandidatesPage, {}, [className])}>
+                <CandidatesFilterModal
+                    filterOptions={filterOptions}
+                    setIsOpen={setIsModalOpened}
+                    isOpen={isModalOpened}
+                />
+
                 <HStack justify="start">
                     <Card className={classes.card}>
                         <Text
@@ -193,7 +203,9 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 </HStack>
 
                 <HStack className={classes.deleteBtn} maxW justify="end">
-                    <Button size="small">Поиск по параметрам</Button>
+                    <Button size="small" onClick={() => setIsModalOpened(true)}>
+                        Поиск по параметрам
+                    </Button>
                     <Button
                         size="small"
                         variant="danger"

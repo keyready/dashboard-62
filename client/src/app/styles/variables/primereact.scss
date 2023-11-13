@@ -102,3 +102,15 @@ div[data-pc-section="actions"] {
     height: 40px;
     align-self: start;
 }
+
+// tree select
+.p-treeselect-panel.p-component.p-ripple-disabled.p-connected-overlay-enter-done {
+    z-index: 5000 !important;
+}
+
+.p-treeselect-label {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+}
