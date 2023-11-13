@@ -1,0 +1,116 @@
+.p-fileupload-buttonbar {
+    padding: 10px 20px;
+}
+
+.p-fileupload.p-fileupload-advanced.p-component {
+    min-width: 50vw;
+}
+
+.p-fileupload-content {
+    * {
+        text-align: left;
+    }
+}
+
+.p-fileupload-row {
+    width: 100%;
+    padding: 10px 20px;
+
+    &:not(&:last-child) {
+        border-bottom: 2px solid rgb(177 157 247 / 16%);
+    }
+}
+
+div[data-pc-section="details"] {
+    width: 100%;
+}
+
+.p-badge-warning {
+    height: 100%;
+    padding: 2px 7px;
+}
+
+span[data-pc-section="filesize"] {
+    margin-right: 10px;
+}
+
+img[role="presentation"] {
+    margin-right: 20px;
+}
+
+div[data-pc-section="actions"] {
+    width: 20px;
+}
+
+.p-fileupload-buttonbar {
+    position: sticky;
+    top: -40px;
+    z-index: 100;
+
+    .p-button {
+        padding: 3px 15px;
+        background: #82dbf7;
+    }
+}
+
+.p-button-label {
+    font: var(--font-s);
+    margin-left: 5px;
+}
+
+// таблицы
+.p-column-title {
+    text-align: center;
+    margin-right: 5px;
+}
+
+.p-datatable-wrapper {
+    border-radius: 5px;
+}
+
+.p-datatable-thead {
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.p-selectable-row {
+    text-align: center;
+}
+
+// дисклошуре
+.p-accordion-header-link {
+    padding: 10px 20px;
+    gap: 10px;
+    font: var(--font-m);
+    font-weight: bold;
+}
+
+.p-accordion-content {
+    padding: 20px;
+
+    p {
+        text-align: left;
+    }
+}
+
+// сплиттер
+.p-splitter-gutter {
+    align-self: stretch;
+}
+
+.p-splitter-gutter-handle {
+    height: 40px;
+    align-self: start;
+}
+
+// tree select
+.p-treeselect-panel.p-component.p-ripple-disabled.p-connected-overlay-enter-done {
+    z-index: 5000 !important;
+}
+
+.p-treeselect-label {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+}

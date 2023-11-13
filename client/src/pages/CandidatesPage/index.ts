@@ -1,18 +1,6 @@
 export { CandidatesPageLazy as CandidatesPage } from './ui/CandidatesPage/CandidatesPage.lazy';
 
 export { CandidatesPageSchema } from './model/types/CandidatesPage';
-export {
-    getCandidatesError,
-    getCandidatesIsLoading,
-    getCandidatesIds,
-    getSelectedCandidates,
-    getLowerAge,
-    getUpperAge,
-    getLowerExp,
-    getUpperExp,
-    getEducationSearch,
-    getSpecialitySearch,
-} from './model/selectors/candidatesPageSelectors';
 export { compareCandidatesByIds } from './model/services/compareCandidatesByIds';
-export { fetchCandidates } from './model/services/fetchCandidates';
+export { fetchTotalCandidates } from './model/services/fetchTotalCandidates';
 export { CandidatesPageActions, CandidatesPageReducer } from './model/slice/CandidatesPageSlice';

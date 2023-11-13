@@ -8,7 +8,7 @@ import DownloadIcon from 'shared/assests/icons/download-icon.svg';
 import RangeIcon from 'shared/assests/icons/range-icon.svg';
 import { AppLink } from 'shared/UI/AppLink';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthModal } from 'features/AuthByEmail';
 import { useSelector } from 'react-redux';
 import { getUserAuthData, userActions } from 'entities/User';
@@ -25,6 +25,7 @@ export const Navbar = memo((props: NavbarProps) => {
 
     const userData = useSelector(getUserAuthData);
     const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const handleLogoutClick = useCallback(() => {
         dispatch(userActions.logout());
@@ -33,19 +34,34 @@ export const Navbar = memo((props: NavbarProps) => {
     return (
         <HStack maxW justify="between" className={classNames(classes.Navbar, {}, [className])}>
             <Text title="Dashboard" size="large" />
-            <AppLink to={RoutePath.main} className={classes.link}>
+            <AppLink
+                to={RoutePath.main}
+                className={classNames(classes.link, {
+                    [classes.active]: location.pathname === RoutePath.main,
+                })}
+            >
                 <HStack gap="8">
                     <Icon className={classes.icon} Svg={InfoIcon} />
                     <Text text="О проекте" size="small" />
                 </HStack>
             </AppLink>
-            <AppLink to={RoutePath.candidates} className={classes.link}>
+            <AppLink
+                to={RoutePath.candidates}
+                className={classNames(classes.link, {
+                    [classes.active]: location.pathname === RoutePath.candidates,
+                })}
+            >
                 <HStack gap="8">
                     <Icon className={classes.icon} Svg={RangeIcon} />
                     <Text text="Сравнение кандидатов" size="small" />
                 </HStack>
             </AppLink>
-            <AppLink to={RoutePath.filesupload} className={classes.link}>
+            <AppLink
+                to={RoutePath.filesupload}
+                className={classNames(classes.link, {
+                    [classes.active]: location.pathname === RoutePath.filesupload,
+                })}
+            >
                 <HStack gap="8">
                     <Icon className={classes.icon} Svg={DownloadIcon} />
                     <Text text="Загрузить данные" size="small" />

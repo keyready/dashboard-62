@@ -7,9 +7,6 @@ import {
 import { Reducer } from '@reduxjs/toolkit';
 
 export type ReducersList = {
-    // получаем список редюсеров,
-    // где ключ - каждое из существующих имен редюсера,
-    // а значение - сам редюсер
     [name in StateSchemaKey]?: Reducer;
 };
 

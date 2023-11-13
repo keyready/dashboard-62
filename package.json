@@ -9,7 +9,8 @@
         "lint:project": "concurrently -n ESLINT,PRETTIER,STYLELINT -c blue,green,orange \"npm run eslint\" \"npm run prettier\" \"cd ./client && npm run stylelint\"",
         "eslint": "eslint \"**/*.{ts,tsx}\" --fix",
         "prettier": "npx prettier --write **/*.{js,jsx,ts,tsx}",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "save": "node commit/index.js"
     },
     "keywords": [],
     "author": "NexusX Team",
@@ -24,8 +25,8 @@
         "eslint-plugin-jsx-a11y": "^6.5.1",
         "eslint-plugin-react": "^7.29.2",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "prettier": "2.8.8",
-        "husky": "^8.0.0"
+        "husky": "^8.0.0",
+        "prettier": "2.8.8"
     },
     "dependencies": {
         "concurrently": "^8.2.2"

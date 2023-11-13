@@ -1,6 +1,8 @@
 @import "reset";
 @import "./variables/globals";
 @import "./themes/normal";
+@import "./variables/primereact";
+@import "primereact/resources/themes/bootstrap4-dark-blue/theme.css";
 
 .app,
 .app_modal {

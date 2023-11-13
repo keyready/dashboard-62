@@ -12,6 +12,7 @@ interface TextProps {
     size?: TextSize;
     variant?: TextVariant;
     onClick?: () => void;
+    id?: string;
 }
 
 export const Text = memo((props: TextProps) => {
@@ -22,6 +23,7 @@ export const Text = memo((props: TextProps) => {
         align = 'justify',
         size = 'medium',
         variant = 'primary',
+        id,
         onClick,
     } = props;
 
@@ -33,7 +35,7 @@ export const Text = memo((props: TextProps) => {
     const add = [className, variantsClasses, alignsClasses, sizeClasses];
 
     return (
-        <div onClick={onClick} className={classNames(classes.Text, {}, add)}>
+        <div id={id} onClick={onClick} className={classNames(classes.Text, {}, add)}>
             {title && <HeaderTag className={classes.title}>{title}</HeaderTag>}
             {text && <p className={classes.text}>{text}</p>}
         </div>

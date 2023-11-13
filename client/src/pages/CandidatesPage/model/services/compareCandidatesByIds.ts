@@ -1,9 +1,3 @@
-/**
- * Функция сравнения кандидатов по id.
- *
- * На вход принимает массив id'шников, в ответ отдает массив кандидатов, отсортированных по баллам
- */
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
 import { Candidate } from 'entities/Candidate';

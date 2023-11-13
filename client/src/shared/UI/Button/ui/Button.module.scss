@@ -1,6 +1,5 @@
 .Button {
     cursor: pointer;
-    padding: 10px 15px;
     border-radius: 8px;
     color: var(--bg-color);
     background: #b6f09c;
@@ -76,23 +75,39 @@
     }
 }
 
-.disabled {
-    cursor: not-allowed;
-    background: var(--card-bg);
-    outline: 2px solid var(--primary-color);
-
-    &:hover {
-        background: var(--card-bg);
-        outline: 2px solid var(--primary-color);
-    }
-}
-
 .danger {
     border-radius: 8px;
+    color: var(--primary-color);
     background: #fc3030;
     transition: 100ms;
 
     &:hover {
         background: rgb(252 48 48 / 80%);
+    }
+}
+
+.small {
+    padding: 3px 5px;
+    font: var(--font-xs);
+}
+
+.medium {
+    padding: 7px 10px;
+    font: var(--font-s);
+}
+
+.large {
+    padding: 10px 15px;
+    font: var(--font-m);
+}
+
+.disabled {
+    cursor: not-allowed;
+    color: var(--primary-color);
+    background: var(--card-bg);
+
+    &:hover {
+        background: var(--card-bg);
+        filter: brightness(0.8);
     }
 }

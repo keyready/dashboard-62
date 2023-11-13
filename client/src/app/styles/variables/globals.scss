@@ -1,6 +1,11 @@
 :root {
     --font-family-main: "Montserrat", sans-serif;
 
+    // xs
+    --font-size-xs: 14px;
+    --font-line-xs: 22px;
+    --font-xs: var(--font-size-xs) / var(--font-line-xs) var(--font-family-main);
+
     // s
     --font-size-s: 20px;
     --font-line-s: 28px;

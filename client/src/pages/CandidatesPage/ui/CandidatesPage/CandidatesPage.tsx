@@ -1,40 +1,36 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import { ChangeEvent, FormEvent, memo, useCallback, useEffect, useState } from 'react';
-import { MTable } from 'shared/UI/MTable';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import {
     DynamicModuleLoader,
     ReducersList,
 } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { useSelector } from 'react-redux';
-import { Loader } from 'shared/UI/Loader';
-import { Alert, Button, Form, InputGroup, Modal, Pagination } from 'react-bootstrap';
+import { Checkbox } from 'primereact/checkbox';
+import { Table } from 'shared/UI/Table';
+import { HStack, VStack } from 'shared/UI/Stack';
+import { Button } from 'shared/UI/Button';
 import { Card } from 'shared/UI/Card';
-import { fetchCandidatesViaParameters } from '../../model/services/fetchCandidatesViaParameters';
-import { CandidateTabs } from '../candidatesTabs/CandidatesTabs';
-import { PageNavbar } from '../PageNavbar/PageNavbar';
-import {
-    CandidatesPageActions,
-    CandidatesPageReducer,
-    getComparedCandidates,
-} from '../../model/slice/CandidatesPageSlice';
-import {
-    getCandidatesError,
-    getCandidatesIds,
-    getCandidatesIsLoading,
-    getEducationSearch,
-    getHasMore,
-    getLowerAge,
-    getLowerExp,
-    getPage,
-    getSelectedCandidates,
-    getSpecialitySearch,
-    getUpperAge,
-    getUpperExp,
-} from '../../model/selectors/candidatesPageSelectors';
+import { Text } from 'shared/UI/Text';
+import { Disclosure } from 'shared/UI/Disclosure';
+import { Splitter, SplitterPanel } from 'primereact/splitter';
+import { useNavigate } from 'react-router-dom';
+import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
+import { RoutePath } from 'shared/config/routeConfig/routeConfig';
+import { Icon } from 'shared/UI/Icon/Icon';
+import ChevronIcon from 'shared/assests/icons/chevron-down.svg';
+import { Input } from 'shared/UI/Input';
+import { Candidate } from 'entities/Candidate';
+import { Skeleton } from 'primereact/skeleton';
+import { Paginator } from 'widgets/Paginator';
+import { useSelector } from 'react-redux';
+import { getTotalCandidates } from 'pages/CandidatesPage/model/selectors/candidatesPageSelector';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { fetchTotalCandidates } from 'pages/CandidatesPage';
+import { Modal } from 'shared/UI/Modal';
+import { CandidatesFilterModal, FilterOptions } from 'widgets/CandidatesFilterModal';
+import { QueryProps, useCandidates } from '../../api/fetchCandidatesApi';
+import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
-import { fetchCandidates } from '../../model/services/fetchCandidates';
 
 interface CandidatesPageProps {
     className?: string;
@@ -47,274 +43,277 @@ const reducers: ReducersList = {
 const CandidatesPage = memo((props: CandidatesPageProps) => {
     const { className } = props;
 
-    const dispatch = useAppDispatch();
-    const candidates = useSelector(getComparedCandidates.selectAll);
-    const candidatesError = useSelector(getCandidatesError);
-    const candidatesIsLoading = useSelector(getCandidatesIsLoading);
-    const candidatesIds = useSelector(getCandidatesIds);
-    const selectedCandidates = useSelector(getSelectedCandidates);
-    const lowerAge = useSelector(getLowerAge);
-    const upperAge = useSelector(getUpperAge);
-    const lowerExp = useSelector(getLowerExp);
-    const upperExp = useSelector(getUpperExp);
-    const page = useSelector(getPage);
-    const hasMore = useSelector(getHasMore);
-    const educationSearch = useSelector(getEducationSearch);
-    const specialitySearch = useSelector(getSpecialitySearch);
+    const { addSearchParams, deleteSearchParams, getSearchParams } = useURLParams();
 
-    const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [wasItFiltered, setWasItFiltered] = useState<boolean>(false);
+    const [selected, setSelected] = useState<Candidate[]>([]);
+    const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
+    const [taskValue, setTaskValue] = useState<string>('');
+    const [page, setPage] = useState<number>(0);
+    const [limit, setLimit] = useState<number>(10);
+    const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+    const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
+
+    const navigate = useNavigate();
+    const totalCandidates = useSelector(getTotalCandidates);
+    const dispatch = useAppDispatch();
+
+    const { data: candidates, isLoading: isCandidatesLoading } = useCandidates({ page, limit });
 
     useEffect(() => {
-        dispatch(fetchCandidates());
-        dispatch(CandidatesPageActions.setSelectedIds([]));
-        dispatch(CandidatesPageActions.setSelectedCandidates([]));
+        dispatch(fetchTotalCandidates());
 
-        // TODO: хоткиз для открытия окна поиска
-        // const onKeypress = (e: any) => {
-        //     const pressed = new Set();
-        // };
-        // document.addEventListener('keypress', onKeypress);
-        //
-        // return () => {
-        //     document.removeEventListener('keypress', onKeypress);
-        // };
+        const params = getSearchParams();
+
+        if (params?.length !== 2) {
+            deleteSearchParams('selected');
+            deleteSearchParams('task');
+            return;
+        }
+
+        const urlTask = params[0]?.param === 'task' ? params[0]?.value : params[1]?.value;
+        const urlSelected = params[1]?.param === 'selected' ? params[1]?.value : params[0]?.value;
+
+        if (params?.length) {
+            setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
+            setTaskValue(urlTask);
+        }
     }, [dispatch]);
 
-    const idsSetterHandler = useCallback(
-        (id: number) => {
-            if (candidatesIds.includes(id)) {
-                dispatch(
-                    CandidatesPageActions.setSelectedIds([
-                        ...candidatesIds.filter((currentId) => currentId !== id),
-                    ]),
-                );
+    useEffect(() => {
+        if (selectedIdsFromUrl.length && candidates) {
+            setSelected(candidates.filter((user) => selectedIdsFromUrl.includes(user.id)));
+        }
+    }, [candidates, selectedIdsFromUrl]);
 
-                dispatch(
-                    CandidatesPageActions.setSelectedCandidates([
-                        ...selectedCandidates.filter((current) => current.id !== Number(id)),
-                    ]),
-                );
-            } else {
-                dispatch(CandidatesPageActions.setSelectedIds([...candidatesIds, id]));
+    useEffect(() => {
+        if (selected.length) {
+            addSearchParams({
+                selected: selected.map((user) => user.id.toString()).join(','),
+            });
+        }
+    }, [selected]);
 
-                dispatch(
-                    CandidatesPageActions.setSelectedCandidates([
-                        ...selectedCandidates,
-                        ...candidates.filter((candidate) => candidate.id === Number(id)),
-                    ]),
+    const handleComparisonClick = useCallback(() => {
+        if (taskValue.length >= 10 && selected.length >= 2 && selected.length <= 4)
+            navigate(
+                `${RoutePath.detailedcomparison}?selected=${selected
+                    .map((user) => user.id.toString())
+                    .join(',')}&task=${taskValue}`,
+            );
+    }, [navigate, selected, taskValue]);
+
+    useEffect(() => {
+        if (taskValue) addSearchParams({ task: taskValue });
+    }, [taskValue]);
+
+    const handleRowDelete = useCallback((candForDelete: Candidate) => {
+        setSelected((prevState) => prevState.filter((cand) => cand.id !== candForDelete.id));
+    }, []);
+
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (
+                event.key === 'Enter' &&
+                taskValue.length >= 10 &&
+                selected.length >= 2 &&
+                selected.length <= 6
+            ) {
+                navigate(
+                    `${RoutePath.detailedcomparison}?selected=${selected
+                        .map((user) => user.id.toString())
+                        .join(',')}&task=${taskValue}`,
                 );
             }
-        },
-        [candidates, candidatesIds, dispatch, selectedCandidates],
-    );
+        };
 
-    // TODO: очистка списка выбранных кандидатов
-    const clearCandidatesList = useCallback(() => {
-        dispatch(CandidatesPageActions.setSelectedIds([]));
-        dispatch(CandidatesPageActions.setSelectedCandidates([]));
-    }, [dispatch]);
+        document.addEventListener('keydown', handleKeyPress);
 
-    const getFirstPage = useCallback(() => {
-        dispatch(CandidatesPageActions.setPage(1));
-        dispatch(fetchCandidates());
-    }, [dispatch]);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [navigate, selected, taskValue]);
 
-    const getPreviousPage = useCallback(() => {
-        if (page > 1) {
-            dispatch(CandidatesPageActions.setPage(page - 1));
-            dispatch(fetchCandidates());
-        }
-    }, [dispatch, page]);
+    if (isCandidatesLoading) {
+        return (
+            <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+                <Page className={classNames(classes.CandidatesPage, {}, [className])}>
+                    <VStack maxW gap="32">
+                        <Skeleton width="45%" height="85px" />
 
-    const getNextPage = useCallback(() => {
-        dispatch(CandidatesPageActions.setPage(page + 1));
-        dispatch(fetchCandidates());
-    }, [dispatch, page]);
+                        <HStack
+                            className={classes.skeletonWrapper}
+                            gap="16"
+                            maxW
+                            align="start"
+                            justify="between"
+                        >
+                            <VStack gap="16" className={classes.skeletonList}>
+                                {new Array(10).fill(0).map((_, index) => (
+                                    <HStack
+                                        className={classes.skeletonCard}
+                                        maxW
+                                        gap="8"
+                                        key={index}
+                                    >
+                                        <Skeleton shape="circle" size="75px" />
+                                        <VStack maxW align="start">
+                                            <Skeleton width="100%" height="40px" />
+                                            <Skeleton width="60%" height="20px" />
+                                            <Skeleton width="60%" height="20px" />
+                                        </VStack>
+                                    </HStack>
+                                ))}
+                            </VStack>
+                            <Skeleton className={classes.skeletonTable} width="60%" height="30vh" />
+                        </HStack>
+                    </VStack>
+                </Page>
+            </DynamicModuleLoader>
+        );
+    }
 
-    const onEducationSearchChange = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            dispatch(CandidatesPageActions.setEducationSearch(e.target.value));
-        },
-        [dispatch],
-    );
-    const onSpecialitySearchChange = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            dispatch(CandidatesPageActions.setSpecialitySearch(e.target.value));
-        },
-        [dispatch],
-    );
-    const onLowerAgeChangeHandler = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            dispatch(CandidatesPageActions.setLowerAge(e.target.value as unknown as number));
-        },
-        [dispatch],
-    );
-    const onUpperAgeChangeHandler = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            dispatch(CandidatesPageActions.setUpperAge(e.target.value as unknown as number));
-        },
-        [dispatch],
-    );
-    const onLowerExpChangeHandler = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            dispatch(CandidatesPageActions.setLowerExp(e.target.value as unknown as number));
-        },
-        [dispatch],
-    );
-    const onUpperExpChangeHandler = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            dispatch(CandidatesPageActions.setUpperExp(e.target.value as unknown as number));
-        },
-        [dispatch],
-    );
-
-    const onSearchCandidateSubmit = useCallback(
-        (e: FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-            dispatch(
-                fetchCandidatesViaParameters({
-                    education: educationSearch,
-                    speciality: specialitySearch,
-                    lowerAge,
-                    upperAge,
-                    lowerExp,
-                    upperExp,
-                }),
-            );
-
-            dispatch(CandidatesPageActions.setEducationSearch(''));
-            dispatch(CandidatesPageActions.setSpecialitySearch(''));
-            dispatch(CandidatesPageActions.setLowerAge(undefined));
-            dispatch(CandidatesPageActions.setUpperAge(undefined));
-            dispatch(CandidatesPageActions.setLowerExp(undefined));
-            dispatch(CandidatesPageActions.setUpperExp(undefined));
-            dispatch(CandidatesPageActions.setSelectedCandidates([]));
-            dispatch(CandidatesPageActions.setSelectedIds([]));
-
-            setIsFocused(false);
-            setWasItFiltered(true);
-        },
-        [dispatch, educationSearch, lowerAge, lowerExp, specialitySearch, upperAge, upperExp],
-    );
-
-    const resetFilters = useCallback(() => {
-        dispatch(fetchCandidates());
-        setWasItFiltered(false);
-        dispatch(CandidatesPageActions.setSelectedCandidates([]));
-        dispatch(CandidatesPageActions.setSelectedIds([]));
-    }, [dispatch]);
+    if (!candidates?.length && !isCandidatesLoading) {
+        return (
+            <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+                <Page className={classNames(classes.CandidatesPage, {}, [className])}>
+                    <h2>ничего не нашли</h2>
+                </Page>
+            </DynamicModuleLoader>
+        );
+    }
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <Page className={classNames(classes.CandidatesPage, {}, [className])}>
-                <Modal show={isFocused} onHide={() => setIsFocused(false)}>
-                    <Card>
-                        <h2>Поиск кандидатов</h2>
-                        <Form onSubmit={onSearchCandidateSubmit}>
-                            <InputGroup className="mb-3">
-                                <Form.Control
-                                    onChange={onEducationSearchChange}
-                                    value={educationSearch}
-                                    placeholder="Поиск по ВУЗу"
-                                />
-                                <Form.Control
-                                    onChange={onSpecialitySearchChange}
-                                    value={specialitySearch}
-                                    placeholder="Поиск по специальности"
-                                />
-                            </InputGroup>
-
-                            <InputGroup className="mb-3">
-                                <Form.Control
-                                    placeholder="Возраст от"
-                                    min={0}
-                                    type="number"
-                                    onChange={onLowerAgeChangeHandler}
-                                    value={lowerAge}
-                                />
-                                <Form.Control
-                                    placeholder="Возраст до"
-                                    max={100}
-                                    type="number"
-                                    onChange={onUpperAgeChangeHandler}
-                                    value={upperAge}
-                                />
-                            </InputGroup>
-                            <InputGroup className="mb-3">
-                                <Form.Control
-                                    placeholder="Опыт работы от"
-                                    min={0}
-                                    type="number"
-                                    onChange={onLowerExpChangeHandler}
-                                    value={lowerExp}
-                                />
-                                <Form.Control
-                                    placeholder="Опыт работы до"
-                                    max={100}
-                                    type="number"
-                                    onChange={onUpperExpChangeHandler}
-                                    value={upperExp}
-                                />
-                            </InputGroup>
-
-                            <Button type="submit" variant="dark">
-                                Поиск
-                            </Button>
-                        </Form>
-                    </Card>
-                </Modal>
-
-                <PageNavbar
-                    isCandidates={selectedCandidates?.length > 1 && selectedCandidates?.length <= 4}
-                    setIsFocused={setIsFocused}
+                <CandidatesFilterModal
+                    filterOptions={filterOptions}
+                    setIsOpen={setIsModalOpened}
+                    isOpen={isModalOpened}
                 />
-                {candidatesError && (
-                    <Alert variant="danger">{`Упс... Произошла ошибка: ${candidatesError}`}</Alert>
-                )}
-                <div className={classes.content}>
-                    <div className={classes.panelsWrapper}>
-                        {candidatesIsLoading ? (
-                            <Card className={classes.loaderCard}>
-                                <Loader />
-                            </Card>
-                        ) : candidates.length ? (
-                            <Card className={classes.tabsCard}>
-                                {candidates.map((candidate) => (
-                                    <Card key={candidate.id} className={classes.cardTab}>
-                                        <CandidateTabs
-                                            candidate={candidate}
-                                            key={candidate.id}
-                                            setSelectedId={idsSetterHandler}
+
+                <HStack justify="start">
+                    <Card className={classes.card}>
+                        <Text
+                            align="left"
+                            size="large"
+                            className={classes.textBlock}
+                            title="Сравнение выпускников"
+                        />
+                    </Card>
+                </HStack>
+
+                <HStack className={classes.deleteBtn} maxW justify="end">
+                    <Button size="small" onClick={() => setIsModalOpened(true)}>
+                        Поиск по параметрам
+                    </Button>
+                    <Button
+                        size="small"
+                        variant="danger"
+                        disabled={!selected.length}
+                        onClick={() => {
+                            setSelected([]);
+                            deleteSearchParams('selected');
+                            deleteSearchParams('task');
+                        }}
+                    >
+                        Очистить выбор
+                    </Button>
+                </HStack>
+
+                <Splitter className={classes.contentWrapper}>
+                    <SplitterPanel size={40} className={classes.accordion}>
+                        <Disclosure
+                            titles={
+                                candidates?.map((candidate) => (
+                                    <HStack maxW justify="start" gap="16" key={candidate.id}>
+                                        <Checkbox
+                                            onChange={(event) => {
+                                                event.stopPropagation();
+                                                if (selected.includes(candidate)) {
+                                                    setSelected((prev) =>
+                                                        prev.filter((item) => item !== candidate),
+                                                    );
+                                                    return;
+                                                }
+                                                setSelected((prev) => [...prev, candidate]);
+                                            }}
+                                            checked={selected.includes(candidate)}
                                         />
-                                    </Card>
-                                ))}
+                                        <div className={classes.img} />
+                                        <Text
+                                            className={classes.textBlock}
+                                            size="extrasmall"
+                                            title={candidate.firstname}
+                                        />
+                                    </HStack>
+                                )) || [<p>ничего</p>]
+                            }
+                            paragraphs={
+                                candidates?.map((user) => (
+                                    <VStack maxW gap="0" key={user.id}>
+                                        <HStack maxW>
+                                            <b>Возраст:</b>
+                                            <p>{user.age}</p>
+                                        </HStack>
+                                        <HStack maxW>
+                                            <b>ВУЗ:</b>
+                                            <p>{user.HES}</p>
+                                        </HStack>
+                                        <HStack maxW>
+                                            <b>Специальность:</b>
+                                            <p>{user.department}</p>
+                                        </HStack>
+                                        <HStack maxW>
+                                            <b>Хобби:</b>
+                                            <p>{user.hobby}</p>
+                                        </HStack>
+                                    </VStack>
+                                )) || [<p>ничего</p>]
+                            }
+                        />
+                        <Paginator
+                            totalCandidates={totalCandidates}
+                            setCurrentLimit={setLimit}
+                            setCurrentPage={setPage}
+                            currentPage={page}
+                            currentLimit={limit}
+                        />
+                    </SplitterPanel>
 
-                                <Pagination className={classes.paginationWrapper}>
-                                    <Pagination.First
-                                        disabled={page === 1}
-                                        onClick={getFirstPage}
-                                    />
-                                    <Pagination.Prev
-                                        disabled={page === 1}
-                                        onClick={getPreviousPage}
-                                    />
-                                    <Pagination.Item>{page}</Pagination.Item>
-                                    <Pagination.Next disabled={!hasMore} onClick={getNextPage} />
-                                </Pagination>
-                            </Card>
-                        ) : (
-                            <Card className={classes.loaderCard}>Никого не найдено</Card>
-                        )}
-                        {wasItFiltered && (
-                            <Button variant="danger" onClick={resetFilters}>
-                                Сбросить фильтры
-                            </Button>
-                        )}
-                    </div>
-
-                    {selectedCandidates && <MTable tableData={selectedCandidates} />}
-                </div>
+                    <SplitterPanel size={60} className={classes.tableWrapper}>
+                        <Table data={selected} onRowDelete={handleRowDelete} />
+                        <Input
+                            className={classes.input}
+                            value={taskValue}
+                            onChange={setTaskValue}
+                            placeholder="Введите задачу, которую необходимо решить"
+                        />
+                        <HStack
+                            maxW
+                            justify="end"
+                            className={classNames(classes.detailedComparisonLinkWrapper, {
+                                [classes.active]:
+                                    taskValue.length >= 10 &&
+                                    selected.length >= 2 &&
+                                    selected.length <= 6,
+                            })}
+                            onClick={handleComparisonClick}
+                        >
+                            <Text
+                                title="Перейти к подробному сравнению"
+                                size="small"
+                                align="right"
+                                className={classNames(classes.detailedComparisonLink, {
+                                    [classes.active]:
+                                        taskValue.length >= 10 &&
+                                        selected.length >= 2 &&
+                                        selected.length <= 6,
+                                })}
+                            />
+                            <Icon Svg={ChevronIcon} />
+                        </HStack>
+                    </SplitterPanel>
+                </Splitter>
             </Page>
         </DynamicModuleLoader>
     );

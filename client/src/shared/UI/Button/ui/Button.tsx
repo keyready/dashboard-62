@@ -1,7 +1,7 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { ButtonHTMLAttributes, memo, ReactNode } from 'react';
-import { variantsMapper } from '../types/button.mapper';
-import { buttonVariants } from '../types/button.types';
+import { variantsMapper, sizesMapper } from '../types/button.mapper';
+import { buttonSizes, buttonVariants } from '../types/button.types';
 import classes from './Button.module.scss';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -9,12 +9,21 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     disabled?: boolean;
     children?: ReactNode;
     variant?: buttonVariants;
+    size?: buttonSizes;
 }
 
 export const Button = memo((props: ButtonProps) => {
-    const { onClick, className, children, disabled, variant = 'primary', ...otherProps } = props;
+    const {
+        onClick,
+        className,
+        children,
+        disabled,
+        size = 'medium',
+        variant = 'primary',
+        ...otherProps
+    } = props;
 
-    const add = [variantsMapper[variant], className];
+    const add = [sizesMapper[size], variantsMapper[variant], className];
 
     return (
         <button

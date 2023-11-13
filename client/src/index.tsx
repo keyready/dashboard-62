@@ -7,6 +7,8 @@ import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'app/providers/ErrorBoundary';
 import { StoreProvider } from 'app/providers/StoreProvider';
 
+import { PrimeReactProvider } from 'primereact/api';
+
 const container = document.getElementById('root');
 if (!container) {
     throw new Error('Не удалось вмонтировать приложение');
@@ -18,7 +20,9 @@ root.render(
         <StoreProvider>
             <ErrorBoundary>
                 <ThemeProvider>
-                    <App />
+                    <PrimeReactProvider>
+                        <App />
+                    </PrimeReactProvider>
                 </ThemeProvider>
             </ErrorBoundary>
         </StoreProvider>

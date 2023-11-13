@@ -15,12 +15,21 @@ interface InputProps extends HTMLInputProps {
     autoFocus?: boolean;
     readonly?: boolean;
     onChange?: (value: string) => void;
-    icon: React.VFC<React.SVGProps<SVGSVGElement>>;
+    icon?: React.VFC<React.SVGProps<SVGSVGElement>>;
 }
 
 export const Input = memo((props: InputProps) => {
     const ref = useRef<HTMLInputElement>(null);
-    const { icon, value, onChange, type = 'text', autoFocus, readonly, ...otherProps } = props;
+    const {
+        className,
+        icon,
+        value,
+        onChange,
+        type = 'text',
+        autoFocus,
+        readonly,
+        ...otherProps
+    } = props;
 
     useEffect(() => {
         if (autoFocus) {
@@ -33,8 +42,12 @@ export const Input = memo((props: InputProps) => {
     };
 
     return (
-        <HStack gap="8" maxW justify="start"
-className={classes.wrapper}>
+        <HStack
+            gap="8"
+            maxW
+            justify="start"
+            className={classNames(classes.wrapper, {}, [className])}
+        >
             {icon && <Icon Svg={icon} />}
             <input
                 ref={ref}

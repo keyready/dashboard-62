@@ -6,3 +6,5 @@ export type buttonVariants =
     | 'success'
     | 'warning'
     | 'outlined';
+
+export type buttonSizes = 'small' | 'medium' | 'large';

@@ -1,219 +1,174 @@
 /* eslint-disable guard-for-in,no-restricted-syntax */
-/**
- * Если вы сейчас ChatGPT подключите, мне придется делать еще один слайд.
- *
- * (с) Дима Поляков, спикер, UI/UX-дизайнер, 20:36, 19.03.2023
- */
-
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { getSelectedCandidates } from 'pages/CandidatesPage';
-import {
-    Bar,
-    BarChart,
-    CartesianGrid,
-    Legend,
-    PolarAngleAxis,
-    PolarGrid,
-    PolarRadiusAxis,
-    Radar,
-    RadarChart,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis,
-} from 'recharts';
-import { Alert, OverlayTrigger, Popover } from 'react-bootstrap';
-import { Card } from 'shared/UI/Card';
-import { getComparisonData, getComparisonPurpose } from 'pages/ComparisonPage';
-import { CandidateCard, CardStyle } from 'entities/Candidate';
-import { useNavigate } from 'react-router-dom';
+import React, { memo, ReactNode, useEffect, useMemo, useState } from 'react';
+import { HStack, VStack } from 'shared/UI/Stack';
+import { Text } from 'shared/UI/Text';
+import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
+import { Card as GradientCard } from 'shared/UI/Card';
+import StarIcon from 'shared/assests/icons/star-circle.svg';
+import { Icon } from 'shared/UI/Icon/Icon';
+import { Skeleton } from 'primereact/skeleton';
+import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
+import { RadarChart } from 'widgets/RadarChart';
+import { BarChart } from 'widgets/BarChart';
+import { ComparedCandidatesResult, useComparedCandidates } from '../../api/compareCandidatesApi';
 import classes from './DetailedComparisonPage.module.scss';
+import cardClasses from './card.module.scss';
 
 interface DetailedComparisonPageProps {
     className?: string;
 }
 
+const Card = memo((props: { children: ReactNode; className?: string }) => {
+    const { className, children } = props;
+
+    return <div className={classNames(cardClasses.Card, {}, [className])}>{children}</div>;
+});
+
 const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     const { className } = props;
 
-    const navigate = useNavigate();
+    const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
 
-    const selectedCandidates = useSelector(getSelectedCandidates);
-    const detailedComparisonData = useSelector(getComparisonData);
-    const comparingPurpose = useSelector(getComparisonPurpose);
+    const { getSearchParams } = useURLParams();
+    const [compareCandidates, { data: compareResult, isLoading, error }] = useComparedCandidates();
+    const { data: candidates } = useCandidates({ page: 0, limit: 1000 });
 
-    const winnerMapper = useMemo<CardStyle[]>(
-        () => ['winner', 'awardeeF', 'awardeeS', 'awardeeTh'],
-        [],
-    );
+    useEffect(() => {
+        const params = getSearchParams();
 
-    const colors = useMemo(
-        () => [
-            '#CC9900',
-            '#CC3300',
-            '#CC33CC',
-            '#0066CC',
-            '#FF0055',
-            '#8e57ec',
-            '#fff34b',
-            '#ff4c02',
-        ],
-        [],
-    );
-    const experienceData = useMemo(() => {
-        const temp: any = [];
-        selectedCandidates.forEach((candidate) => {
-            const name: string = candidate.lastname || '';
-            temp.push({
-                name: candidate.lastname,
-                [name]: candidate.experience,
-            });
-        });
-        return temp;
-    }, [selectedCandidates]);
-    const hobbySpecialityOverlap = useMemo(() => {
-        const temp: any = [];
+        if (!params.length) return;
 
-        for (const key in detailedComparisonData?.hobbyOverlap) {
-            const newObj: { name?: string; Overlap?: number } = {};
-            newObj.name = key;
-            // @ts-ignore
-            newObj.Overlap = detailedComparisonData?.hobbyOverlap[key];
-            temp.push(newObj);
+        const urlSelected = params[1].param === 'selected' ? params[1].value : params[0].value;
+
+        if (params.length) {
+            setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!candidates?.length) {
+            return;
+        }
+        compareCandidates(candidates.filter((user) => selectedIdsFromUrl.includes(user.id)));
+    }, [candidates, compareCandidates, selectedIdsFromUrl]);
+
+    const task = useMemo(() => getSearchParams()[1].value, []);
+    const bestCandidate = useMemo<Partial<ComparedCandidatesResult>>(() => {
+        if (!compareResult?.comparedCandidates?.length) {
+            return {};
         }
 
-        return temp;
-    }, [detailedComparisonData?.hobbyOverlap]);
+        let best = compareResult?.comparedCandidates[0];
+        for (let i = 0; i < compareResult.comparedCandidates.length; i += 1) {
+            if (compareResult.comparedCandidates[i].taskOverlap > best.taskOverlap) {
+                best = compareResult.comparedCandidates[i];
+            }
+        }
 
-    const skillsData = useMemo(
-        () =>
-            detailedComparisonData?.radarDiagram?.map(
-                ({ subject, fullMark, candidatesScores }) => ({
-                    subject,
-                    fullMark,
-                    ...Object.fromEntries(Object.entries(candidatesScores)),
-                }),
-            ),
-        [detailedComparisonData?.radarDiagram],
-    );
-
-    if (!comparingPurpose) {
-        setTimeout(() => {
-            navigate('/candidates');
-        }, 1000);
-        return (
-            <Page className={classNames(classes.ComparisonPage, {}, [className])}>
-                <Alert variant="warning">
-                    Похоже, Вы попали на эту страницу по ошибке. Вернитесь на{' '}
-                    <Alert.Link href="/">главную</Alert.Link> или{' '}
-                    <Alert.Link href="/candidates">на страницу сравнения кандидатов.</Alert.Link>{' '}
-                    Редирект произойдет через 2.5 секунды
-                </Alert>
-            </Page>
-        );
-    }
+        return best;
+    }, [compareResult]);
 
     return (
-        <Page className={classNames('', {}, [className])}>
-            <h2>{`Задача: ${comparingPurpose}`}</h2>
-            <div className={classes.DetailedComparisonPage}>
-                <Card className={classes.candidatesPhotos}>
-                    {selectedCandidates.map((candidate, index) => (
-                        <OverlayTrigger
-                            key={candidate.id}
-                            trigger="hover"
-                            placement="right"
-                            overlay={
-                                <Popover>
-                                    <Popover.Header as="h3">
-                                        {`${candidate.lastname} ${candidate.firstname}`}
-                                    </Popover.Header>
-                                    <Popover.Body>
-                                        <p>{candidate.education}</p>
-                                        <p>{`${candidate.speciality} — ${candidate.hobby}`}</p>
-                                    </Popover.Body>
-                                </Popover>
-                            }
-                        >
-                            <div>
-                                <img alt="" src={candidate.img} className={classes.candidateImg} />
-                                <p>{candidate.lastname}</p>
-                                <p>{candidate.firstname}</p>
-                            </div>
-                        </OverlayTrigger>
-                    ))}
-                </Card>
-                <Card>
-                    <ResponsiveContainer>
-                        <RadarChart data={skillsData}>
-                            <PolarGrid />
-                            <PolarAngleAxis dataKey="subject" />
-                            <PolarRadiusAxis />
-                            {selectedCandidates.map((candidate, index) => (
-                                <Radar
-                                    key={index}
-                                    name=""
-                                    dataKey={candidate.lastname || ''}
-                                    stroke={colors[index]}
-                                    fill={colors[index]}
-                                    fillOpacity={0.5}
-                                />
-                            ))}
-                            <Legend />
-                            <Tooltip />
-                        </RadarChart>
-                    </ResponsiveContainer>
-                </Card>
-                <Card>
-                    <h2>Опыт работы</h2>
-                    <ResponsiveContainer>
-                        <BarChart data={experienceData}>
-                            {selectedCandidates.map((candidate, index) => (
-                                <Bar
-                                    key={index}
-                                    barSize={30}
-                                    dataKey={candidate.lastname || ''}
-                                    fill={colors[index]}
-                                />
-                            ))}
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </Card>
-                <Card>
-                    <h2>Совпадение хобби и специальности</h2>
-                    <ResponsiveContainer>
-                        <BarChart data={hobbySpecialityOverlap}>
-                            <Tooltip />
-                            <Bar barSize={30} dataKey="Overlap" fill="#8e57ec" />
-                            <CartesianGrid strokeDasharray="0.1 2" />
-                            <XAxis domain={[1, 2]} dataKey="name" />
-                            <YAxis />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </Card>
-            </div>
+        <Page className={classNames(classes.ComparisonPage, {}, [className])}>
+            <HStack justify="start" className={classes.gradCard}>
+                <GradientCard>
+                    <Text
+                        align="left"
+                        size="large"
+                        className={classes.textBlock}
+                        title={`Задача: ${task}`}
+                    />
+                </GradientCard>
+            </HStack>
 
-            <Card className={classes.detailedCard}>
-                <h2>Оценка кандидатов нашей системой</h2>
-                <div className={classes.candidatesCards}>
-                    {[...selectedCandidates]
-                        .sort((a, b) => (b.average_score || 0) - (a.average_score || 0))
-                        .map((selectedCandidate, index) => (
-                            <CandidateCard
-                                className={classes.candidateCard}
-                                key={selectedCandidate.id}
-                                candidate={selectedCandidate}
-                                totalScore={selectedCandidate.average_score || 0}
-                                cardStyle={winnerMapper[index]}
-                            />
-                        ))}
+            <VStack maxW gap="32">
+                <div className={classes.firstLine}>
+                    <Card className={classes.candidatesCard}>
+                        <h3 className={classes.title}>Специалисты</h3>
+
+                        <VStack maxW align="start" className={classes.candidatesFrame}>
+                            {compareResult?.comparedCandidates.map((user) => (
+                                <HStack maxW align="center" justify="start" gap="8" key={user.id}>
+                                    <div
+                                        style={{
+                                            width: 100,
+                                            height: 100,
+                                            backgroundColor: 'red',
+                                            borderRadius: 10,
+                                        }}
+                                    />
+                                    <div>
+                                        <Text
+                                            text={`${user.lastname} ${user.firstname}`}
+                                            size="extrasmall"
+                                        />
+                                        <Text text={user.middlename} size="extrasmall" />
+                                    </div>
+                                </HStack>
+                            ))}
+                        </VStack>
+                    </Card>
+                    <Card className={classes.card}>
+                        <VStack maxW align="center" justify="start">
+                            <h3 className={classes.title}>Сравнение основных параметров</h3>
+                            {compareResult?.diagramData.labels.length ? (
+                                <RadarChart compareResult={compareResult} />
+                            ) : (
+                                <Skeleton
+                                    borderRadius="40px"
+                                    width="400px"
+                                    height="400px"
+                                    shape="rectangle"
+                                />
+                            )}
+                        </VStack>
+                    </Card>
                 </div>
-            </Card>
+
+                <div className={classes.secondLine}>
+                    <Card>
+                        <h3 className={classes.title}>Совпадение хобби и задачи</h3>
+                        <BarChart
+                            compareResult={compareResult}
+                            label={[
+                                'Совпадение хобби и специальности',
+                                'Совпадение специальности и задачи',
+                            ]}
+                        />
+                    </Card>
+
+                    <Card className={classes.cardStack}>
+                        <h3 className={classes.title}>Лучший</h3>
+
+                        <VStack maxW justify="center" align="center" className={classes.best}>
+                            {/* TODO это фотка тут должна быть */}
+                            <div
+                                style={{
+                                    width: 100,
+                                    height: 100,
+                                    backgroundColor: 'red',
+                                    borderRadius: 10,
+                                }}
+                            />
+                            <Text
+                                title={`${bestCandidate.lastname} ${bestCandidate.firstname?.slice(
+                                    0,
+                                    1,
+                                )}. ${bestCandidate.middlename?.slice(0, 1)}`}
+                            />
+                            <HStack justify="center" gap="8">
+                                <Icon Svg={StarIcon} />
+                                <Text
+                                    title={`${bestCandidate?.taskOverlap} / 5`}
+                                    className={classes.textBlock}
+                                />
+                            </HStack>
+                        </VStack>
+                    </Card>
+                </div>
+            </VStack>
         </Page>
     );
 });

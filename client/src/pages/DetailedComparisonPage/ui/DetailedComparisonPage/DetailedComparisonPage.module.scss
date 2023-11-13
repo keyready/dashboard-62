@@ -1,68 +1,55 @@
-p,
-h2 {
-    margin: 0;
-    padding: 0;
+.card {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    min-height: 460px;
 }
 
-.DetailedComparisonPage {
+.title {
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    justify-self: start;
+}
+
+.best {
     height: 100%;
-    display: grid;
-    margin-top: 15px;
-    grid-template-columns: 1fr 2fr;
-    grid-gap: 10px;
 }
 
-.candidatesPhotos {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-    align-content: center;
-    justify-items: center;
+.gradCard {
+    margin-bottom: 20px;
+}
 
-    p {
+.textBlock {
+    h1,
+    h2,
+    h3,
+    h4 {
         margin: 0;
-        padding: 0;
-        text-align: center;
     }
 }
 
-.candidateImg {
-    width: 100px;
-    height: 100px;
-    border-radius: 15px;
+.firstLine {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.5fr 3fr;
+    grid-gap: 15px;
 }
 
-.commonComparison {
-    grid-row: 3 / span 3;
-    grid-column: 1 / span 2;
+.candidatesFrame {
+    overflow-y: auto;
+    max-height: 550px;
 }
 
-.detailedCard {
-    padding: 20px;
-    margin-top: 15px;
+.secondLine {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
 }
 
-.candidatesCards {
+.cardStack {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: nowrap;
-    margin-top: 20px;
-}
-
-.candidateCard {
-    position: relative;
-    margin-right: -30px;
-
-    &:last-child {
-        left: 0;
-        margin-right: 0;
-    }
-}
-
-.comparison {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
+    justify-content: center;
 }
