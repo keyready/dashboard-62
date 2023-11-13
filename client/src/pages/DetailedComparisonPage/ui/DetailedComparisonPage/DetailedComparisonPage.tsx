@@ -2,7 +2,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
 import React, { memo, ReactNode, useEffect, useMemo, useState } from 'react';
-import { Chart } from 'primereact/chart';
 import { HStack, VStack } from 'shared/UI/Stack';
 import { Text } from 'shared/UI/Text';
 import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
@@ -11,6 +10,8 @@ import StarIcon from 'shared/assests/icons/star-circle.svg';
 import { Icon } from 'shared/UI/Icon/Icon';
 import { Skeleton } from 'primereact/skeleton';
 import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
+import { RadarChart } from 'widgets/RadarChart';
+import { BarChart } from 'widgets/BarChart';
 import { ComparedCandidatesResult, useComparedCandidates } from '../../api/compareCandidatesApi';
 import classes from './DetailedComparisonPage.module.scss';
 import cardClasses from './card.module.scss';
@@ -27,11 +28,6 @@ const Card = memo((props: { children: ReactNode; className?: string }) => {
 
 const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     const { className } = props;
-
-    const [chartData, setChartData] = useState({});
-    const [chartOptions, setChartOptions] = useState({});
-    const [barData, setBarData] = useState({});
-    const [barOptions, setBarOptions] = useState({});
 
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
 
@@ -73,41 +69,6 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
         return best;
     }, [compareResult]);
-    const colors = useMemo(
-        () => ['#FCE4D6', '#FDF4E3', '#E6F0F9', '#E8F6E4', '#FDF2E8', '#E3F2FD'],
-        [],
-    );
-
-    useEffect(() => {
-        const data =
-            {
-                ...compareResult?.diagramData,
-                datasets: compareResult?.diagramData?.datasets?.map((dataset, index) => ({
-                    ...dataset,
-                    color: colors[index],
-                })),
-            } || {};
-        const options = {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#fff', // цвет легенды
-                    },
-                },
-            },
-            scales: {
-                r: {
-                    grid: {
-                        color: '#fff', // цвет сетки радара
-                    },
-                },
-            },
-            responsive: true,
-        };
-
-        setChartData(data);
-        setChartOptions(options);
-    }, [colors, compareResult]);
 
     return (
         <Page className={classNames(classes.ComparisonPage, {}, [className])}>
@@ -153,12 +114,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                         <VStack maxW align="center" justify="start">
                             <h3 className={classes.title}>Сравнение основных параметров</h3>
                             {compareResult?.diagramData.labels.length ? (
-                                <Chart
-                                    className={classes.radar}
-                                    type="radar"
-                                    data={chartData || {}}
-                                    options={chartOptions}
-                                />
+                                <RadarChart compareResult={compareResult} />
                             ) : (
                                 <Skeleton
                                     borderRadius="40px"
@@ -174,6 +130,13 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                 <div className={classes.secondLine}>
                     <Card>
                         <h3 className={classes.title}>Совпадение хобби и задачи</h3>
+                        <BarChart
+                            compareResult={compareResult}
+                            label={[
+                                'Совпадение хобби и специальности',
+                                'Совпадение специальности и задачи',
+                            ]}
+                        />
                     </Card>
 
                     <Card>

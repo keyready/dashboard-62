@@ -17,7 +17,7 @@ interface DiagramInterface {
     datasets: DiagramDatasetInterface[];
 }
 
-interface ComparedResult {
+export interface ComparedResult {
     comparedCandidates: ComparedCandidatesResult[];
     diagramData: DiagramInterface;
 }

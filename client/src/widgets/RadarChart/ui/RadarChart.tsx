@@ -1,15 +1,62 @@
 import { classNames } from 'shared/lib/classNames/classNames';
-import { useTranslation } from 'react-i18next';
-import { memo } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
+import { Chart } from 'primereact/chart';
+import { ComparedResult } from 'pages/DetailedComparisonPage';
 import classes from './RadarChart.module.scss';
 
 interface RadarChartProps {
     className?: string;
+    compareResult?: ComparedResult;
 }
 
 export const RadarChart = memo((props: RadarChartProps) => {
-    const { className } = props;
-    const { t } = useTranslation();
+    const { className, compareResult } = props;
 
-    return <div className={classNames(classes.RadarChart, {}, [className])}>{t('RadarChart')}</div>;
+    const [chartData, setChartData] = useState({});
+    const [chartOptions, setChartOptions] = useState({});
+
+    const colors = useMemo(
+        () => ['#FCE4D6', '#FDF4E3', '#E6F0F9', '#E8F6E4', '#FDF2E8', '#E3F2FD'],
+        [],
+    );
+
+    useEffect(() => {
+        const data =
+            {
+                ...compareResult?.diagramData,
+                datasets: compareResult?.diagramData?.datasets?.map((dataset, index) => ({
+                    ...dataset,
+                    color: colors[index],
+                })),
+            } || {};
+        const options = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#fff', // цвет легенды
+                    },
+                },
+            },
+            scales: {
+                r: {
+                    grid: {
+                        color: '#fff', // цвет сетки радара
+                    },
+                },
+            },
+            responsive: true,
+        };
+
+        setChartData(data);
+        setChartOptions(options);
+    }, [colors, compareResult]);
+
+    return (
+        <Chart
+            className={classNames(classes.radar, {}, [className])}
+            type="radar"
+            data={chartData || {}}
+            options={chartOptions}
+        />
+    );
 });
