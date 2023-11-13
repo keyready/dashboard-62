@@ -142,7 +142,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                     <Card>
                         <h3 className={classes.title}>Лучший</h3>
 
-                        <VStack maxW align="center" className={classes.best}>
+                        <VStack maxW justify="center" align="center" className={classes.best}>
                             {/* TODO это фотка тут должна быть */}
                             <div
                                 style={{

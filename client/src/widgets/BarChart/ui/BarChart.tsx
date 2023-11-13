@@ -13,12 +13,6 @@ interface BarChartProps {
 export const BarChart = memo((props: BarChartProps) => {
     const { className, label, compareResult } = props;
 
-    useEffect(() => {
-        compareResult?.comparedCandidates.map((cand) => {
-            console.log(cand.firstname);
-        });
-    }, [compareResult]);
-
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
 
@@ -31,15 +25,15 @@ export const BarChart = memo((props: BarChartProps) => {
             datasets: [
                 {
                     label: label[0],
-                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-                    borderColor: documentStyle.getPropertyValue('--blue-500'),
-                    data: [65, 59, 80],
+                    backgroundColor: '#82DBF7',
+                    borderColor: '#00FAEB',
+                    data: compareResult?.comparedCandidates.map((cand) => cand.taskOverlap),
                 },
                 {
                     label: label[1],
-                    backgroundColor: documentStyle.getPropertyValue('--red-500'),
-                    borderColor: documentStyle.getPropertyValue('--red-500'),
-                    data: [34, 23, 87],
+                    backgroundColor: '#00FAEB',
+                    borderColor: '#00FAEB',
+                    data: compareResult?.comparedCandidates.map((cand) => cand.hobbyOverlap),
                 },
             ],
         };
