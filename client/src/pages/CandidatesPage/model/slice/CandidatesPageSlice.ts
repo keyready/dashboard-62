@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchCandidates } from 'pages/CandidatesPage';
+import { fetchTotalCandidates } from 'pages/CandidatesPage';
 import { CandidatesPageSchema } from '../types/CandidatesPage';
 
 const initialState: CandidatesPageSchema = {};
@@ -10,14 +10,15 @@ export const CandidatesPageSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchCandidates.pending, (state) => {
+            .addCase(fetchTotalCandidates.pending, (state) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(fetchCandidates.fulfilled, (state, action: PayloadAction<any>) => {
+            .addCase(fetchTotalCandidates.fulfilled, (state, action: PayloadAction<number>) => {
                 state.isLoading = false;
+                state.totalCandidates = action.payload;
             })
-            .addCase(fetchCandidates.rejected, (state, action) => {
+            .addCase(fetchTotalCandidates.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

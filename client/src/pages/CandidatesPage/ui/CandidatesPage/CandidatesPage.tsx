@@ -19,9 +19,14 @@ import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Icon } from 'shared/UI/Icon/Icon';
 import ChevronIcon from 'shared/assests/icons/chevron-down.svg';
 import { Input } from 'shared/UI/Input';
-import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
 import { Candidate } from 'entities/Candidate';
 import { Skeleton } from 'primereact/skeleton';
+import { Paginator } from 'widgets/Paginator';
+import { useSelector } from 'react-redux';
+import { getTotalCandidates } from 'pages/CandidatesPage/model/selectors/candidatesPageSelector';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { fetchTotalCandidates } from 'pages/CandidatesPage';
+import { QueryProps, useCandidates } from '../../api/fetchCandidatesApi';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
 
@@ -41,13 +46,18 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const [selected, setSelected] = useState<Candidate[]>([]);
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
     const [taskValue, setTaskValue] = useState<string>('');
-    const [page, setPage] = useState<number>(1);
+    const [page, setPage] = useState<number>(0);
+    const [limit, setLimit] = useState<number>(10);
 
     const navigate = useNavigate();
+    const totalCandidates = useSelector(getTotalCandidates);
+    const dispatch = useAppDispatch();
 
-    const { data: candidates, isLoading: isCandidatesLoading } = useCandidates(page);
+    const { data: candidates, isLoading: isCandidatesLoading } = useCandidates({ page, limit });
 
     useEffect(() => {
+        dispatch(fetchTotalCandidates());
+
         const params = getSearchParams();
 
         if (params?.length !== 2) {
@@ -63,7 +73,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
             setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
             setTaskValue(urlTask);
         }
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (selectedIdsFromUrl.length && candidates) {
@@ -183,6 +193,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 </HStack>
 
                 <HStack className={classes.deleteBtn} maxW justify="end">
+                    <Button size="small">Поиск по параметрам</Button>
                     <Button
                         size="small"
                         variant="danger"
@@ -202,8 +213,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                         <Disclosure
                             titles={
                                 candidates?.map((candidate) => (
-                                    <HStack maxW justify="start" gap="16"
-key={candidate.id}>
+                                    <HStack maxW justify="start" gap="16" key={candidate.id}>
                                         <Checkbox
                                             onChange={(event) => {
                                                 event.stopPropagation();
@@ -248,6 +258,13 @@ key={candidate.id}>
                                     </VStack>
                                 )) || [<p>ничего</p>]
                             }
+                        />
+                        <Paginator
+                            totalCandidates={totalCandidates}
+                            setCurrentLimit={setLimit}
+                            setCurrentPage={setPage}
+                            currentPage={page}
+                            currentLimit={limit}
                         />
                     </SplitterPanel>
 

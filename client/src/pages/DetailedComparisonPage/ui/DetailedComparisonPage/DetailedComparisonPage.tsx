@@ -33,7 +33,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
     const { getSearchParams } = useURLParams();
     const [compareCandidates, { data: compareResult, isLoading, error }] = useComparedCandidates();
-    const { data: candidates } = useCandidates(1);
+    const { data: candidates } = useCandidates({ page: 0, limit: 1000 });
 
     useEffect(() => {
         const params = getSearchParams();
@@ -90,8 +90,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
                         <VStack maxW align="start" className={classes.candidatesFrame}>
                             {compareResult?.comparedCandidates.map((user) => (
-                                <HStack maxW align="center" justify="start"
-gap="8" key={user.id}>
+                                <HStack maxW align="center" justify="start" gap="8" key={user.id}>
                                     <div
                                         style={{
                                             width: 100,
@@ -143,8 +142,7 @@ gap="8" key={user.id}>
                     <Card className={classes.cardStack}>
                         <h3 className={classes.title}>Лучший</h3>
 
-                        <VStack maxW justify="center" align="center"
-className={classes.best}>
+                        <VStack maxW justify="center" align="center" className={classes.best}>
                             {/* TODO это фотка тут должна быть */}
                             <div
                                 style={{

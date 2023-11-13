@@ -7,6 +7,19 @@
     }
 }
 
+.accordion {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.paginator {
+    position: sticky;
+    bottom: 20px;
+}
+
 .p-datatable-wrapper {
     * {
         text-align: center;

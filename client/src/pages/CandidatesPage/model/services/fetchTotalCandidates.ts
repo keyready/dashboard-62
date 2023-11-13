@@ -1,19 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
-import { Candidate } from 'entities/Candidate';
 
-export const fetchCandidates = createAsyncThunk<Candidate[], void, ThunkConfig<string>>(
+export const fetchTotalCandidates = createAsyncThunk<number, void, ThunkConfig<string>>(
     'candidatesPage/fetchCandidates',
     async (_, thunkAPI) => {
         const { extra, rejectWithValue } = thunkAPI;
 
         try {
-            const response = await extra.api.get<Candidate[]>('/api/candidates', {
-                params: {
-                    limit: 10,
-                    page: 1,
-                },
-            });
+            const response = await extra.api.get<number>('/api/total_candidates');
             if (!response.data) {
                 throw new Error();
             }
