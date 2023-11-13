@@ -10,7 +10,7 @@
         "eslint": "eslint \"**/*.{ts,tsx}\" --fix",
         "prettier": "npx prettier --write **/*.{js,jsx,ts,tsx}",
         "prepare": "husky install",
-        "save": "git add . && git commit -m \"$npm_config_m\" && git push"
+        "save": "git add . && git commit -m \"$npm_config_message\" && git push"
     },
     "keywords": [],
     "author": "NexusX Team",
