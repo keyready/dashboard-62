@@ -77,9 +77,9 @@
 
 .danger {
     border-radius: 8px;
+    color: var(--primary-color);
     background: #fc3030;
     transition: 100ms;
-    color: var(--primary-color);
 
     &:hover {
         background: rgb(252 48 48 / 80%);
@@ -87,24 +87,24 @@
 }
 
 .small {
-    font: var(--font-xs);
     padding: 3px 5px;
+    font: var(--font-xs);
 }
 
 .medium {
-    font: var(--font-s);
     padding: 7px 10px;
+    font: var(--font-s);
 }
 
 .large {
-    font: var(--font-m);
     padding: 10px 15px;
+    font: var(--font-m);
 }
 
 .disabled {
     cursor: not-allowed;
-    background: var(--card-bg);
     color: var(--primary-color);
+    background: var(--card-bg);
 
     &:hover {
         background: var(--card-bg);

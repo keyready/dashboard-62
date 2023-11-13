@@ -21,6 +21,7 @@ import ChevronIcon from 'shared/assests/icons/chevron-down.svg';
 import { Input } from 'shared/UI/Input';
 import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
 import { Candidate } from 'entities/Candidate';
+import { Skeleton } from 'primereact/skeleton';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
 
@@ -114,7 +115,36 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
         return (
             <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
                 <Page className={classNames(classes.CandidatesPage, {}, [className])}>
-                    <h2>Идет загрузка</h2>
+                    <VStack maxW gap="32">
+                        <Skeleton width="45%" height="85px" />
+
+                        <HStack
+                            className={classes.skeletonWrapper}
+                            gap="16"
+                            maxW
+                            align="start"
+                            justify="between"
+                        >
+                            <VStack gap="16" className={classes.skeletonList}>
+                                {new Array(10).fill(0).map((_, index) => (
+                                    <HStack
+                                        className={classes.skeletonCard}
+                                        maxW
+                                        gap="8"
+                                        key={index}
+                                    >
+                                        <Skeleton shape="circle" size="75px" />
+                                        <VStack maxW align="start">
+                                            <Skeleton width="100%" height="40px" />
+                                            <Skeleton width="60%" height="20px" />
+                                            <Skeleton width="60%" height="20px" />
+                                        </VStack>
+                                    </HStack>
+                                ))}
+                            </VStack>
+                            <Skeleton className={classes.skeletonTable} width="60%" height="30vh" />
+                        </HStack>
+                    </VStack>
                 </Page>
             </DynamicModuleLoader>
         );
@@ -163,7 +193,8 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                         <Disclosure
                             titles={
                                 candidates?.map((candidate) => (
-                                    <HStack maxW justify="start" gap="16" key={candidate.id}>
+                                    <HStack maxW justify="start" gap="16"
+key={candidate.id}>
                                         <Checkbox
                                             onChange={(event) => {
                                                 event.stopPropagation();

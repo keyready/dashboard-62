@@ -35,8 +35,10 @@ export const Table = memo((props: TableProps) => {
             emptyMessage="Выберите от 2 до 4 выпускников, чтобы перейти к углубленному сравнению"
             // onSelectionChange={handleTableSelectionChange}
         >
-            <Column alignHeader="center" dataType="text" field="firstname" header="ФИО" sortable />
-            <Column alignHeader="center" dataType="text" field="HES" header="ВУЗ" sortable />
+            <Column alignHeader="center" dataType="text" field="firstname"
+header="ФИО" sortable />
+            <Column alignHeader="center" dataType="text" field="HES"
+header="ВУЗ" sortable />
             <Column
                 alignHeader="center"
                 dataType="text"
@@ -44,8 +46,10 @@ export const Table = memo((props: TableProps) => {
                 header="Специальность"
                 sortable
             />
-            <Column alignHeader="center" dataType="numeric" field="age" header="Возраст" sortable />
-            <Column alignHeader="center" dataType="text" field="hobby" header="Хобби" sortable />
+            <Column alignHeader="center" dataType="numeric" field="age"
+header="Возраст" sortable />
+            <Column alignHeader="center" dataType="text" field="hobby"
+header="Хобби" sortable />
         </DataTable>
     );
 });

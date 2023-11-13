@@ -9,41 +9,15 @@ import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
 import { Card as GradientCard } from 'shared/UI/Card';
 import StarIcon from 'shared/assests/icons/star-circle.svg';
 import { Icon } from 'shared/UI/Icon/Icon';
-import { Candidate } from 'entities/Candidate';
+import { Skeleton } from 'primereact/skeleton';
+import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
+import { ComparedCandidatesResult, useComparedCandidates } from '../../api/compareCandidatesApi';
 import classes from './DetailedComparisonPage.module.scss';
 import cardClasses from './card.module.scss';
 
 interface DetailedComparisonPageProps {
     className?: string;
 }
-
-const users: Partial<Candidate>[] = [
-    {
-        id: 0,
-        firstname: 'Родион',
-        HES: 'ВКА',
-        department: 'Создание защищенного ПО',
-        age: 20,
-        hobby: 'Frontend-разработка',
-    },
-    {
-        id: 1,
-        firstname: 'Димка',
-        HES: 'ВКА',
-        department: 'Создание защищенного ПО',
-        age: 20,
-        hobby: 'UI/UX дизайнер',
-    },
-    {
-        id: 2,
-        firstname: 'Валя',
-        HES: 'ВКА',
-        department: 'Создание защищенного ПО',
-        age: 20,
-        hobby: 'Backend-разработка',
-    },
-];
-const score: number = 4.3;
 
 const Card = memo((props: { children: ReactNode; className?: string }) => {
     const { className, children } = props;
@@ -56,56 +30,84 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
+    const [barData, setBarData] = useState({});
+    const [barOptions, setBarOptions] = useState({});
+
+    const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
 
     const { getSearchParams } = useURLParams();
-
-    const task = useMemo(() => getSearchParams()[1].value, []);
+    const [compareCandidates, { data: compareResult, isLoading, error }] = useComparedCandidates();
+    const { data: candidates } = useCandidates(1);
 
     useEffect(() => {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const data = {
-            labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-            datasets: [
-                {
-                    label: 'My First dataset',
-                    borderColor: documentStyle.getPropertyValue('--bluegray-400'),
-                    pointBackgroundColor: documentStyle.getPropertyValue('--bluegray-400'),
-                    pointBorderColor: documentStyle.getPropertyValue('--bluegray-400'),
-                    pointHoverBackgroundColor: 'purple',
-                    pointHoverBorderColor: documentStyle.getPropertyValue('--bluegray-400'),
-                    data: [65, 59, 90, 81, 56, 55, 40],
-                },
-                {
-                    label: 'My Second dataset',
-                    borderColor: documentStyle.getPropertyValue('--pink-400'),
-                    pointBackgroundColor: documentStyle.getPropertyValue('--pink-400'),
-                    pointBorderColor: documentStyle.getPropertyValue('--pink-400'),
-                    pointHoverBackgroundColor: 'purple',
-                    pointHoverBorderColor: documentStyle.getPropertyValue('--pink-400'),
-                    data: [28, 48, 40, 19, 96, 27, 100],
-                },
-            ],
-        };
+        const params = getSearchParams();
+
+        if (!params.length) return;
+
+        const urlSelected = params[1].param === 'selected' ? params[1].value : params[0].value;
+
+        if (params.length) {
+            setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!candidates?.length) {
+            return;
+        }
+        compareCandidates(candidates.filter((user) => selectedIdsFromUrl.includes(user.id)));
+    }, [candidates, compareCandidates, selectedIdsFromUrl]);
+
+    const task = useMemo(() => getSearchParams()[1].value, []);
+    const bestCandidate = useMemo<Partial<ComparedCandidatesResult>>(() => {
+        if (!compareResult?.comparedCandidates?.length) {
+            return {};
+        }
+
+        let best = compareResult?.comparedCandidates[0];
+        for (let i = 0; i < compareResult.comparedCandidates.length; i += 1) {
+            if (compareResult.comparedCandidates[i].taskOverlap > best.taskOverlap) {
+                best = compareResult.comparedCandidates[i];
+            }
+        }
+
+        return best;
+    }, [compareResult]);
+    const colors = useMemo(
+        () => ['#FCE4D6', '#FDF4E3', '#E6F0F9', '#E8F6E4', '#FDF2E8', '#E3F2FD'],
+        [],
+    );
+
+    useEffect(() => {
+        const data =
+            {
+                ...compareResult?.diagramData,
+                datasets: compareResult?.diagramData?.datasets?.map((dataset, index) => ({
+                    ...dataset,
+                    color: colors[index],
+                })),
+            } || {};
         const options = {
             plugins: {
                 legend: {
                     labels: {
-                        color: 'red', // цвет легенды
+                        color: '#fff', // цвет легенды
                     },
                 },
             },
             scales: {
                 r: {
                     grid: {
-                        color: 'green', // цвет сетки радара
+                        color: '#fff', // цвет сетки радара
                     },
                 },
             },
+            responsive: true,
         };
 
         setChartData(data);
         setChartOptions(options);
-    }, []);
+    }, [colors, compareResult]);
 
     return (
         <Page className={classNames(classes.ComparisonPage, {}, [className])}>
@@ -124,8 +126,9 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                 <div className={classes.firstLine}>
                     <Card>
                         <h3 className={classes.title}>Специалисты</h3>
+
                         <VStack maxW align="start">
-                            {users.map((user) => (
+                            {compareResult?.comparedCandidates.map((user) => (
                                 <HStack maxW align="center" justify="start" gap="8" key={user.id}>
                                     <div
                                         style={{
@@ -149,24 +152,35 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                     <Card className={classes.card}>
                         <VStack maxW align="center" justify="start">
                             <h3 className={classes.title}>Сравнение основных параметров</h3>
-                            <Chart
-                                className={classes.radar}
-                                type="radar"
-                                data={chartData}
-                                options={chartOptions}
-                            />
+                            {compareResult?.diagramData.labels.length ? (
+                                <Chart
+                                    className={classes.radar}
+                                    type="radar"
+                                    data={chartData || {}}
+                                    options={chartOptions}
+                                />
+                            ) : (
+                                <Skeleton
+                                    borderRadius="40px"
+                                    width="400px"
+                                    height="400px"
+                                    shape="rectangle"
+                                />
+                            )}
                         </VStack>
                     </Card>
                 </div>
 
                 <div className={classes.secondLine}>
                     <Card>
-                        <h3 className={classes.title}>Опыт работы</h3>
+                        <h3 className={classes.title}>Совпадение хобби и задачи</h3>
                     </Card>
+
                     <Card>
                         <h3 className={classes.title}>Лучший</h3>
 
                         <VStack maxW align="center" className={classes.best}>
+                            {/* TODO это фотка тут должна быть */}
                             <div
                                 style={{
                                     width: 100,
@@ -175,15 +189,20 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                                     borderRadius: 10,
                                 }}
                             />
-                            <Text title="Родионова П.И" />
+                            <Text
+                                title={`${bestCandidate.lastname} ${bestCandidate.firstname?.slice(
+                                    0,
+                                    1,
+                                )}. ${bestCandidate.middlename?.slice(0, 1)}`}
+                            />
                             <HStack justify="center" gap="8">
                                 <Icon Svg={StarIcon} />
-                                <Text title={`${score} / 5`} className={classes.textBlock} />
+                                <Text
+                                    title={`${bestCandidate?.taskOverlap} / 5`}
+                                    className={classes.textBlock}
+                                />
                             </HStack>
                         </VStack>
-                    </Card>
-                    <Card>
-                        <h3 className={classes.title}>Совпадение увлечений</h3>
                     </Card>
                 </div>
             </VStack>

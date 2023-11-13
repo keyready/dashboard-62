@@ -6,7 +6,7 @@
   "scripts": {
     "init": "npm i --force",
     "start": "webpack serve --env port=3000",
-    "build:prod": "webpack --env mode=production",
+    "build": "webpack --env mode=production",
     "stylelint": "npx stylelint \"**/*.scss\" --fix"
   },
   "keywords": [],

@@ -27,22 +27,22 @@
 
 .contentWrapper {
     border: none;
-    outline: none;
     background: transparent;
     display: flex;
     align-items: start;
+    gap: 10px;
+    outline: none;
     position: relative;
-	gap: 10px;
 }
 
 .tableWrapper {
-    position: sticky;
-    top: -20px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     gap: 10px;
+    position: sticky;
+    top: -20px;
 }
 
 .input {
@@ -66,10 +66,29 @@
 
     h3 {
         color: transparent !important;
+        font: var(--font-m);
+        font-weight: bold;
         -webkit-background-clip: text !important;
         background-clip: text !important;
         background-image: var(--accent-gradient) !important;
-        font: var(--font-m);
-        font-weight: bold;
     }
+}
+
+.skeletonWrapper {
+    align-items: start;
+    position: relative;
+}
+
+.skeletonCard {
+    padding: 10px 15px;
+    border-radius: 8px;
+    outline: 2px solid rgb(255 255 255 / 6%);
+}
+
+.skeletonList {
+    width: 40%;
+}
+
+.skeletonTable {
+    width: 60%;
 }

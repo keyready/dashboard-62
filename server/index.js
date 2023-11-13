@@ -199,7 +199,29 @@ app.get('/api/candidates', (req, res) =>
 app.post('/api/upload', (req, res) => {
     console.log(req);
 
-    setInterval(() => res.status(200).json(), 2000);
+    return setInterval(() => res.status(200).json(), 2000);
+});
+
+app.post('/api/compare_candidates', (req, res) => {
+    const { body } = req;
+
+    const candidates = body.map((cand) => ({
+        ...cand,
+        taskOverlap: ((Math.random() * 100) % 10).toFixed(2),
+        hobbyOverlap: ((Math.random() * 100) % 10).toFixed(2),
+    }));
+    const datasets = candidates.map((cand) => ({
+        label: cand.firstname,
+        data: [...new Array(5)].map(() => ((Math.random() * 10) % 10).toFixed(2)),
+    }));
+
+    res.status(200).json({
+        comparedCandidates: candidates,
+        diagramData: {
+            labels: ['Экономика', 'Педагогика', 'Политология', 'Психология', 'Строевая подготовка'],
+            datasets,
+        },
+    });
 });
 
 app.post('/login', async (req, res) => {

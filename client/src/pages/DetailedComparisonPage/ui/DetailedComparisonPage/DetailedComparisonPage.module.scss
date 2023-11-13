@@ -1,8 +1,8 @@
 .card {
-    min-height: 460px;
     display: flex;
     align-items: start;
     justify-content: center;
+    min-height: 460px;
 }
 
 .title {
@@ -32,17 +32,20 @@
 }
 
 .radar {
-    height: 314px;
+    width: 550px;
+    height: 550px;
 }
 
 .firstLine {
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1.5fr 3fr;
     grid-gap: 15px;
 }
 
 .secondLine {
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
 }
