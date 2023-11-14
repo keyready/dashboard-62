@@ -8,5 +8,5 @@ sqlalchemy
 pyyaml
 sqlalchemy_utils
 sqlalchemy_serializer
-openai
+openai==0.28
 xmltodict

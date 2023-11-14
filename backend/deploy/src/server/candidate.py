@@ -57,7 +57,7 @@ def upload():
                     for fileName in os.listdir('/static/files/{}'.format(dirName)):
                             EXT=['.png','.jpg','.jpeg']
                             if f'.{fileName.split(".")[1]}' in EXT:
-                                imgName=generate_img_name(f'/backend/server/static/files/{dirName}/{fileName}')
+                                imgName=generate_img_name(f'/static/files/{dirName}/{fileName}',dirName)
                             if f'.{fileName.split(".")[1]}' not in EXT:
                                 with open(f'/static/files/{dirName}/{fileName}','r',encoding='utf-8') as form:
                                     repetition_counter=0 # счетчик дубликатов
@@ -122,11 +122,11 @@ def compare_candidates():
         datasets=[]
         dataset={}
         data=[]
-        candidates=Candidate.query.filter(Candidate.id._in(ids)).all()
+        candidates=Candidate.query.filter(Candidate.id.in_(ids)).all()
         for cnd in candidates:
             dataset.update({'label':cnd.lastname})
             for subject in cnd.subjectsEstimation:
-                data.append(subject['value'])
+                data.append(subject['score'])
             dataset.update({'data':data})
             datasets.append(dataset)
         
@@ -142,8 +142,8 @@ def compare_candidates():
             ############################################## Сравнение по хобби, специальности, факультету и кафедре ##################################################
 
             request_gpt_chat=f'''
-                I will now give you information about a university graduate: his hobby, the faculty and department he graduated from, his specialty. Evaluate on a scale from 0 to 3 how much his hobby corresponds to his specialty. That is, if a graduate graduated from the Faculty of special information Technologies in the specialty "Creation of protected software", but was fond of singing for all 5 years of study, the coefficient will be 0
-                Data: hobby — ${candidate.hobby}, specialty —${candidate.speciality}, faculty — ${candidate.faculty}, department — ${candidate.department}
+                I will now give you information about a university graduate: his hobby, the faculty and department he graduated from. Evaluate on a scale from 0 to 3 how much his hobby corresponds to his specialty. That is, if a graduate graduated from the Faculty of special information Technologies in the specialty "Creation of protected software", but was fond of singing for all 5 years of study, the coefficient will be 0
+                Data: hobby — ${candidate.hobby},faculty — ${candidate.faculty}, department — ${candidate.department}
                 In the answer, specify only a number
             '''
             response_gpt_chat=openai.ChatCompletion.create(

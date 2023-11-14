@@ -6,3 +6,5 @@ def check_management_in_db(username):
     management=Management.query.filter_by(username=username).first()
     if management == None:return None
     else: return management
+
+        

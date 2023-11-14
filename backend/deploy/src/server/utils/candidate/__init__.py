@@ -10,9 +10,9 @@ def check_candidate_in_db(email):
     if candidate is not None:return True
     return False
 
-def generate_img_name(imgPath):
-    newName=''.join(random.choice(string.ascii_letters+string.digits) for _ in range(15))
-    os.rename(imgPath,newName)
+def generate_img_name(imgPath,dirName):
+    newName=''.join(random.choice(string.ascii_letters+string.digits) for _ in range(15))+'.jpg'
+    os.rename(imgPath,f'/static/files/{dirName}/{newName}')
     return newName
 
 def save_candidate_in_db(candidate_data,imgName):
@@ -23,7 +23,7 @@ def save_candidate_in_db(candidate_data,imgName):
         email=candidate_data['email'],
         age=candidate_data['age'],
         averageSubjectsScore=candidate_data['averageSubjectsScore'],
-        img='/backend/server/static/files/{}'.format(imgName),
+        img=imgName,
         # faculty=candidate_data['faculty'],
         # department=candidate_data['department'],
         hobby=candidate_data['hobby'],

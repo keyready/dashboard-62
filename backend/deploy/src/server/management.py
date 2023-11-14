@@ -47,10 +47,26 @@ def candidates():
         paginations_args = request.args.to_dict()        
         jsonCandidates=[]
         ########################################## ПАГИНАЦИЯ #######################################################
-        candidates = Candidate.query.order_by(Candidate.id).limit(int(paginations_args['limit'])).offset((int(paginations_args['page'])) * int(paginations_args['limit']))
+        candidates = Candidate.query.order_by(
+            Candidate.id
+        ).filter(
+            Candidate.age >= paginations_args['age'].split(',')[0], Candidate.age <= paginations_args['age'].split(',')[1] 
+        ).limit(
+            int(paginations_args['limit'])
+        ).offset(
+            (int(paginations_args['page'])) * int(paginations_args['limit'])
+        )
         ############################################################################################################
+
         for candidate in candidates:
-            jsonCandidates.append(Candidate.object_as_dict(candidate))        
+            if paginations_args['education'] != '':
+                if candidate.faculty == paginations_args['education']:
+                    jsonCandidates.append(Candidate.object_as_dict(candidate))
+                else:
+                    continue      
+            else:
+                jsonCandidates.append(Candidate.object_as_dict(candidate))
+        
         return jsonify(jsonCandidates)  
     except ValueError as e:
         print(e)
