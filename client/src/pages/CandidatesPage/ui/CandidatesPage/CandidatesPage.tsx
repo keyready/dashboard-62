@@ -225,7 +225,13 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                         <Disclosure
                             titles={
                                 candidates?.map((candidate) => (
-                                    <HStack maxW justify="start" gap="16" key={candidate.id}>
+                                    <HStack
+                                        className={classes.disclosureBug}
+                                        maxW
+                                        justify="start"
+                                        gap="16"
+                                        key={candidate.id}
+                                    >
                                         <Checkbox
                                             onChange={(event) => {
                                                 event.stopPropagation();
@@ -239,7 +245,12 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                             }}
                                             checked={selected.includes(candidate)}
                                         />
-                                        <div className={classes.img} />
+                                        <img
+                                            src={candidate.img}
+                                            title={candidate.lastname}
+                                            alt={candidate.lastname}
+                                            className={classes.img}
+                                        />
                                         <Text
                                             className={classes.textBlock}
                                             size="extrasmall"
@@ -256,8 +267,8 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                             <p>{user.age}</p>
                                         </HStack>
                                         <HStack maxW>
-                                            <b>ВУЗ:</b>
-                                            <p>{user.HES}</p>
+                                            <b>Факультет:</b>
+                                            <p>{user.faculty}</p>
                                         </HStack>
                                         <HStack maxW>
                                             <b>Специальность:</b>

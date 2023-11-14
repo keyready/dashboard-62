@@ -146,13 +146,11 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                         <VStack maxW align="start" className={classes.candidatesFrame}>
                             {compareResult?.comparedCandidates.map((user) => (
                                 <HStack maxW align="center" justify="start" gap="8" key={user.id}>
-                                    <div
-                                        style={{
-                                            width: 100,
-                                            height: 100,
-                                            backgroundColor: 'red',
-                                            borderRadius: 10,
-                                        }}
+                                    <img
+                                        src={user.img}
+                                        title={user.lastname}
+                                        alt={user.lastname}
+                                        className={classes.img}
                                     />
                                     <div>
                                         <Text
@@ -198,14 +196,11 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                         <h3 className={classes.title}>Лучший</h3>
 
                         <VStack maxW justify="center" align="center" className={classes.best}>
-                            {/* TODO это фотка тут должна быть */}
-                            <div
-                                style={{
-                                    width: 100,
-                                    height: 100,
-                                    backgroundColor: 'red',
-                                    borderRadius: 10,
-                                }}
+                            <img
+                                src={bestCandidate.img}
+                                title={bestCandidate.lastname}
+                                alt={bestCandidate.lastname}
+                                className={classes.bestImg}
                             />
                             <Text
                                 title={`${bestCandidate.lastname} ${bestCandidate.firstname?.slice(

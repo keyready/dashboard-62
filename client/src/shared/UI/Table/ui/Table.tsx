@@ -37,10 +37,14 @@ export const Table = memo((props: TableProps) => {
             // onSelectionChange={handleTableSelectionChange}
             onRowClick={(event) => onRowDelete?.(event.data as Candidate)}
         >
-            <Column alignHeader="center" dataType="text" field="firstname"
-header="ФИО" sortable />
-            <Column alignHeader="center" dataType="text" field="HES"
-header="ВУЗ" sortable />
+            <Column alignHeader="center" dataType="text" field="firstname" header="ФИО" sortable />
+            <Column
+                alignHeader="center"
+                dataType="text"
+                field="faculty"
+                header="Факультет"
+                sortable
+            />
             <Column
                 alignHeader="center"
                 dataType="text"
@@ -48,10 +52,8 @@ header="ВУЗ" sortable />
                 header="Специальность"
                 sortable
             />
-            <Column alignHeader="center" dataType="numeric" field="age"
-header="Возраст" sortable />
-            <Column alignHeader="center" dataType="text" field="hobby"
-header="Хобби" sortable />
+            <Column alignHeader="center" dataType="numeric" field="age" header="Возраст" sortable />
+            <Column alignHeader="center" dataType="text" field="hobby" header="Хобби" sortable />
         </DataTable>
     );
 });
