@@ -43,7 +43,7 @@ const reducers: ReducersList = {
 const CandidatesPage = memo((props: CandidatesPageProps) => {
     const { className } = props;
 
-    const { addSearchParams, deleteSearchParams, getSearchParams } = useURLParams();
+    const { addSearchParams, deleteSearchParams, getSearchParam } = useURLParams();
 
     const [selected, setSelected] = useState<Candidate[]>([]);
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
@@ -51,31 +51,48 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const [page, setPage] = useState<number>(0);
     const [limit, setLimit] = useState<number>(10);
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-    const [filterOptions, setFilterOptions] = useState<FilterOptions>({});
+    const [filterOptions, setFilterOptions] = useState<FilterOptions>({
+        education: [],
+        age: [18, 40],
+    });
 
     const navigate = useNavigate();
     const totalCandidates = useSelector(getTotalCandidates);
     const dispatch = useAppDispatch();
 
-    const { data: candidates, isLoading: isCandidatesLoading } = useCandidates({ page, limit });
+    const {
+        data: candidates,
+        isLoading: isCandidatesLoading,
+        isFetching: isCandidatesFetching,
+    } = useCandidates({ page, limit, filterOptions });
+
+    useEffect(() => {
+        dispatch(fetchTotalCandidates());
+    }, [filterOptions, dispatch]);
 
     useEffect(() => {
         dispatch(fetchTotalCandidates());
 
-        const params = getSearchParams();
+        const urlTask = getSearchParam('task');
+        const urlSelected = getSearchParam('selected');
+        const urlAge = getSearchParam('age');
+        const urlEducation = getSearchParam('education');
 
-        if (params?.length !== 2) {
-            deleteSearchParams('selected');
-            deleteSearchParams('task');
-            return;
+        if (urlTask) setTaskValue(urlTask);
+        if (urlSelected) setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
+        if (urlEducation) {
+            setFilterOptions({
+                ...filterOptions,
+                education: urlEducation.split(','),
+            });
+            addSearchParams({ education: urlEducation });
         }
-
-        const urlTask = params[0]?.param === 'task' ? params[0]?.value : params[1]?.value;
-        const urlSelected = params[1]?.param === 'selected' ? params[1]?.value : params[0]?.value;
-
-        if (params?.length) {
-            setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
-            setTaskValue(urlTask);
+        if (urlAge) {
+            setFilterOptions({
+                ...filterOptions,
+                age: urlAge.split(',').map(Number) as [number, number],
+            });
+            addSearchParams({ age: urlAge });
         }
     }, [dispatch]);
 
@@ -189,6 +206,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                     filterOptions={filterOptions}
                     setIsOpen={setIsModalOpened}
                     isOpen={isModalOpened}
+                    setFilterOptions={setFilterOptions}
                 />
 
                 <HStack justify="start">
@@ -222,55 +240,88 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
                 <Splitter className={classes.contentWrapper}>
                     <SplitterPanel size={40} className={classes.accordion}>
-                        <Disclosure
-                            titles={
-                                candidates?.map((candidate) => (
-                                    <HStack maxW justify="start" gap="16" key={candidate.id}>
-                                        <Checkbox
-                                            onChange={(event) => {
-                                                event.stopPropagation();
-                                                if (selected.includes(candidate)) {
-                                                    setSelected((prev) =>
-                                                        prev.filter((item) => item !== candidate),
-                                                    );
-                                                    return;
-                                                }
-                                                setSelected((prev) => [...prev, candidate]);
-                                            }}
-                                            checked={selected.includes(candidate)}
-                                        />
-                                        <div className={classes.img} />
-                                        <Text
-                                            className={classes.textBlock}
-                                            size="extrasmall"
-                                            title={candidate.firstname}
-                                        />
+                        {isCandidatesFetching ? (
+                            <VStack gap="16" className={classes.skeletonListFetching}>
+                                {new Array(5).fill(0).map((_, index) => (
+                                    <HStack
+                                        className={classes.skeletonCard}
+                                        maxW
+                                        gap="8"
+                                        key={index}
+                                    >
+                                        <Skeleton shape="circle" size="75px" />
+                                        <VStack maxW align="start">
+                                            <Skeleton width="100%" height="40px" />
+                                            <Skeleton width="60%" height="20px" />
+                                            <Skeleton width="60%" height="20px" />
+                                        </VStack>
                                     </HStack>
-                                )) || [<p>ничего</p>]
-                            }
-                            paragraphs={
-                                candidates?.map((user) => (
-                                    <VStack maxW gap="0" key={user.id}>
-                                        <HStack maxW>
-                                            <b>Возраст:</b>
-                                            <p>{user.age}</p>
+                                ))}
+                            </VStack>
+                        ) : (
+                            <Disclosure
+                                titles={
+                                    candidates?.map((candidate) => (
+                                        <HStack
+                                            className={classes.disclosureBug}
+                                            maxW
+                                            justify="start"
+                                            gap="16"
+                                            key={candidate.id}
+                                        >
+                                            <Checkbox
+                                                onChange={(event) => {
+                                                    event.stopPropagation();
+                                                    if (selected.includes(candidate)) {
+                                                        setSelected((prev) =>
+                                                            prev.filter(
+                                                                (item) => item !== candidate,
+                                                            ),
+                                                        );
+                                                        return;
+                                                    }
+                                                    setSelected((prev) => [...prev, candidate]);
+                                                }}
+                                                checked={selected.includes(candidate)}
+                                            />
+                                            <img
+                                                src={candidate.img}
+                                                title={candidate.lastname}
+                                                alt={candidate.lastname}
+                                                className={classes.img}
+                                            />
+                                            <Text
+                                                className={classes.textBlock}
+                                                size="extrasmall"
+                                                title={candidate.firstname}
+                                            />
                                         </HStack>
-                                        <HStack maxW>
-                                            <b>ВУЗ:</b>
-                                            <p>{user.HES}</p>
-                                        </HStack>
-                                        <HStack maxW>
-                                            <b>Специальность:</b>
-                                            <p>{user.department}</p>
-                                        </HStack>
-                                        <HStack maxW>
-                                            <b>Хобби:</b>
-                                            <p>{user.hobby}</p>
-                                        </HStack>
-                                    </VStack>
-                                )) || [<p>ничего</p>]
-                            }
-                        />
+                                    )) || [<p>ничего</p>]
+                                }
+                                paragraphs={
+                                    candidates?.map((user) => (
+                                        <VStack maxW gap="0" key={user.id}>
+                                            <HStack maxW>
+                                                <b>Возраст:</b>
+                                                <p>{user.age}</p>
+                                            </HStack>
+                                            <HStack maxW>
+                                                <b>Факультет:</b>
+                                                <p>{user.faculty}</p>
+                                            </HStack>
+                                            <HStack maxW>
+                                                <b>Специальность:</b>
+                                                <p>{user.department}</p>
+                                            </HStack>
+                                            <HStack maxW>
+                                                <b>Хобби:</b>
+                                                <p>{user.hobby}</p>
+                                            </HStack>
+                                        </VStack>
+                                    )) || [<p>ничего</p>]
+                                }
+                            />
+                        )}
                         <Paginator
                             totalCandidates={totalCandidates}
                             setCurrentLimit={setLimit}

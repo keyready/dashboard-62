@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(
     cors({
-        origin: 'http://localhost:3000',
+        origin: ['http://localhost:3000', 'http://localhost:5000'],
         credentials: true,
     }),
 );
@@ -193,12 +193,39 @@ const candidatesFromDB = [
         hobby: 'Футбол',
     },
 ];
+const faculties = [
+    'Факультет конструкции летательных аппаратов',
+    'Факультет систем управления ракетно-космических комплексов',
+    'Факультет радиоэлектронных систем космических комплексов',
+    'Факультет инженерного и электромеханического обеспечения',
+    'Факультет сбора и обработки информации',
+    'Факультет специальных информационных технологий',
+    'Факультет топогеодезического обеспечения и картографии',
+    'Факультет средств ракетно-космической обороны',
+    'Факультет автоматизированных систем управления войсками',
+];
+
+app.use((req, res, next) => {
+    for (let i = 0; i < candidatesFromDB.length; i += 1) {
+        candidatesFromDB[
+            i
+        ].img = `https://placehold.co/600x600/82dbf7/black?text=${candidatesFromDB[
+            i
+        ].lastname.slice(0, 1)}${candidatesFromDB[i].firstname.slice(0, 1)}${candidatesFromDB[
+            i
+        ].middlename.slice(0, 1)}`;
+        candidatesFromDB[i].faculty = faculties[Math.floor(Math.random() * (9 - 1 + 1)) + 1];
+    }
+
+    next();
+});
 
 app.get('/api/candidates', (req, res) => {
-    const { page, limit } = req.query;
+    const { page, limit, education, age } = req.query;
 
     const _page = Number(page);
     const _limit = Number(limit);
+    const _age = age?.split(',').map(Number) || [18, 40];
 
     const startIndex = _page * _limit;
     const endIndex = startIndex + _limit;
@@ -208,7 +235,9 @@ app.get('/api/candidates', (req, res) => {
         return;
     }
 
-    const result = candidatesFromDB.slice(startIndex, endIndex);
+    const result = candidatesFromDB
+        .filter((cand) => cand.age >= _age[0] && cand.age <= _age[1])
+        .slice(startIndex, endIndex);
 
     return res.status(200).json(result);
 });
@@ -222,17 +251,21 @@ app.post('/api/upload', (req, res) => {
 });
 
 app.post('/api/compare_candidates', (req, res) => {
-    const { body } = req;
+    const { candidatesIds, task } = req.body;
 
-    const candidates = body.map((cand) => ({
-        ...cand,
-        taskOverlap: ((Math.random() * 100) % 10).toFixed(2),
-        hobbyOverlap: ((Math.random() * 100) % 10).toFixed(2),
-    }));
-    const datasets = candidates.map((cand) => ({
-        label: cand.firstname,
-        data: [...new Array(5)].map(() => ((Math.random() * 10) % 10).toFixed(2)),
-    }));
+    const candidates = candidatesFromDB
+        .filter((cand) => candidatesIds.includes(cand.id))
+        .map((cand) => ({
+            ...cand,
+            taskOverlap: ((Math.random() * 100) % 10).toFixed(2),
+            hobbyOverlap: ((Math.random() * 100) % 10).toFixed(2),
+        }));
+    const datasets = candidatesFromDB
+        .filter((cand) => candidatesIds.includes(cand.id))
+        .map((cand) => ({
+            label: cand.firstname,
+            data: [...new Array(5)].map(() => ((Math.random() * 10) % 10).toFixed(2)),
+        }));
 
     res.status(200).json({
         comparedCandidates: candidates,

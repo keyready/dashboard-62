@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "init": "npm i --force",
-    "start": "webpack serve --env port=3000",
-    "build": "webpack --env mode=production",
+    "start": "webpack serve --env port=5000 apiUrl=http://localhost:9999/",
+    "build": "webpack --env mode=production port=5000",
     "stylelint": "npx stylelint \"**/*.scss\" --fix"
   },
   "keywords": [],
@@ -63,7 +63,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.6",
-    "react-router-dom": "^6.2.1",
+    "react-router-dom": "^6.18.0",
     "recharts": "^2.4.3"
   }
 }

@@ -1,7 +1,5 @@
-import { classNames } from 'shared/lib/classNames/classNames';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback } from 'react';
 import { Paginator as PPaginator, PaginatorPageChangeEvent } from 'primereact/paginator';
-import classes from './Paginator.module.scss';
 
 interface PaginatorProps {
     className?: string;
@@ -36,7 +34,7 @@ export const Paginator = memo((props: PaginatorProps) => {
             first={currentPage * currentLimit}
             rows={currentLimit}
             totalRecords={totalCandidates || 0}
-            rowsPerPageOptions={[10, 15, 20]}
+            rowsPerPageOptions={[10, 15, 20, 50]}
             onPageChange={onPageChange}
         />
     );
