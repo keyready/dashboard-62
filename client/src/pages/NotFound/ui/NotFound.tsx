@@ -4,8 +4,6 @@ import { Button } from 'shared/UI/Button';
 import { useNavigate } from 'react-router-dom';
 import { Theme, useTheme } from 'app/providers/ThemeProvider';
 
-import { FileUpload } from 'primereact/fileupload';
-
 import classes from './NotFound.module.scss';
 
 interface NotFoundProps {

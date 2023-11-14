@@ -106,11 +106,27 @@ div[data-pc-section="actions"] {
 // tree select
 .p-treeselect-panel.p-component.p-ripple-disabled.p-connected-overlay-enter-done {
     z-index: 5000 !important;
+    max-width: 65vw !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
 }
 
 .p-treeselect-label {
     padding: 10px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-gap: 10px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.p-treenode-label {
+    text-align: left;
+}
+
+.p-treeselect-token {
+    white-space: collapse;
+    max-width: 40vw;
+    text-align: left;
 }
