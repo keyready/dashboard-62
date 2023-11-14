@@ -1,0 +1,43 @@
+{
+  "firstname": "Святополк",
+  "middlename": "Данилович",
+  "lastname": "Громов",
+  "email": "lobanovalekse@example.net",
+  "age": "17",
+  "averageSubjectsScore": 4.84,
+  "hobby": "Садоводство",
+  "subjectsEstimation": [
+    {
+      "title": "Математика",
+      "score": 3
+    },
+    {
+      "title": "Физика",
+      "score": 4
+    },
+    {
+      "title": "Химия",
+      "score": 5
+    },
+    {
+      "title": "Физическая подготовка",
+      "score": 3
+    },
+    {
+      "title": "Введение в военную науку",
+      "score": 3
+    },
+    {
+      "title": "Основы обращения с оружием",
+      "score": 4
+    },
+    {
+      "title": "Картография и навигация",
+      "score": 3
+    },
+    {
+      "title": "Военная история",
+      "score": 5
+    }
+  ]
+}

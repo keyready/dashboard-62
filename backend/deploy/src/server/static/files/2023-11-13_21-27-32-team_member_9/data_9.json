@@ -1,0 +1,43 @@
+{
+  "firstname": "Потап",
+  "middlename": "Валентинович",
+  "lastname": "Щербаков",
+  "email": "marfa_1974@example.com",
+  "age": "19",
+  "averageSubjectsScore": 4.87,
+  "hobby": "Путешествия",
+  "subjectsEstimation": [
+    {
+      "title": "Математика",
+      "score": 4
+    },
+    {
+      "title": "Физика",
+      "score": 3
+    },
+    {
+      "title": "Химия",
+      "score": 4
+    },
+    {
+      "title": "Физическая подготовка",
+      "score": 5
+    },
+    {
+      "title": "Введение в военную науку",
+      "score": 3
+    },
+    {
+      "title": "Основы обращения с оружием",
+      "score": 5
+    },
+    {
+      "title": "Картография и навигация",
+      "score": 5
+    },
+    {
+      "title": "Военная история",
+      "score": 3
+    }
+  ]
+}

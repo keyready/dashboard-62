@@ -1,0 +1,43 @@
+{
+  "firstname": "Мефодий",
+  "middlename": "Данилович",
+  "lastname": "Пахомов",
+  "email": "kudrjashovprov@example.org",
+  "age": "17",
+  "averageSubjectsScore": 4.29,
+  "hobby": "Садоводство",
+  "subjectsEstimation": [
+    {
+      "title": "Математика",
+      "score": 5
+    },
+    {
+      "title": "Физика",
+      "score": 5
+    },
+    {
+      "title": "Химия",
+      "score": 4
+    },
+    {
+      "title": "Физическая подготовка",
+      "score": 3
+    },
+    {
+      "title": "Введение в военную науку",
+      "score": 5
+    },
+    {
+      "title": "Основы обращения с оружием",
+      "score": 5
+    },
+    {
+      "title": "Картография и навигация",
+      "score": 4
+    },
+    {
+      "title": "Военная история",
+      "score": 5
+    }
+  ]
+}

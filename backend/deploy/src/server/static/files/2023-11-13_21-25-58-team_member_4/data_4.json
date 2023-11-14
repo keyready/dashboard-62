@@ -1,0 +1,43 @@
+{
+  "firstname": "Богдан",
+  "middlename": "Харламович",
+  "lastname": "Молчанов",
+  "email": "polikarp92@example.org",
+  "age": "20",
+  "averageSubjectsScore": 3.34,
+  "hobby": "Фотография",
+  "subjectsEstimation": [
+    {
+      "title": "Математика",
+      "score": 4
+    },
+    {
+      "title": "Физика",
+      "score": 4
+    },
+    {
+      "title": "Химия",
+      "score": 4
+    },
+    {
+      "title": "Физическая подготовка",
+      "score": 3
+    },
+    {
+      "title": "Введение в военную науку",
+      "score": 5
+    },
+    {
+      "title": "Основы обращения с оружием",
+      "score": 5
+    },
+    {
+      "title": "Картография и навигация",
+      "score": 5
+    },
+    {
+      "title": "Военная история",
+      "score": 4
+    }
+  ]
+}
