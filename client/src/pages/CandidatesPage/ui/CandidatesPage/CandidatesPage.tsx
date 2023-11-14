@@ -43,7 +43,7 @@ const reducers: ReducersList = {
 const CandidatesPage = memo((props: CandidatesPageProps) => {
     const { className } = props;
 
-    const { addSearchParams, deleteSearchParams, getSearchParams, getSearchParam } = useURLParams();
+    const { addSearchParams, deleteSearchParams, getSearchParam } = useURLParams();
 
     const [selected, setSelected] = useState<Candidate[]>([]);
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
