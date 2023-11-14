@@ -221,10 +221,11 @@ app.use((req, res, next) => {
 });
 
 app.get('/api/candidates', (req, res) => {
-    const { page, limit } = req.query;
+    const { page, limit, education, age } = req.query;
 
     const _page = Number(page);
     const _limit = Number(limit);
+    const _age = age?.split(',').map(Number) || [18, 40];
 
     const startIndex = _page * _limit;
     const endIndex = startIndex + _limit;
@@ -234,7 +235,9 @@ app.get('/api/candidates', (req, res) => {
         return;
     }
 
-    const result = candidatesFromDB.slice(startIndex, endIndex);
+    const result = candidatesFromDB
+        .filter((cand) => cand.age >= _age[0] && cand.age <= _age[1])
+        .slice(startIndex, endIndex);
 
     return res.status(200).json(result);
 });

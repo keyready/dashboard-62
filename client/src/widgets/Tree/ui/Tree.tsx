@@ -326,6 +326,7 @@ export const Tree = memo((props: TreeProps) => {
 
     return (
         <TreeSelect
+            placeholder="Выберите специальность"
             onNodeSelect={handleNodeSelect}
             onNodeUnselect={handleNodeUnselect}
             className={classes.Tree}
@@ -335,7 +336,6 @@ export const Tree = memo((props: TreeProps) => {
             metaKeySelection={false}
             selectionMode="checkbox"
             display="chip"
-            placeholder="Select Items"
         />
     );
 });
