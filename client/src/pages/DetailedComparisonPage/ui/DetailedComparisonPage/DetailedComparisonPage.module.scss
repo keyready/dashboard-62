@@ -5,6 +5,10 @@
     min-height: 460px;
 }
 
+.error {
+    height: calc(100vh - 175px);
+}
+
 .title {
     text-transform: uppercase;
     margin-bottom: 20px;

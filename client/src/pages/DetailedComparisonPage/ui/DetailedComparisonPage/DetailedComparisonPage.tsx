@@ -30,10 +30,15 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     const { className } = props;
 
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
+    const [task, setTask] = useState<string>('');
 
     const { getSearchParams } = useURLParams();
-    const [compareCandidates, { data: compareResult, isLoading, error }] = useComparedCandidates();
-    const { data: candidates } = useCandidates({ page: 0, limit: 1000 });
+    const [compareCandidates, { data: compareResult, isLoading: isComparingProgress, error }] =
+        useComparedCandidates();
+    const { data: candidates, isLoading: isCandidatesLoading } = useCandidates({
+        page: 0,
+        limit: 1000,
+    });
 
     useEffect(() => {
         const params = getSearchParams();
@@ -41,9 +46,11 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
         if (!params.length) return;
 
         const urlSelected = params[1].param === 'selected' ? params[1].value : params[0].value;
+        const urlTask = params[0].param === 'task' ? params[0].value : params[1].value;
 
         if (params.length) {
             setSelectedIdsFromUrl(urlSelected.split(',').map(Number));
+            setTask(urlTask);
         }
     }, []);
 
@@ -51,10 +58,12 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
         if (!candidates?.length) {
             return;
         }
-        compareCandidates(candidates.filter((user) => selectedIdsFromUrl.includes(user.id)));
-    }, [candidates, compareCandidates, selectedIdsFromUrl]);
+        compareCandidates({
+            candidates: candidates.filter((user) => selectedIdsFromUrl.includes(user.id)),
+            task,
+        });
+    }, [candidates, compareCandidates, selectedIdsFromUrl, task]);
 
-    const task = useMemo(() => getSearchParams()[1].value, []);
     const bestCandidate = useMemo<Partial<ComparedCandidatesResult>>(() => {
         if (!compareResult?.comparedCandidates?.length) {
             return {};
@@ -69,6 +78,52 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
         return best;
     }, [compareResult]);
+
+    if (isComparingProgress || isCandidatesLoading) {
+        return (
+            <Page className={classNames(classes.ComparisonPage, {}, [className])}>
+                <HStack justify="start" className={classes.gradCard}>
+                    <Skeleton width="400px" height="60px" borderRadius="10px" />
+                </HStack>
+
+                <VStack maxW gap="32">
+                    <div className={classes.firstLine}>
+                        <Skeleton width="100%" height="450px" borderRadius="10px" />
+                        <Skeleton width="100%" height="450px" borderRadius="10px" />
+                    </div>
+
+                    <div className={classes.secondLine}>
+                        <Skeleton width="100%" height="350px" borderRadius="10px" />
+                        <Skeleton width="100%" height="350px" borderRadius="10px" />
+                    </div>
+                </VStack>
+            </Page>
+        );
+    }
+
+    if (error) {
+        return (
+            <Page className={classNames(classes.ComparisonPage, {}, [className])}>
+                <VStack className={classes.error} maxW align="center" justify="center">
+                    <Text
+                        align="center"
+                        variant="error"
+                        title="Произошла ошибка при запросе к ChatGPT"
+                        text="Перезагрузите страницу, это должно помочь"
+                    />
+                    <Text
+                        align="center"
+                        text={
+                            'Иногда ChatGPT не справляется с оцениванием такого образования, ' +
+                            'которое дают в Академии, поэтому сравнения может быть необходимо' +
+                            'проводить несколько раз'
+                        }
+                        size="small"
+                    />
+                </VStack>
+            </Page>
+        );
+    }
 
     return (
         <Page className={classNames(classes.ComparisonPage, {}, [className])}>
