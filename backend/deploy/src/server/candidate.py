@@ -20,7 +20,8 @@ from server.utils.candidate import (
     json_parser,
     yml_parser,
     check_candidate_in_db,
-    save_candidate_in_db
+    save_candidate_in_db,
+    generate_img_name
 )
 
 @app.route('/',methods=['GET'])
@@ -54,8 +55,10 @@ def upload():
                                 os.remove('./{}'.format(nameCurrentZip))
                 for dirName in os.listdir(os.path.abspath('/static/files/')):
                     for fileName in os.listdir('/static/files/{}'.format(dirName)):
-                            VALIDATE_EXT=['.png','.jpg','.jpeg']
-                            if f'.{fileName.split(".")[1]}' not in VALIDATE_EXT:
+                            EXT=['.png','.jpg','.jpeg']
+                            if f'.{fileName.split(".")[1]}' in EXT:
+                                imgName=generate_img_name(f'/backend/server/static/files/{dirName}/{fileName}')
+                            if f'.{fileName.split(".")[1]}' not in EXT:
                                 with open(f'/static/files/{dirName}/{fileName}','r',encoding='utf-8') as form:
                                     repetition_counter=0 # счетчик дубликатов
                                     erorr_format_counter=0 # счетчик анкет неверного формата
@@ -65,29 +68,28 @@ def upload():
                                             if check_candidate_in_db(candidate_data['email']):
                                                 repetition_counter+=1
                                                 continue
-                                            # imgPath='/backend/deploy/src/server/static/files/{}'.format()
-                                            save_candidate_in_db(candidate_data,)
+                                            save_candidate_in_db(candidate_data,imgName)
                                             jsonCandidates.append(candidate_data)
                                         case '.yml':
                                             candidate_data=yml_parser(form,dirName)
                                             if check_candidate_in_db(candidate_data['email']):
                                                 repetition_counter+=1
                                                 continue
-                                            save_candidate_in_db(candidate_data)
+                                            save_candidate_in_db(candidate_data,imgName)
                                             jsonCandidates.append(candidate_data)
                                         case '.yaml':
                                             candidate_data=yml_parser(form,dirName)
                                             if check_candidate_in_db(candidate_data['email']):
                                                 repetition_counter+=1
                                                 continue
-                                            save_candidate_in_db(candidate_data)
+                                            save_candidate_in_db(candidate_data,imgName)
                                             jsonCandidates.append(candidate_data)
                                         case '.json':
                                             candidate_data=json_parser(form,dirName)
                                             if check_candidate_in_db(candidate_data['email']):
                                                 repetition_counter+=1
                                                 continue
-                                            save_candidate_in_db(candidate_data)
+                                            save_candidate_in_db(candidate_data,imgName)
                                             jsonCandidates.append(candidate_data)
                                         case _:
                                             erorr_format_counter+=1
@@ -102,11 +104,11 @@ def upload():
         print(err)
         return abort(500)
 
-@app.route('/api/compare_candidates',methods=['GET','POST']) #TODO ПЕРЕПИСАТЬ!!
+@app.route('/api/compare_candidates',methods=['GET','POST'])
 def compare_candidates():
     try:
         ids=list(map(int,request.json['candidatesIds']))
-        task=request.json['task'] #todo имя поля
+        task=request.json['task']
         
         jsonCandidates = []
         diagramData = {}
@@ -116,6 +118,19 @@ def compare_candidates():
         for subject in candidate.subjectsEstimation:
             labels.append(subject['title'])
         diagramData.update({'labels':labels})
+
+        datasets=[]
+        dataset={}
+        data=[]
+        candidates=Candidate.query.filter(Candidate.id._in(ids)).all()
+        for cnd in candidates:
+            dataset.update({'label':cnd.lastname})
+            for subject in cnd.subjectsEstimation:
+                data.append(subject['value'])
+            dataset.update({'data':data})
+            datasets.append(dataset)
+        
+        diagramData.update({'datasets':datasets})
 
         for candidate_id in ids:
             candidate=Candidate.query.filter_by(id=candidate_id).first()
@@ -157,7 +172,7 @@ def compare_candidates():
 
         return jsonify(
             comparedCandidates=jsonCandidates,
-            diagramData=''
+            diagramData=diagramData
         )
     except ValueError as err:
         print(err)

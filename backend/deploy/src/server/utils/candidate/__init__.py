@@ -1,16 +1,21 @@
-import json,yaml,xmltodict
+import json,yaml,xmltodict,os,string,random
 from yaml.loader import SafeLoader
 
 from server import db
 from server.models import Candidate
 
 
-def  check_candidate_in_db(email):
+def check_candidate_in_db(email):
     candidate=Candidate.query.filter_by(email=email).first()
     if candidate is not None:return True
     return False
 
-def save_candidate_in_db(candidate_data):
+def generate_img_name(imgPath):
+    newName=''.join(random.choice(string.ascii_letters+string.digits) for _ in range(15))
+    os.rename(imgPath,newName)
+    return newName
+
+def save_candidate_in_db(candidate_data,imgName):
     db.session.add(Candidate(
         firstname=candidate_data['firstname'],
         middlename=candidate_data['middlename'],
@@ -18,7 +23,7 @@ def save_candidate_in_db(candidate_data):
         email=candidate_data['email'],
         age=candidate_data['age'],
         averageSubjectsScore=candidate_data['averageSubjectsScore'],
-        # img='/backend/server/static/{}'.format(imgPath),
+        img='/backend/server/static/files/{}'.format(imgName),
         # faculty=candidate_data['faculty'],
         # department=candidate_data['department'],
         hobby=candidate_data['hobby'],
