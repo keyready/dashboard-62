@@ -29,6 +29,10 @@ const Card = memo((props: { children: ReactNode; className?: string }) => {
 const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     const { className } = props;
 
+    useEffect(() => {
+        document.title = 'Подробное сравнение';
+    }, []);
+
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
     const [task, setTask] = useState<string>('');
 

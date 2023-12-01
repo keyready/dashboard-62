@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import {
     DynamicModuleLoader,
     ReducersList,
@@ -22,6 +22,10 @@ const reducers: ReducersList = {
 
 const UploadFilesPage = memo((props: UploadFilesPageProps) => {
     const { className } = props;
+
+    useEffect(() => {
+        document.title = 'Загрузите данные';
+    }, []);
 
     return (
         <DynamicModuleLoader reducers={reducers}>

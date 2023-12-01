@@ -101,6 +101,17 @@
     font: var(--font-m);
 }
 
+.success {
+    border-radius: 8px;
+    color: var(--secondary-color);
+    background: #b6f09c;
+    transition: 100ms;
+
+    &:hover {
+        background: #bceeac;
+    }
+}
+
 .disabled {
     cursor: not-allowed;
     color: var(--primary-color);

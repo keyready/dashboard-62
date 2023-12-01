@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Text } from 'shared/UI/Text';
 import { HStack, VStack } from 'shared/UI/Stack';
 import { Card } from 'shared/UI/Card';
@@ -12,6 +12,10 @@ interface MainPageProps {
 
 const MainPage = memo((props: MainPageProps) => {
     const { className } = props;
+
+    useEffect(() => {
+        document.title = 'IVT-23';
+    }, []);
 
     return (
         <Page className={classNames(classes.MainPage, {}, [className])}>

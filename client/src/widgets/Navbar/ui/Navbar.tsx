@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { getUserAuthData, userActions } from 'entities/User';
 import { Button } from 'shared/UI/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
 import classes from './Navbar.module.scss';
 
 interface NavbarProps {
@@ -32,41 +33,68 @@ export const Navbar = memo((props: NavbarProps) => {
     }, [dispatch]);
 
     return (
-        <HStack maxW justify="between" className={classNames(classes.Navbar, {}, [className])}>
+        <HStack
+            gap="32"
+            maxW
+            justify="between"
+            className={classNames(classes.Navbar, {}, [className])}
+        >
             <Text title="Dashboard" size="large" />
-            <AppLink
-                to={RoutePath.main}
-                className={classNames(classes.link, {
-                    [classes.active]: location.pathname === RoutePath.main,
-                })}
-            >
-                <HStack gap="8">
-                    <Icon className={classes.icon} Svg={InfoIcon} />
-                    <Text text="О проекте" size="small" />
-                </HStack>
-            </AppLink>
-            <AppLink
-                to={RoutePath.candidates}
-                className={classNames(classes.link, {
-                    [classes.active]: location.pathname === RoutePath.candidates,
-                })}
-            >
-                <HStack gap="8">
-                    <Icon className={classes.icon} Svg={RangeIcon} />
-                    <Text text="Сравнение кандидатов" size="small" />
-                </HStack>
-            </AppLink>
-            <AppLink
-                to={RoutePath.filesupload}
-                className={classNames(classes.link, {
-                    [classes.active]: location.pathname === RoutePath.filesupload,
-                })}
-            >
-                <HStack gap="8">
-                    <Icon className={classes.icon} Svg={DownloadIcon} />
-                    <Text text="Загрузить данные" size="small" />
-                </HStack>
-            </AppLink>
+
+            <HStack maxW gap="16" justify="center">
+                <AppLink
+                    to={RoutePath.main}
+                    className={classNames(classes.link, {
+                        [classes.active]: location.pathname === RoutePath.main,
+                    })}
+                >
+                    <HStack gap="8">
+                        <Icon className={classes.icon} Svg={InfoIcon} />
+                        <Text text="О проекте" size="small" />
+                    </HStack>
+                </AppLink>
+
+                {userData ? (
+                    <>
+                        <AppLink
+                            to={RoutePath.candidates}
+                            className={classNames(classes.link, {
+                                [classes.active]: location.pathname === RoutePath.candidates,
+                            })}
+                        >
+                            <HStack gap="8">
+                                <Icon className={classes.icon} Svg={RangeIcon} />
+                                <Text text="Сравнение кандидатов" size="small" />
+                            </HStack>
+                        </AppLink>
+                        <AppLink
+                            to={RoutePath.filesupload}
+                            className={classNames(classes.link, {
+                                [classes.active]: location.pathname === RoutePath.filesupload,
+                            })}
+                        >
+                            <HStack gap="8">
+                                <Icon className={classes.icon} Svg={DownloadIcon} />
+                                <Text text="Загрузить данные" size="small" />
+                            </HStack>
+                        </AppLink>
+                    </>
+                ) : (
+                    <AppLink
+                        to={RoutePath.createcandidatepage}
+                        className={classNames(classes.link, {
+                            [classes.active]: location.pathname === RoutePath.createcandidatepage,
+                        })}
+                    >
+                        <HStack gap="8">
+                            <EnvelopeClosedIcon
+                                className={classNames(classes.icon, {}, [classes.radixIcon])}
+                            />
+                            <Text text="Подать анкету" size="small" />
+                        </HStack>
+                    </AppLink>
+                )}
+            </HStack>
 
             {userData ? (
                 <Button variant="danger" onClick={handleLogoutClick}>
