@@ -53,7 +53,13 @@ export const Table = memo((props: TableProps) => {
                 sortable
             />
             <Column alignHeader="center" dataType="numeric" field="age" header="Возраст" sortable />
-            <Column alignHeader="center" dataType="text" field="hobby" header="Хобби" sortable />
+            <Column
+                alignHeader="center"
+                dataType="text"
+                field="keySkills"
+                header="Ключевые навыки"
+                sortable
+            />
         </DataTable>
     );
 });

@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import {
     DynamicModuleLoader,
     ReducersList,
@@ -9,6 +9,7 @@ import { UploadFiles } from 'features/UploadFiles';
 import { Card } from 'shared/UI/Card';
 import { Text } from 'shared/UI/Text';
 import { HStack } from 'shared/UI/Stack';
+import { PageTitle } from 'widgets/PageTitle';
 import classes from './UploadFilesPage.module.scss';
 import { UploadFilesReducer } from '../model/slice/UploadFilesSlice';
 
@@ -23,19 +24,14 @@ const reducers: ReducersList = {
 const UploadFilesPage = memo((props: UploadFilesPageProps) => {
     const { className } = props;
 
+    useEffect(() => {
+        document.title = 'Загрузите данные';
+    }, []);
+
     return (
         <DynamicModuleLoader reducers={reducers}>
             <Page className={classNames(classes.UploadFilesPage, {}, [className])}>
-                <HStack justify="start">
-                    <Card className={classes.card}>
-                        <Text
-                            align="left"
-                            size="large"
-                            className={classes.textBlock}
-                            title="Загрузка резюме"
-                        />
-                    </Card>
-                </HStack>
+                <PageTitle title="Загрузка резюме" />
 
                 <UploadFiles />
             </Page>

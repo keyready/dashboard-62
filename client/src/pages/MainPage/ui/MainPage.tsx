@@ -1,9 +1,10 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Text } from 'shared/UI/Text';
 import { HStack, VStack } from 'shared/UI/Stack';
 import { Card } from 'shared/UI/Card';
+import { PageTitle } from 'widgets/PageTitle';
 import classes from './MainPage.module.scss';
 
 interface MainPageProps {
@@ -13,18 +14,13 @@ interface MainPageProps {
 const MainPage = memo((props: MainPageProps) => {
     const { className } = props;
 
+    useEffect(() => {
+        document.title = 'IVT-23';
+    }, []);
+
     return (
         <Page className={classNames(classes.MainPage, {}, [className])}>
-            <HStack justify="start">
-                <Card className={classes.card}>
-                    <Text
-                        align="left"
-                        size="large"
-                        className={classes.textBlock}
-                        title="О проекте"
-                    />
-                </Card>
-            </HStack>
+            <PageTitle title="О проекте" />
 
             <VStack maxW gap="16">
                 <div className={classes.descriptionTable}>

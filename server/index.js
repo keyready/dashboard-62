@@ -20,7 +20,7 @@ const candidatesFromDB = [
         HES: 'ВКА',
         department: 'Создание защищенного ПО',
         age: '20',
-        hobby: 'Frontend-разработка',
+        keySkills: ['Frontend-разработка', 'TeamLead'],
     },
     {
         id: 1,
@@ -30,7 +30,7 @@ const candidatesFromDB = [
         HES: 'ВКА',
         department: 'Создание защищенного ПО',
         age: '20',
-        hobby: 'UI/UX дизайнер',
+        keySkills: ['UI/UX дизайнер'],
     },
     {
         id: 2,
@@ -40,7 +40,7 @@ const candidatesFromDB = [
         HES: 'ВКА',
         department: 'Создание защищенного ПО',
         age: '20',
-        hobby: 'Backend-разработка',
+        keySkills: ['Backend-разработка'],
     },
     {
         id: 3,
@@ -50,7 +50,7 @@ const candidatesFromDB = [
         HES: 'Политех имени Петра Великого',
         department: 'Что-то там с процессорами',
         age: '20',
-        hobby: 'Cybersport',
+        keySkills: ['Cybersport'],
     },
     {
         id: 4,
@@ -60,7 +60,7 @@ const candidatesFromDB = [
         HES: 'Московский государственный университет',
         department: 'Информатика',
         age: '21',
-        hobby: 'Чтение',
+        keySkills: ['Чтение'],
     },
     {
         id: 5,
@@ -70,7 +70,7 @@ const candidatesFromDB = [
         HES: 'Санкт-Петербургский государственный университет',
         department: 'Математика',
         age: '22',
-        hobby: 'Футбол',
+        keySkills: ['Футбол'],
     },
     {
         id: 6,
@@ -80,7 +80,7 @@ const candidatesFromDB = [
         HES: 'Новосибирский государственный университет',
         department: 'Физика',
         age: '23',
-        hobby: 'Кино',
+        keySkills: ['Кино'],
     },
     {
         id: 7,
@@ -90,7 +90,7 @@ const candidatesFromDB = [
         HES: 'Политех имени Петра Великого',
         department: 'Что-то там с процессорами',
         age: '24',
-        hobby: 'Cybersport',
+        keySkills: ['Cybersport'],
     },
     {
         id: 8,
@@ -100,7 +100,7 @@ const candidatesFromDB = [
         HES: 'Московский государственный университет',
         department: 'Информатика',
         age: '25',
-        hobby: 'Чтение',
+        keySkills: ['Чтение'],
     },
     {
         id: 9,
@@ -110,7 +110,7 @@ const candidatesFromDB = [
         HES: 'Санкт-Петербургский государственный университет',
         department: 'Математика',
         age: '26',
-        hobby: 'Футбол',
+        keySkills: ['Футбол'],
     },
     {
         id: 10,
@@ -120,7 +120,7 @@ const candidatesFromDB = [
         HES: 'Новосибирский государственный университет',
         department: 'Физика',
         age: '27',
-        hobby: 'Кино',
+        keySkills: ['Кино'],
     },
     {
         id: 11,
@@ -130,7 +130,7 @@ const candidatesFromDB = [
         HES: 'Политех имени Петра Великого',
         department: 'Что-то там с процессорами',
         age: '28',
-        hobby: 'Cybersport',
+        keySkills: ['Cybersport'],
     },
     {
         id: 12,
@@ -140,7 +140,7 @@ const candidatesFromDB = [
         HES: 'Московский государственный университет',
         department: 'Информатика',
         age: '29',
-        hobby: 'Чтение',
+        keySkills: ['Чтение'],
     },
     {
         id: 13,
@@ -150,7 +150,7 @@ const candidatesFromDB = [
         HES: 'Санкт-Петербургский государственный университет',
         department: 'Математика',
         age: '30',
-        hobby: 'Футбол',
+        keySkills: ['Футбол'],
     },
     {
         id: 14,
@@ -160,7 +160,7 @@ const candidatesFromDB = [
         HES: 'Новосибирский государственный университет',
         department: 'Физика',
         age: '31',
-        hobby: 'Кино',
+        keySkills: ['Кино'],
     },
     {
         id: 15,
@@ -170,7 +170,7 @@ const candidatesFromDB = [
         HES: 'Политех имени Петра Великого',
         department: 'Что-то там с процессорами',
         age: '32',
-        hobby: 'Cybersport',
+        keySkills: ['Cybersport'],
     },
     {
         id: 16,
@@ -180,7 +180,7 @@ const candidatesFromDB = [
         HES: 'Московский государственный университет',
         department: 'Информатика',
         age: '33',
-        hobby: 'Чтение',
+        keySkills: ['Чтение'],
     },
     {
         id: 17,
@@ -190,7 +190,7 @@ const candidatesFromDB = [
         HES: 'Санкт-Петербургский государственный университет',
         department: 'Математика',
         age: '34',
-        hobby: 'Футбол',
+        keySkills: ['Футбол'],
     },
 ];
 const faculties = [
@@ -282,4 +282,14 @@ app.post('/login', async (req, res) => {
     return res.status(200).json({ id: 1, email });
 });
 
-app.listen(9999);
+app.get('/api/subjects/fetch', (req, res) =>
+    res.status(200).json([
+        { title: 'привет', id: 1 },
+        { title: 'пока', id: 2 },
+        { title: 'как дела', id: 3 },
+        { title: 'все норм', id: 4 },
+        { title: 'все не очеень', id: 5 },
+    ]),
+);
+
+app.listen(5000);

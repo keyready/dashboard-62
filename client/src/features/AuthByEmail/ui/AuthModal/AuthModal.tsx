@@ -44,7 +44,6 @@ export const AuthModal = memo((props: AuthModalProps) => {
         [dispatch],
     );
     const handleForgetPassClick = useCallback(() => {}, []);
-    const handleTabsChange = useCallback(() => {}, []);
     const handleLoginClick = useCallback(
         async (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
@@ -70,8 +69,7 @@ export const AuthModal = memo((props: AuthModalProps) => {
                 setIsOpen={setIsModalOpened}
             >
                 <form onSubmit={handleLoginClick}>
-                    <VStack maxW justify="start" gap="16"
-className={classes.body}>
+                    <VStack maxW justify="start" gap="16" className={classes.body}>
                         <Input
                             value={userMail}
                             onChange={handleEmailChange}
@@ -92,7 +90,7 @@ className={classes.body}>
                             className={classes.forget}
                         />
 
-                        <Button type="submit" className={classes.loginBtn}>
+                        <Button variant="success" type="submit" className={classes.loginBtn}>
                             Войти
                         </Button>
 
@@ -106,8 +104,7 @@ className={classes.body}>
                             />
                         )}
 
-                        <HStack gap="8" justify="center" maxW
-className={classes.helpers}>
+                        <HStack gap="8" justify="center" maxW className={classes.helpers}>
                             <Text
                                 onClick={handleForgetPassClick}
                                 size="extrasmall"
@@ -125,7 +122,11 @@ className={classes.helpers}>
                 </form>
             </Modal>
 
-            <Button className={classes.btn} variant="danger" onClick={() => setIsModalOpened(true)}>
+            <Button
+                variant="success"
+                className={classes.btn}
+                onClick={() => setIsModalOpened(true)}
+            >
                 Войти
             </Button>
         </>

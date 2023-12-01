@@ -4,7 +4,7 @@ import { MainPage } from 'pages/MainPage';
 import { CandidatesPage } from 'pages/CandidatesPage';
 import { UploadFilesPage } from 'pages/UploadFilesPage';
 import { DetailedComparisonPage } from 'pages/DetailedComparisonPage';
-import { LoginPage } from 'pages/LoginPage';
+import { CreateCandidatePage } from 'pages/CreateCandidatePage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
@@ -15,7 +15,7 @@ export enum AppRoutes {
     CANDIDATES = 'candidates',
     DETAILEDCOMPARISON = 'detailedcomparison',
     FILESUPLOAD = 'filesupload',
-    LOGINPAGE = 'loginpage',
+    CREATECANDIDATEPAGE = 'createcandidatepage',
 
     // last
     NOT_FOUND = 'not_found',
@@ -24,9 +24,9 @@ export enum AppRoutes {
 export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.CANDIDATES]: '/candidates',
     [AppRoutes.MAIN]: '/',
-    [AppRoutes.DETAILEDCOMPARISON]: '/detailed_comparison',
-    [AppRoutes.FILESUPLOAD]: '/files_upload',
-    [AppRoutes.LOGINPAGE]: '/login',
+    [AppRoutes.DETAILEDCOMPARISON]: '/candidate/detailed_comparison',
+    [AppRoutes.FILESUPLOAD]: '/candidate/upload',
+    [AppRoutes.CREATECANDIDATEPAGE]: '/candidate/create',
 
     // last
     [AppRoutes.NOT_FOUND]: '*',
@@ -52,9 +52,9 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
         element: <UploadFilesPage />,
         authOnly: true,
     },
-    [AppRoutes.LOGINPAGE]: {
-        path: RoutePath.loginpage,
-        element: <LoginPage />,
+    [AppRoutes.CREATECANDIDATEPAGE]: {
+        path: RoutePath.createcandidatepage,
+        element: <CreateCandidatePage />,
     },
 
     // last
