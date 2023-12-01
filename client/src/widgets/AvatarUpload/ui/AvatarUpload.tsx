@@ -14,10 +14,11 @@ interface AvatarUploadProps {
     file?: File;
     placeholder?: string;
     type?: 'img' | 'file';
+    name?: string;
 }
 
 export const AvatarUpload = memo((props: AvatarUploadProps) => {
-    const { className, required, setFile, file, placeholder = 'Ваше фото', type } = props;
+    const { className, required, name, setFile, file, placeholder = 'Ваше фото', type } = props;
 
     const [imageUrl, setImageUrl] = useState<string>('');
 
@@ -56,6 +57,7 @@ export const AvatarUpload = memo((props: AvatarUploadProps) => {
             </label>
 
             <input
+                name={name}
                 required={required}
                 id={type}
                 className={classes.input}

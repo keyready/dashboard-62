@@ -21,7 +21,6 @@ import { AvatarUpload } from 'widgets/AvatarUpload';
 import { Slider } from 'shared/UI/Slider';
 import { Skeleton } from 'primereact/skeleton';
 import { DiplomaScoreInput } from 'shared/UI/DiplomaScoreInput';
-import { InputText } from 'primereact/inputtext';
 import { Button } from 'shared/UI/Button';
 import classes from './CreateCandidatePage.module.scss';
 import { useSubjects } from '../../api/fetchAllSubjectsApi';
@@ -62,29 +61,24 @@ const CreateCandidatePage = memo((props: CreateCandidatePageProps) => {
         (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
-            const formData = new FormData();
-            formData.append('names', JSON.stringify(names));
-            formData.append('keySkills', JSON.stringify(keySkills));
+            const formData = new FormData(event.currentTarget);
+            formData.append('name', JSON.stringify(names));
             formData.append('phoneNumber', phoneNumber);
             formData.append('mail', mail);
             formData.append('age', age.toString());
             formData.append('education', JSON.stringify(education));
             formData.append('subjectsScores', JSON.stringify(subjectsScores));
-            formData.append('img', image as File);
-            formData.append('document', file as File);
+            formData.append('keySkills', JSON.stringify(keySkills));
 
             fetch('http://localhost:5000/api/candidate/create', {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
             })
                 .then((response) => response.json())
                 .then((data) => console.log(data))
                 .catch((error) => console.error(error));
         },
-        [names, keySkills, phoneNumber, mail, age, education, subjectsScores, image, file],
+        [age, education, keySkills, mail, names, phoneNumber, subjectsScores],
     );
 
     return (
@@ -132,6 +126,7 @@ const CreateCandidatePage = memo((props: CreateCandidatePageProps) => {
                             </VStack>
 
                             <AvatarUpload
+                                name="img"
                                 file={image}
                                 setFile={setImage}
                                 required
@@ -259,6 +254,7 @@ const CreateCandidatePage = memo((props: CreateCandidatePageProps) => {
                                 </div>
                             )}
                             <AvatarUpload
+                                name="document"
                                 file={file}
                                 setFile={setFile}
                                 required
