@@ -9,6 +9,7 @@ import { UploadFiles } from 'features/UploadFiles';
 import { Card } from 'shared/UI/Card';
 import { Text } from 'shared/UI/Text';
 import { HStack } from 'shared/UI/Stack';
+import { PageTitle } from 'widgets/PageTitle';
 import classes from './UploadFilesPage.module.scss';
 import { UploadFilesReducer } from '../model/slice/UploadFilesSlice';
 
@@ -30,16 +31,7 @@ const UploadFilesPage = memo((props: UploadFilesPageProps) => {
     return (
         <DynamicModuleLoader reducers={reducers}>
             <Page className={classNames(classes.UploadFilesPage, {}, [className])}>
-                <HStack justify="start">
-                    <Card className={classes.card}>
-                        <Text
-                            align="left"
-                            size="large"
-                            className={classes.textBlock}
-                            title="Загрузка резюме"
-                        />
-                    </Card>
-                </HStack>
+                <PageTitle title="Загрузка резюме" />
 
                 <UploadFiles />
             </Page>

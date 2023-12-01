@@ -12,7 +12,7 @@ export interface Candidate {
     middlename: string;
     lastname: string;
 
-    hobby: string;
+    keySkills: string[];
 
     age: number;
     HES: string;

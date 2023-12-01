@@ -4,7 +4,8 @@ import { Button } from 'shared/UI/Button';
 import { useNavigate } from 'react-router-dom';
 import { Theme, useTheme } from 'app/providers/ThemeProvider';
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { PageTitle } from 'widgets/PageTitle';
 import classes from './NotFound.module.scss';
 
 interface NotFoundProps {
@@ -21,7 +22,7 @@ export const NotFound = ({ className }: NotFoundProps) => {
 
     return (
         <Page className={classNames(classes.NotFound, {}, [className])}>
-            <h2>Страница не найдена</h2>
+            <PageTitle title="Страница не найдена" />
             <Button
                 variant={theme === Theme.LIGHT ? 'primary' : 'warning'}
                 onClick={() => navigate('/')}

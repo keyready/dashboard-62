@@ -12,6 +12,7 @@ import { Skeleton } from 'primereact/skeleton';
 import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
 import { RadarChart } from 'widgets/RadarChart';
 import { BarChart } from 'widgets/BarChart';
+import { PageTitle } from 'widgets/PageTitle';
 import { ComparedCandidatesResult, useComparedCandidates } from '../../api/compareCandidatesApi';
 import classes from './DetailedComparisonPage.module.scss';
 import cardClasses from './card.module.scss';
@@ -131,16 +132,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
     return (
         <Page className={classNames(classes.ComparisonPage, {}, [className])}>
-            <HStack justify="start" className={classes.gradCard}>
-                <GradientCard>
-                    <Text
-                        align="left"
-                        size="large"
-                        className={classes.textBlock}
-                        title={`Задача: ${task}`}
-                    />
-                </GradientCard>
-            </HStack>
+            <PageTitle title={`Задача: ${task}`} />
 
             <VStack maxW gap="32">
                 <div className={classes.firstLine}>

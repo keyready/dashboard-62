@@ -1,0 +1,21 @@
+.DiplomaScoreInput {
+
+}
+
+.title {
+    width: 260px;
+    height: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: black;
+    background: linear-gradient(92deg, #b6f09c 0%, #82dbf7 100%);
+    z-index: 10;
+}
+
+.input {
+    width: 70px;
+    height: 100%;
+    z-index: 5;
+    margin-left: -15px;
+    text-align: right;
+}

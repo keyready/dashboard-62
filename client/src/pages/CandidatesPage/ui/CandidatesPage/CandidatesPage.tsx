@@ -28,6 +28,7 @@ import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { fetchTotalCandidates } from 'pages/CandidatesPage';
 import { Modal } from 'shared/UI/Modal';
 import { CandidatesFilterModal, FilterOptions } from 'widgets/CandidatesFilterModal';
+import { PageTitle } from 'widgets/PageTitle';
 import { QueryProps, useCandidates } from '../../api/fetchCandidatesApi';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
@@ -98,7 +99,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
             });
             addSearchParams({ age: urlAge });
         }
-    }, [dispatch]);
+    }, [dispatch, filterOptions]);
 
     useEffect(() => {
         if (selectedIdsFromUrl.length && candidates) {
@@ -213,16 +214,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                     setFilterOptions={setFilterOptions}
                 />
 
-                <HStack justify="start">
-                    <Card className={classes.card}>
-                        <Text
-                            align="left"
-                            size="large"
-                            className={classes.textBlock}
-                            title="Сравнение выпускников"
-                        />
-                    </Card>
-                </HStack>
+                <PageTitle title="Сравнение выпускников" />
 
                 <HStack className={classes.deleteBtn} maxW justify="end">
                     <Button size="small" onClick={() => setIsModalOpened(true)}>
@@ -318,8 +310,8 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                                 <p>{user.department}</p>
                                             </HStack>
                                             <HStack maxW>
-                                                <b>Хобби:</b>
-                                                <p>{user.hobby}</p>
+                                                <b>Ключевые навыки:</b>
+                                                <p>{user.keySkills.slice(0, 3).join(', ')}</p>
                                             </HStack>
                                         </VStack>
                                     )) || [<p>ничего</p>]
