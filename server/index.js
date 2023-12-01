@@ -292,4 +292,8 @@ app.get('/api/subjects/fetch', (req, res) =>
     ]),
 );
 
+app.get('/api/fetch_key_skills', (req, res) =>
+    res.status(200).json(['Frontend', 'Backend', 'DevOps', 'Английский', 'Русский', 'Информатика']),
+);
+
 app.listen(5000);

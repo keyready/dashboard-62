@@ -15,7 +15,7 @@ import { InputMask } from 'shared/UI/InputMask';
 import { PageTitle } from 'widgets/PageTitle';
 import { Input } from 'shared/UI/Input';
 import { Divider } from 'primereact/divider';
-import { Autocomplete } from 'shared/UI/Autocomplete';
+import { MailAutoComplete } from 'shared/UI/MailAutoComplete';
 import { Text } from 'shared/UI/Text';
 import { AvatarUpload } from 'widgets/AvatarUpload';
 import { Slider } from 'shared/UI/Slider';
@@ -175,7 +175,7 @@ const CreateCandidatePage = memo((props: CreateCandidatePageProps) => {
                                 placeholder="Номер телефона"
                                 mask="+9 (999) 999-99-99"
                             />
-                            <Autocomplete
+                            <MailAutoComplete
                                 required
                                 placeholder="Почта"
                                 value={mail}

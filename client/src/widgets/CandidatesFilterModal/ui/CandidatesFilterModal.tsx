@@ -5,7 +5,9 @@ import { Button } from 'shared/UI/Button';
 import { HStack, VStack } from 'shared/UI/Stack';
 import { Slider, SliderChangeEvent } from 'primereact/slider';
 import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
+import { AutoComplete } from 'shared/UI/AutoComplete';
 import classes from './CandidatesFilterModal.module.scss';
+import { useKeySkills } from '../api/fetchKeySkillsApi';
 
 export interface FilterOptions {
     age: [number, number];
@@ -23,8 +25,10 @@ export const CandidatesFilterModal = memo((props: CandidatesFilterModalProps) =>
     const { isOpen, setIsOpen, filterOptions, setFilterOptions } = props;
 
     const [localOptions, setLocalOptions] = useState<FilterOptions>(filterOptions);
+    const [keySkill, setKeySkill] = useState<string>('');
 
     const { addSearchParams, deleteSearchParams } = useURLParams();
+    const { data: keySkills, isLoading: isKeySkillsLoading } = useKeySkills();
 
     const handleAgeRangeChange = useCallback(
         (event: SliderChangeEvent) => {
@@ -98,6 +102,10 @@ export const CandidatesFilterModal = memo((props: CandidatesFilterModalProps) =>
                         Очистить фильтры
                     </Button>
                 </HStack>
+
+                {keySkills?.length && (
+                    <AutoComplete data={keySkills} value={keySkill} setValue={setKeySkill} />
+                )}
             </VStack>
         </Modal>
     );
