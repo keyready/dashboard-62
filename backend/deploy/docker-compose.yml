@@ -4,8 +4,8 @@ services:
   backend:
     container_name: backend
     build: ./src
+    command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 36000 --reload
     # command: ['sh','-c','/backend/start.sh']
-    command: gunicorn --bind 0.0.0.0:5000 manage:app --reload --timeout 3600
     restart: always    
     volumes:
       - ./src:/backend #DEV

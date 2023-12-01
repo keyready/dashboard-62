@@ -8,5 +8,8 @@ sqlalchemy
 pyyaml
 sqlalchemy_utils
 sqlalchemy_serializer
-openai==0.28
 xmltodict
+gigachat
+# Статистика
+numpy
+scipy
