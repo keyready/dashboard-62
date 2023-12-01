@@ -20,6 +20,7 @@ export const DiplomaScoreInput = memo((props: DiplomaScoreInputProps) => {
             <Input
                 min={3}
                 max={5}
+                required
                 className={classes.input}
                 value={value}
                 onChange={(value) => setValue(~~value)}
