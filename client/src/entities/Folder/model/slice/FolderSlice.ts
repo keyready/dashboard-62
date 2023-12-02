@@ -7,7 +7,7 @@ import { Folder } from '../types/Folder';
 
 const initialState: FolderSchema = {
     data: undefined,
-    isLoading: false,
+    isLoading: true,
     error: undefined,
 };
 
