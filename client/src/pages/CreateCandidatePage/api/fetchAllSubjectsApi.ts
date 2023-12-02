@@ -3,7 +3,7 @@ import { Subject } from 'entities/Subject';
 
 const fetchSubjectsApi = rtkApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchCandidates: build.query<Subject[], void>({
+        fetchSubjects: build.query<Subject[], void>({
             query: () => ({
                 url: '/api/subjects/fetch',
             }),
@@ -11,4 +11,4 @@ const fetchSubjectsApi = rtkApi.injectEndpoints({
     }),
 });
 
-export const useSubjects = fetchSubjectsApi.useFetchCandidatesQuery;
+export const useSubjects = fetchSubjectsApi.useFetchSubjectsQuery;

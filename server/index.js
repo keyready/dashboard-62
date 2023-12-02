@@ -284,11 +284,11 @@ app.post('/login', async (req, res) => {
 
 app.get('/api/subjects/fetch', (req, res) =>
     res.status(200).json([
-        { title: 'привет', id: 1 },
-        { title: 'пока', id: 2 },
-        { title: 'как дела', id: 3 },
-        { title: 'все норм', id: 4 },
-        { title: 'все не очеень', id: 5 },
+        { title: 'Математика', id: 1 },
+        { title: 'Матанализ', id: 2 },
+        { title: 'Тервер', id: 3 },
+        { title: 'СГА', id: 4 },
+        { title: 'Социология', id: 5 },
     ]),
 );
 
