@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: backend
+    build: ./src
+    # command: ['sh','-c','/backend/start.sh']
+    command: gunicorn --bind 0.0.0.0:5000 manage:app --reload --timeout 3600
+    restart: always    
+    volumes:
+      - ./src:/backend #DEV
+      - ./src/server/static:/static
+    ports:
+      - 5000:5000
+    networks:
+      - custom_network_ntti    
+    depends_on:
+      - database
+  
+  database:
+    container_name: database
+    image: postgres:15-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    networks:
+      - custom_network_ntti
+
+  nginx:
+    container_name: nginx
+    restart: always 
+    build: ./nginx
+    volumes:
+      - ./src/server/static:/static
+    ports:
+      - 80:80
+    networks:
+      - custom_network_ntti
+    
+networks:
+  custom_network_ntti:
+    driver: bridge
+    name: custom_network_ntti
