@@ -217,6 +217,9 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 <PageTitle title="Сравнение выпускников" />
 
                 <HStack className={classes.deleteBtn} maxW justify="end">
+                    <Button size="small" onClick={() => navigate(RoutePath.grouping)}>
+                        Группировка кандидатов
+                    </Button>
                     <Button size="small" onClick={() => setIsModalOpened(true)}>
                         Поиск по параметрам
                     </Button>

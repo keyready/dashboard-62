@@ -16,7 +16,8 @@ export const PageTitle = memo((props: PageTitleProps) => {
     return (
         <HStack justify="start" className={classNames(classes.PageTitle, {}, [className])}>
             <Card className={classes.card}>
-                <Text align="left" size="large" className={classes.textBlock} title={title} />
+                <Text align="left" size="large" className={classes.textBlock}
+title={title} />
             </Card>
         </HStack>
     );

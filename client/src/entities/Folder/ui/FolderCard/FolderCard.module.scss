@@ -1,0 +1,48 @@
+.wrapper {
+    width: 390px;
+    height: 500px;
+    flex-shrink: 0;
+}
+
+.FolderCard {
+    flex-grow: 1;
+    padding: 30px;
+    height: 100%;
+    border-radius: 16px;
+    outline: 4px solid #b6f09c;
+}
+
+.text {
+    p {
+        font-weight: bold;
+    }
+}
+
+.expand {
+    cursor: pointer;
+    transition: 200ms;
+    height: 36px;
+    padding: 2px;
+    border-radius: 8px;
+    background: gray;
+    font-size: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &:hover {
+        transform: scale(1.05);
+        background: #b6f09c;
+        color: black;
+    }
+}
+
+.addIcon {
+    width: 75px;
+    height: 75px;
+    transition: 200ms;
+    color: #b6f09c;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}

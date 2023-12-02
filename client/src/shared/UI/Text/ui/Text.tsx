@@ -20,7 +20,7 @@ export const Text = memo((props: TextProps) => {
         className,
         title,
         text,
-        align = 'justify',
+        align = 'left',
         size = 'medium',
         variant = 'primary',
         id,

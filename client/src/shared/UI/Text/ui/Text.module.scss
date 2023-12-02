@@ -10,7 +10,6 @@
     }
 
     p {
-        margin: 5px 0;
         color: var(--secondary-color);
         font: var(--font-l);
     }
@@ -18,14 +17,12 @@
 
 .medium {
     h2 {
-        margin: 20px 0 0;
         color: var(--primary-color) !important;
         font: var(--font-l);
         font-weight: bold;
     }
 
     p {
-        margin: 5px 0;
         color: var(--secondary-color);
         font: var(--font-m);
     }
@@ -33,14 +30,12 @@
 
 .small {
     h3 {
-        margin: 20px 0 0;
         color: var(--primary-color);
         font: var(--font-m);
         font-weight: bold;
     }
 
     p {
-        margin: 5px 0;
         color: var(--secondary-color);
         font: var(--font-s);
     }
@@ -48,16 +43,14 @@
 
 .extrasmall {
     h4 {
-        margin: 20px 0 0;
         color: var(--primary-color);
         font: var(--font-s);
         font-weight: bold;
     }
 
     p {
-        margin: 5px 0;
         color: var(--secondary-color);
-        font: var(--font-s);
+        font: var(--font-xs);
     }
 }
 
