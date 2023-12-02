@@ -5,10 +5,10 @@
 }
 
 .FolderCard {
-    flex-grow: 1;
-    padding: 30px;
     height: 100%;
+    padding: 30px;
     border-radius: 16px;
+    flex-grow: 1;
     outline: 4px solid #b6f09c;
 }
 
@@ -20,27 +20,27 @@
 
 .expand {
     cursor: pointer;
-    transition: 200ms;
     height: 36px;
     padding: 2px;
     border-radius: 8px;
     background: gray;
     font-size: 16px;
+    transition: 200ms;
     overflow: hidden;
     white-space: nowrap;
 
     &:hover {
-        transform: scale(1.05);
-        background: #b6f09c;
         color: black;
+        background: #b6f09c;
+        transform: scale(1.05);
     }
 }
 
 .addIcon {
     width: 75px;
     height: 75px;
-    transition: 200ms;
     color: #b6f09c;
+    transition: 200ms;
 
     &:hover {
         transform: scale(1.05);

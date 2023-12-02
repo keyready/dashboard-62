@@ -2,10 +2,10 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { AutoComplete, AutoCompleteCompleteEvent } from 'primereact/autocomplete';
 import { HStack } from 'shared/UI/Stack';
-import classes from './Autocomplete.module.scss';
+import classes from './MailAutoComplete.module.scss';
 import { fetchMails } from '../api/fetchMails';
 
-interface AutocompleteProps {
+interface MailAutoCompleteProps {
     className?: string;
     value: string;
     setValue: (value: string) => void;
@@ -13,7 +13,7 @@ interface AutocompleteProps {
     required?: boolean;
 }
 
-export const Autocomplete = memo((props: AutocompleteProps) => {
+export const MailAutoComplete = memo((props: MailAutoCompleteProps) => {
     const { className, setValue, value, placeholder, required } = props;
 
     const [items, setItems] = useState<string[]>([]);

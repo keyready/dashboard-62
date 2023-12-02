@@ -112,6 +112,14 @@ div[data-pc-section="actions"] {
     transform: translate(-50%, -50%) !important;
 }
 
+.p-placeholder {
+    text-align: left;
+}
+
+.p-treeselect-label-container {
+    background: #1a1d21;
+}
+
 .p-treeselect-label {
     padding: 10px;
     display: grid;
@@ -163,4 +171,19 @@ div[data-pc-section="actions"] {
 // autocomplete
 .p-autocomplete-panel.p-component.p-ripple-disabled.p-connected-overlay-enter-done {
     text-align: left !important;
+}
+
+// dropdown
+.p-dropdown-label.p-inputtext,
+.p-dropdown-item {
+    text-align: left;
+}
+
+// multi select
+.p-multiselect-label {
+    text-align: left;
+}
+
+.p-multiselect-label-container {
+    background: #1a1d21;
 }

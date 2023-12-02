@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { createFolder } from '../services/createFolder';
 import { FolderSchema } from '../types/FolderSchema';
-// import { fetchFolder } from '../services/fetchFolder';
 
 const initialState: FolderSchema = {
     data: undefined,
@@ -12,21 +12,20 @@ export const FolderSlice = createSlice({
     name: 'FolderSlice',
     initialState,
     reducers: {},
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(fetchFolder.pending, (state) => {
-    //             state.error = undefined;
-    //             state.isLoading = true;
-    //         })
-    //         .addCase(fetchFolder.fulfilled, (state, action: PayloadAction<any>) => {
-    //             state.isLoading = false;
-    //             state.data = action.payload;
-    //         })
-    //         .addCase(fetchFolder.rejected, (state, action) => {
-    //             state.isLoading = false;
-    //             state.error = action.payload;
-    //         });
-    // },
+    extraReducers: (builder) => {
+        builder
+            .addCase(createFolder.pending, (state) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(createFolder.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(createFolder.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            });
+    },
 });
 
 export const { actions: FolderActions } = FolderSlice;

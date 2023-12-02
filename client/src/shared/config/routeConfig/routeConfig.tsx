@@ -28,14 +28,14 @@ export enum AppRoutes {
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
-    [AppRoutes.CANDIDATES]: '/candidates',
     [AppRoutes.MAIN]: '/',
-    [AppRoutes.DETAILEDCOMPARISON]: '/candidate/detailed_comparison',
-    [AppRoutes.FILESUPLOAD]: '/candidate/upload',
-    [AppRoutes.CREATECANDIDATEPAGE]: '/candidate/create',
+    [AppRoutes.CANDIDATES]: '/candidates',
     [AppRoutes.GROUPING]: '/candidates/grouping',
-    [AppRoutes.CREATEGROUP]: '/groups/create',
     [AppRoutes.ALLOCATION]: '/candidates/allocation',
+    [AppRoutes.DETAILEDCOMPARISON]: '/candidates/detailed_comparison',
+    [AppRoutes.FILESUPLOAD]: '/candidates/upload',
+    [AppRoutes.CREATECANDIDATEPAGE]: '/candidate/create',
+    [AppRoutes.CREATEGROUP]: '/groups/create',
 
     // last
     [AppRoutes.NOT_FOUND]: '*',

@@ -1,5 +1,7 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { ButtonHTMLAttributes, memo, ReactNode } from 'react';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { HStack } from 'shared/UI/Stack';
 import { variantsMapper, sizesMapper } from '../types/button.mapper';
 import { buttonSizes, buttonVariants } from '../types/button.types';
 import classes from './Button.module.scss';
@@ -10,6 +12,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children?: ReactNode;
     variant?: buttonVariants;
     size?: buttonSizes;
+    isLoading?: boolean;
 }
 
 export const Button = memo((props: ButtonProps) => {
@@ -20,6 +23,7 @@ export const Button = memo((props: ButtonProps) => {
         disabled,
         size = 'medium',
         variant = 'primary',
+        isLoading,
         ...otherProps
     } = props;
 
@@ -32,7 +36,15 @@ export const Button = memo((props: ButtonProps) => {
             disabled={disabled}
             {...otherProps}
         >
-            {children}
+            <HStack maxW justify="start" gap="8">
+                {isLoading && (
+                    <ProgressSpinner
+                        animationDuration="1s"
+                        style={{ width: '30px', height: '30px' }}
+                    />
+                )}
+                {children}
+            </HStack>
         </button>
     );
 });

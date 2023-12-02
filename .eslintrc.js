@@ -32,6 +32,7 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'no-underscore-dangle': 'off',
         'import/no-unresolved': 'off',
+        'no-nested-ternary': 'off',
         'no-param-reassign': 'off',
         '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
         'import/extensions': 'off',

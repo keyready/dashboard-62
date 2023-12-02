@@ -1,14 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
-import { Folder } from '../types/Folder';
 
-export const fetchFolder = createAsyncThunk<Folder, string, ThunkConfig<string>>(
-    'Folder/fetchFolder',
-    async (FolderId, thunkAPI) => {
+interface CreateFolderProps {
+    folderTitle: string;
+    params: {
+        param: string;
+        value: string;
+    };
+}
+
+export const createFolder = createAsyncThunk<string, CreateFolderProps, ThunkConfig<string>>(
+    'Folder/createFolder',
+    async (props, thunkAPI) => {
         const { extra, rejectWithValue } = thunkAPI;
 
         try {
-            const response = await extra.api.get<Folder>('/url');
+            const response = await extra.api.post<string>('/api/folder/create', props);
 
             if (!response.data) {
                 throw new Error();

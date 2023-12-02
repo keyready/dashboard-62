@@ -1,3 +1,30 @@
 .CreateFolderPage {
 
 }
+
+.divider {
+    margin: 35px 0 0;
+
+    &:first-child {
+        margin: 0;
+    }
+}
+
+.dividerTitle {
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: #1a1d21;
+
+    p {
+        color: #999;
+    }
+}
+
+.sliderWrapper {
+    width: 100%;
+}
+
+.submitBtn {
+    margin-top: 100px;
+    align-self: end;
+}
