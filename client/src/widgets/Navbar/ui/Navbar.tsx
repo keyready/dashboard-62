@@ -8,7 +8,7 @@ import DownloadIcon from 'shared/assests/icons/download-icon.svg';
 import RangeIcon from 'shared/assests/icons/range-icon.svg';
 import { AppLink } from 'shared/UI/AppLink';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { AuthModal } from 'features/AuthByEmail';
 import { useSelector } from 'react-redux';
 import { getUserAuthData, userActions } from 'entities/User';
@@ -59,7 +59,9 @@ export const Navbar = memo((props: NavbarProps) => {
                         <AppLink
                             to={RoutePath.candidates}
                             className={classNames(classes.link, {
-                                [classes.active]: location.pathname === RoutePath.candidates,
+                                [classes.active]:
+                                    location.pathname === RoutePath.candidates ||
+                                    location.pathname === RoutePath.grouping,
                             })}
                         >
                             <HStack gap="8">

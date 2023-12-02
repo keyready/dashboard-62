@@ -292,4 +292,58 @@ app.get('/api/subjects/fetch', (req, res) =>
     ]),
 );
 
+app.get('/api/fetch_key_skills', (req, res) =>
+    res.status(200).json([
+        { title: 'Кино', id: 1 },
+        { title: 'Футбол', id: 2 },
+        { title: 'Cybersport', id: 3 },
+        { title: 'Чтение', id: 4 },
+        { title: 'Информатика', id: 5 },
+        { title: 'Математика', id: 6 },
+    ]),
+);
+
+app.post('/api/folder/create', (req, res) => {
+    const { body } = req;
+    console.log(body);
+
+    return res.status(201).json('Папка создана, кандидаты сгруппированы');
+});
+
+app.post('/api/folder/manual_create', (req, res) => {
+    const { body } = req;
+    console.log(body);
+
+    return res.status(201).json('Папка создана, кандидаты сгруппированы');
+});
+
+app.get('/api/folder/fetch_all', (req, res) =>
+    res.status(200).json([
+        {
+            id: 1,
+            title: 'Инженеры',
+            groupingRule: 'Просто отчаянные ребята',
+        },
+        {
+            id: 2,
+            title: 'Фронтендеры',
+            groupingRule: 'Главные за кнопки и их положение на экране',
+        },
+        {
+            id: 3,
+            title: 'Дизайнеры',
+            groupingRule: 'Ниче не делают, а денег просят много',
+        },
+    ]),
+);
+
+app.get('/api/folder/candidates', (req, res) => {
+    const { folderId } = req.query;
+
+    return res.status(200).json({
+        title: 'Инженеры',
+        participants: candidatesFromDB.slice(4, 10),
+    });
+});
+
 app.listen(5000);

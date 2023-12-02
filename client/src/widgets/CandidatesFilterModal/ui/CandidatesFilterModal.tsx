@@ -68,7 +68,7 @@ export const CandidatesFilterModal = memo((props: CandidatesFilterModalProps) =>
         >
             <VStack maxW className={classes.wrapper}>
                 <HStack maxW align="start" gap="16">
-                    <h3 style={{ margin: 0 }}>Факультет, кафедра:</h3>
+                    <h3 style={{ margin: 0, textAlign: 'left' }}>Факультет, кафедра:</h3>
                     <Tree
                         selectedParams={localOptions.education}
                         setSelectedParams={handleEducationChange}
@@ -79,7 +79,7 @@ export const CandidatesFilterModal = memo((props: CandidatesFilterModalProps) =>
                     <h3 style={{ margin: 0 }}>Возраст:</h3>
                     <HStack className={classes.sliderWrapper} maxW gap="16">
                         <p>{localOptions.age[0]}</p>
-                        <div style={{ width: 450 }}>
+                        <div style={{ width: '100%' }}>
                             <Slider
                                 min={18}
                                 max={40}

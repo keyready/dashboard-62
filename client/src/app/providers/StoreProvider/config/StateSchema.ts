@@ -13,6 +13,7 @@ import { CandidateSchema } from 'entities/Candidate';
 import { CandidatesPageSchema } from 'pages/CandidatesPage';
 import { UploadPageSchema } from 'pages/UploadFilesPage';
 import { rtkApi } from 'shared/api/rtkApi';
+import { FolderSchema } from 'entities/Folder';
 
 export interface StateSchema {
     user: UserSchema;
@@ -24,6 +25,7 @@ export interface StateSchema {
     candidate?: CandidateSchema;
     candidates?: CandidatesPageSchema;
     filesUpload?: UploadPageSchema;
+    folder?: FolderSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

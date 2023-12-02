@@ -2,7 +2,7 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import { memo, useCallback } from 'react';
 import StarIcon from 'shared/assests/icons/star.svg';
 import classes from './CandidateCard.module.scss';
-import { Candidate } from '../model/types/Candidate';
+import { Candidate } from '../../model/types/Candidate';
 
 export type CardStyle = 'winner' | 'awardeeF' | 'awardeeS' | 'awardeeTh';
 

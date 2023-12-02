@@ -8,4 +8,6 @@ export {
     getCandidateError,
 } from './model/selectors/CandidateSelector';
 
-export { CandidateCard, CardStyle } from './ui/CandidateCard';
+export { CandidateCard, CardStyle } from './ui/CandidateCard/CandidateCard';
+export { CandidatePreviewCard } from './ui/CandidatePreviewCard/CandidatePreviewCard';
+export { CandidatePreviewGrid } from './ui/CandidatePreviewGrid/CandidatePreviewGrid';

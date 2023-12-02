@@ -59,6 +59,7 @@ export const Flex = (props: FlexProps) => {
         maxW,
         maxH,
         onClick,
+        ...otherProps
     } = props;
 
     const mods: Mods = {
@@ -75,7 +76,11 @@ export const Flex = (props: FlexProps) => {
     ];
 
     return (
-        <div onClick={onClick} className={classNames(classes.Flex, mods, classesMapper)}>
+        <div
+            onClick={onClick}
+            className={classNames(classes.Flex, mods, classesMapper)}
+            {...otherProps}
+        >
             {children}
         </div>
     );
