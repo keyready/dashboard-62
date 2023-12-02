@@ -3,6 +3,7 @@ import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
 
 interface CreateFolderManuallyProps {
     folderTitle: string;
+    groupingRule: string;
     candidatesIds: number[];
 }
 

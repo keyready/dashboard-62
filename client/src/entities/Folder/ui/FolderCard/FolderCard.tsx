@@ -46,6 +46,10 @@ export const FolderCard = memo((props: FolderCardProps) => {
         navigate(RoutePath.creategroup);
     }, [navigate]);
 
+    const handleGroupClick = useCallback(() => {
+        navigate(`${RoutePath.folderoverview}/${folder?.id}`);
+    }, [folder?.id, navigate]);
+
     if (isFirst) {
         return (
             <div className={classNames(classes.wrapper, {}, [className])}>
@@ -62,7 +66,7 @@ export const FolderCard = memo((props: FolderCardProps) => {
     return (
         <div className={classNames(classes.wrapper, {}, [className])}>
             <VStack maxW justify="between" className={classes.FolderCard}>
-                <Text title={folder?.title} />
+                <Text className={classes.header} onClick={handleGroupClick} title={folder?.title} />
 
                 <VStack maxW>
                     <VStack maxW>

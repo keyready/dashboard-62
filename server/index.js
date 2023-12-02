@@ -317,6 +317,24 @@ app.post('/api/folder/manual_create', (req, res) => {
     return res.status(201).json('Папка создана, кандидаты сгруппированы');
 });
 
-app.get('/api/folder/fetch_all', (req, res) => res.status(200).json([]));
+app.get('/api/folder/fetch_all', (req, res) =>
+    res.status(200).json([
+        {
+            id: 1,
+            title: 'Инженеры',
+            groupingRule: 'Просто отчаянные ребята',
+        },
+        {
+            id: 2,
+            title: 'Фронтендеры',
+            groupingRule: 'Главные за кнопки и их положение на экране',
+        },
+        {
+            id: 3,
+            title: 'Дизайнеры',
+            groupingRule: 'Ниче не делают, а денег просят много',
+        },
+    ]),
+);
 
 app.listen(5000);

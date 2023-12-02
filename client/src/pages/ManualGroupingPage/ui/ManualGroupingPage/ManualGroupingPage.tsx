@@ -33,6 +33,7 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
     const isFolderCreating = useSelector(getFolderIsLoading);
 
     const [folderTitle, setFolderTitle] = useState<string>('');
+    const [groupingRule, setGroupingRule] = useState<string>('');
     const [candidatesIds, setCandidatesIds] = useState<number[]>([]);
     const [selected, setSelected] = useState<Candidate[]>([]);
 
@@ -41,8 +42,8 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
     }, [selected]);
 
     const isButtonDisabled = useMemo(
-        () => folderTitle === '' || candidatesIds.length === 0,
-        [candidatesIds.length, folderTitle],
+        () => folderTitle === '' || candidatesIds.length === 0 || groupingRule === '',
+        [candidatesIds.length, folderTitle, groupingRule],
     );
 
     const handleCandidateDelete = useCallback((candidateId: number) => {
@@ -55,6 +56,7 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
             const result = await dispatch(
                 createFolderManually({
                     folderTitle,
+                    groupingRule,
                     candidatesIds,
                 }),
             );
@@ -85,6 +87,21 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
                         value={folderTitle}
                         onChange={setFolderTitle}
                         placeholder="Название группы"
+                    />
+
+                    <Divider align="left" className={classes.divider}>
+                        <Text
+                            className={classes.dividerTitle}
+                            align="left"
+                            text="Описание группы"
+                            size="small"
+                        />
+                    </Divider>
+                    <Input
+                        required
+                        value={groupingRule}
+                        onChange={setGroupingRule}
+                        placeholder="Описание группы"
                     />
 
                     <Divider align="left" className={classes.divider}>

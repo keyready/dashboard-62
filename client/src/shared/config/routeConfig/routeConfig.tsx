@@ -9,6 +9,7 @@ import { GroupingPage } from 'pages/GroupingPage';
 import { CreateFolderPage } from 'pages/CreateFolderPage';
 import { AllocationPage } from 'pages/AllocationPage';
 import { ManualGroupingPage } from 'pages/ManualGroupingPage';
+import { FolderOverviewPage } from 'pages/FolderOverviewPage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
@@ -21,6 +22,7 @@ export enum AppRoutes {
     FILESUPLOAD = 'filesupload',
     CREATECANDIDATEPAGE = 'createcandidatepage',
     GROUPING = 'grouping',
+    FOLDEROVERVIEW = 'folderoverview',
     CREATEGROUP = 'creategroup',
     ALLOCATION = 'allocation',
     MANUALGROUPING = 'manualgrouping',
@@ -39,6 +41,7 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.FILESUPLOAD]: '/candidates/upload',
     [AppRoutes.CREATECANDIDATEPAGE]: '/candidate/create',
     [AppRoutes.CREATEGROUP]: '/groups/create',
+    [AppRoutes.FOLDEROVERVIEW]: '/folders',
 
     // last
     [AppRoutes.NOT_FOUND]: '*',
@@ -89,6 +92,11 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.ALLOCATION]: {
         path: RoutePath.allocation,
         element: <AllocationPage />,
+        authOnly: true,
+    },
+    [AppRoutes.FOLDEROVERVIEW]: {
+        path: `${RoutePath.folderoverview}/:folderId`,
+        element: <FolderOverviewPage />,
         authOnly: true,
     },
 

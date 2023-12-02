@@ -28,6 +28,7 @@
     transition: 200ms;
     overflow: hidden;
     white-space: nowrap;
+    margin-top: 20px;
 
     &:hover {
         color: black;
@@ -45,4 +46,8 @@
     &:hover {
         transform: scale(1.05);
     }
+}
+
+.header {
+    cursor: pointer;
 }
