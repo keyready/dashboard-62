@@ -13,6 +13,7 @@ import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
 import { RadarChart } from 'widgets/RadarChart';
 import { BarChart } from 'widgets/BarChart';
 import { PageTitle } from 'widgets/PageTitle';
+import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { ComparedCandidatesResult, useComparedCandidates } from '../../api/compareCandidatesApi';
 import classes from './DetailedComparisonPage.module.scss';
 import cardClasses from './card.module.scss';
@@ -109,8 +110,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     if (error) {
         return (
             <Page className={classNames(classes.ComparisonPage, {}, [className])}>
-                <VStack className={classes.error} maxW align="center"
-justify="center">
+                <VStack className={classes.error} maxW align="center" justify="center">
                     <Text
                         align="center"
                         variant="error"
@@ -133,7 +133,13 @@ justify="center">
 
     return (
         <Page className={classNames(classes.ComparisonPage, {}, [className])}>
-            <PageTitle title={`Задача: ${task}`} />
+            <PageTitle
+                breadcrumbPath={[
+                    { label: 'Сравнение кандидатов', url: RoutePath.candidates },
+                    { label: 'Подробное сравнение кандидатов' },
+                ]}
+                title={`Задача: ${task}`}
+            />
 
             <VStack maxW gap="32">
                 <div className={classes.firstLine}>
@@ -142,8 +148,7 @@ justify="center">
 
                         <VStack maxW align="start" className={classes.candidatesFrame}>
                             {compareResult?.comparedCandidates.map((user) => (
-                                <HStack maxW align="center" justify="start"
-gap="8" key={user.id}>
+                                <HStack maxW align="center" justify="start" gap="8" key={user.id}>
                                     <img
                                         src={user.img}
                                         title={user.lastname}
@@ -193,8 +198,7 @@ gap="8" key={user.id}>
                     <Card className={classes.cardStack}>
                         <h3 className={classes.title}>Лучший</h3>
 
-                        <VStack maxW justify="center" align="center"
-className={classes.best}>
+                        <VStack maxW justify="center" align="center" className={classes.best}>
                             <img
                                 src={bestCandidate.img}
                                 title={bestCandidate.lastname}

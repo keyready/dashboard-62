@@ -70,7 +70,15 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
 
     return (
         <Page className={classNames(classes.ManualGroupingPage, {}, [className])}>
-            <PageTitle title="Ручное создание группы" />
+            <PageTitle
+                breadcrumbPath={[
+                    { label: 'Сравнение кандидатов', url: RoutePath.candidates },
+                    { label: 'Группировка кандидатов', url: RoutePath.grouping },
+                    { label: 'Создание группы', url: RoutePath.creategroup },
+                    { label: 'Ручное создание группы' },
+                ]}
+                title="Ручное создание группы"
+            />
 
             <form onSubmit={handleFolderCreateSubmit}>
                 <VStack maxW>

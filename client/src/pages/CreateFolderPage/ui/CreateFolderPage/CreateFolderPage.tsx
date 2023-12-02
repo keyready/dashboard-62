@@ -105,7 +105,14 @@ const CreateFolderPage = memo((props: CreateFolderPageProps) => {
     return (
         <DynamicModuleLoader reducers={{ folder: FolderReducer }}>
             <Page className={classNames(classes.CreateFolderPage, {}, [className])}>
-                <PageTitle title="Создать группу" />
+                <PageTitle
+                    breadcrumbPath={[
+                        { label: 'Сравнение кандидатов', url: RoutePath.candidates },
+                        { label: 'Группировка кандидатов', url: RoutePath.grouping },
+                        { label: 'Создание группы' },
+                    ]}
+                    title="Создать группу"
+                />
 
                 <form onSubmit={handleFolderCreateSubmit}>
                     <VStack maxW>

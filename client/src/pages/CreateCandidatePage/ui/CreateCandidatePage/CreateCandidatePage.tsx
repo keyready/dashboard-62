@@ -22,6 +22,7 @@ import { Slider } from 'shared/UI/Slider';
 import { Skeleton } from 'primereact/skeleton';
 import { DiplomaScoreInput } from 'shared/UI/DiplomaScoreInput';
 import { Button } from 'shared/UI/Button';
+import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import classes from './CreateCandidatePage.module.scss';
 import { useSubjects } from '../../api/fetchAllSubjectsApi';
 

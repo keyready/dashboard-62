@@ -5,13 +5,10 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
-import { Checkbox } from 'primereact/checkbox';
 import { Table } from 'shared/UI/Table';
 import { HStack, VStack } from 'shared/UI/Stack';
 import { Button } from 'shared/UI/Button';
-import { Card } from 'shared/UI/Card';
 import { Text } from 'shared/UI/Text';
-import { Disclosure } from 'shared/UI/Disclosure';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { useNavigate } from 'react-router-dom';
 import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
@@ -26,11 +23,10 @@ import { useSelector } from 'react-redux';
 import { getTotalCandidates } from 'pages/CandidatesPage/model/selectors/candidatesPageSelector';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { fetchTotalCandidates } from 'pages/CandidatesPage';
-import { Modal } from 'shared/UI/Modal';
 import { CandidatesFilterModal, FilterOptions } from 'widgets/CandidatesFilterModal';
 import { PageTitle } from 'widgets/PageTitle';
 import { CandidatesDisclosure } from 'widgets/CandidatesDisclosure';
-import { QueryProps, useCandidates } from '../../api/fetchCandidatesApi';
+import { useCandidates } from '../../api/fetchCandidatesApi';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
 
