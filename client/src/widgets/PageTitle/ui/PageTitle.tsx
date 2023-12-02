@@ -20,7 +20,8 @@ export const PageTitle = memo((props: PageTitleProps) => {
         <VStack justify="start" className={classNames(classes.PageTitle, {}, [className])}>
             <Card className={classes.card}>
                 {breadcrumb && breadcrumbPath?.length && <Breadcrumb path={breadcrumbPath} />}
-                <Text align="left" size="large" className={classes.textBlock} title={title} />
+                <Text align="left" size="large" className={classes.textBlock}
+title={title} />
             </Card>
         </VStack>
     );

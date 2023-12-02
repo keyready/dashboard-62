@@ -190,7 +190,8 @@ const CreateFolderPage = memo((props: CreateFolderPageProps) => {
                             </>
                         )}
 
-                        <HStack maxW justify="end" gap="16" className={classes.submitBtn}>
+                        <HStack maxW justify="end" gap="16"
+className={classes.submitBtn}>
                             <Button onClick={handleManualFolderFilling}>
                                 Ручное заполнение группы
                             </Button>
