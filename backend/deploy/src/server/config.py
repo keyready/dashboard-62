@@ -1,9 +1,9 @@
 import os
 
 class Config(object):
-    SECRET_KEY=os.getenv('SECRET_KEY')
-    OPENAI_KEY=os.getenv('OPENAI_KEY')
-    SQLALCHEMY_DATABASE_URI=os.getenv('DB_URI')    
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DB_URI')  
+    GIGACHAT_API = os.getenv('GIGACHAT_API')  
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     JSONIFY_PRETTYPRINT_REGULAR = False
