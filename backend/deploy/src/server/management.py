@@ -44,26 +44,24 @@ def logout():
 @app.route('/api/candidates',methods=['GET'])
 def candidates():
     try:
-        paginations_args = request.args.to_dict()        
-        
-        if 'educaiton' in paginations_args.keys():
-            candidates = Candidate.query.filter_by(faculty=paginations_args['educaiton'])
+        queryParams = request.args.to_dict()        
         
         jsonCandidates=[]
         ########################################## ПАГИНАЦИЯ #######################################################
         candidates = Candidate.query.order_by(
             Candidate.id        
-        # ).filter(
-            # Candidate.age >= paginations_args['age'].split(',')[0], Candidate.age <= paginations_args['age'].split(',')[1] 
         ).limit(
-            int(paginations_args['limit'])
+            int(queryParams['limit'])
         ).offset(
-            (int(paginations_args['page'])) * int(paginations_args['limit'])
+            (int(queryParams['page'])) * int(queryParams['limit'])
         )
 
         for candidate in candidates:
+            # if candidate.faculty == queryParams['faculty'] and \
+                    # candidate.departments == queryParams['department'] and \
+                        # queryParams['age'].split(',')[0] <= candidate.age <= queryParams['age'].split(',')[1]:
                 jsonCandidates.append(Candidate.object_as_dict(candidate))
-
+        
         return jsonify(jsonCandidates)  
     except ValueError as e:
         print(e)

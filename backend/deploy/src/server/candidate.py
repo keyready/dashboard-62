@@ -110,10 +110,15 @@ import json
 @app.route('/api/candidate/create',methods=['POST'])
 def create_candidate():
         candidateData = request.form.to_dict()
-        candidateData['name']=json.loads(candidateData['name'])
-        candidateData['education']=json.loads(candidateData['education'])
-        candidateData['keySkills']=json.loads(candidateData['keySkills'])
-        print(candidateData)
+
+        byteObjects = ['name','education','keySkills']
+        for key in candidateData.keys():
+            if key in byteObjects:
+                candidateData[key]=json.loads(candidateData[key])
+        # candidateData['name']=json.loads(candidateData['name'])
+        # candidateData['education']=json.loads(candidateData['education'])
+        # candidateData['keySkills']=json.loads(candidateData['keySkills'])
+
         document = request.files['document']
         img = request.files['img']
 
@@ -129,9 +134,9 @@ def create_candidate():
         document.save(pathSave+'/'+document.filename)
         img.save(pathSave+'/'+img.filename)
 
-        # if check_candidate_in_db(candidateData['email']):abort(400)
+        if check_candidate_in_db(candidateData['email']):abort(400)
 
-        # averageScore=average_score(candidateData['subjectsEstimation'])
+        averageScore=average_score(candidateData['subjectsEstimation'])
 
         candidate=Candidate(
             firstname=candidateData['name']['firstname'],
@@ -139,13 +144,13 @@ def create_candidate():
             lastname=candidateData['name']['lastname'],
             email=candidateData['mail'],
             age=candidateData['age'],
-            # averageSubjectsScore=averageScore,
+            averageSubjectsScore=averageScore,
             img=f'static/documents/{dirName}/{img.filename}',
             phoneNumber=candidateData['phoneNumber'],
             faculty=candidateData['education']['faculty'],
             department=candidateData['education']['department'],
             keySkills=candidateData['keySkills'],
-            # subjectsEstimation=candidateData['subjectsEstimation'],
+            subjectsEstimation=candidateData['subjectsEstimation'],
             document=f'static/documents/{dirName}/{document.filename}'
         )
 
@@ -172,8 +177,8 @@ def compare_candidates():
             
             jsonCandidate=Candidate.object_as_dict(candidate)
 
-            kolmogorovTest = kolmogorov_test()
-            pearsonTest = pearson_test()
+            kolmogorovTest = kolmogorov_test(list_score(jsonCandidate))
+            pearsonTest = pearson_test(list_score(jsonCandidate))
 
             with GigaChat(credentials=app.config['GIGACHAT_API'],verify_ssl_certs=False) as giga:
             ############################################## Сравнение по хобби, специальности, факультету и кафедре ##################################################

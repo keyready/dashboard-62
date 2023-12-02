@@ -1,3 +1,4 @@
+import PyPDF2
 import json,yaml,xmltodict,os,string,random
 from yaml.loader import SafeLoader
 import numpy as np
@@ -176,3 +177,14 @@ def average_score(cnd):
     for obj in cnd:
         digit+=obj['score']
     return digit/len(cnd)
+
+
+def read_pdf(file_path):
+    with open(file_path, 'rb') as file:
+        pdf_reader = PyPDF2.PdfFileReader(file)
+        num_pages = pdf_reader.numPages
+        for page_num in range(num_pages):
+            page = pdf_reader.getPage(page_num)
+            text += page.extractText()
+
+    return text

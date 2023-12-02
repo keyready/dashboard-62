@@ -13,3 +13,4 @@ gigachat
 # Статистика
 numpy
 scipy
+PyPDF2
