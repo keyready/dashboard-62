@@ -23,22 +23,3 @@
 .candidatesList {
     width: 55%;
 }
-
-.selectedCandidatesGrid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
-}
-
-.candCard {
-    cursor: not-allowed;
-    padding: 30px;
-}
-
-.img {
-    width: 150px;
-    height: 150px;
-    border-radius: 20px;
-}
-

@@ -13,7 +13,7 @@ import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Button } from 'shared/UI/Button';
 import { useSelector } from 'react-redux';
 import { CandidatesDisclosure } from 'widgets/CandidatesDisclosure';
-import { Candidate } from 'entities/Candidate';
+import { Candidate, CandidatePreviewCard, CandidatePreviewGrid } from 'entities/Candidate';
 import classes from './ManualGroupingPage.module.scss';
 
 interface ManualGroupingPageProps {
@@ -65,7 +65,7 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
                 navigate(RoutePath.grouping);
             }
         },
-        [candidatesIds, dispatch, folderTitle, navigate],
+        [candidatesIds, dispatch, folderTitle, groupingRule, navigate],
     );
 
     return (
@@ -121,34 +121,10 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
                             defaultSelected={selected}
                             setSelectedProps={setSelected}
                         />
-                        <div className={classes.selectedCandidatesGrid}>
-                            {selected.map((candidate) => (
-                                <VStack
-                                    onClick={() => handleCandidateDelete(candidate.id)}
-                                    align="center"
-                                    maxW
-                                    className={classes.candCard}
-                                >
-                                    <img
-                                        src={candidate.img}
-                                        alt={candidate.lastname}
-                                        className={classes.img}
-                                    />
-                                    <VStack maxW align="center">
-                                        <Text
-                                            title={candidate.lastname}
-                                            size="small"
-                                            align="center"
-                                        />
-                                        <Text
-                                            size="small"
-                                            text={`${candidate.firstname} ${candidate.middlename}`}
-                                            align="center"
-                                        />
-                                    </VStack>
-                                </VStack>
-                            ))}
-                        </div>
+                        <CandidatePreviewGrid
+                            handleCandidateDelete={handleCandidateDelete}
+                            candidates={selected}
+                        />
                     </HStack>
 
                     <HStack maxW justify="end" className={classes.buttonWrapper}>

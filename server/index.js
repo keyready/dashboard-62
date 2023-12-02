@@ -337,4 +337,13 @@ app.get('/api/folder/fetch_all', (req, res) =>
     ]),
 );
 
+app.get('/api/folder/candidates', (req, res) => {
+    const { folderId } = req.query;
+
+    return res.status(200).json({
+        title: 'Инженеры',
+        participants: candidatesFromDB.slice(4, 10),
+    });
+});
+
 app.listen(5000);
