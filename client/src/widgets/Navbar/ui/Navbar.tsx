@@ -59,9 +59,7 @@ export const Navbar = memo((props: NavbarProps) => {
                         <AppLink
                             to={RoutePath.candidates}
                             className={classNames(classes.link, {
-                                [classes.active]:
-                                    location.pathname === RoutePath.candidates ||
-                                    location.pathname === RoutePath.grouping,
+                                [classes.active]: location.pathname === RoutePath.candidates,
                             })}
                         >
                             <HStack gap="8">

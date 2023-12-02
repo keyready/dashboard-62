@@ -4,6 +4,7 @@ import { memo, useEffect } from 'react';
 import { PageTitle } from 'widgets/PageTitle';
 import { HStack } from 'shared/UI/Stack';
 import { FolderCard, FoldersList, useFolders } from 'entities/Folder';
+import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import classes from './GroupingPage.module.scss';
 
 interface GroupingPageProps {
@@ -25,7 +26,13 @@ const GroupingPage = memo((props: GroupingPageProps) => {
 
     return (
         <Page className={classNames(classes.GroupingPage, {}, [className])}>
-            <PageTitle title="Группировка кандидатов" />
+            <PageTitle
+                breadcrumbPath={[
+                    { label: 'Сравнение кандидатов', url: RoutePath.candidates },
+                    { label: 'Группировка кандидатов' },
+                ]}
+                title="Группировка кандидатов"
+            />
 
             {isFoldersLoading && <div>Загрузка...</div>}
             {foldersError && !isFoldersLoading && <div>Ошибка при загрузке</div>}

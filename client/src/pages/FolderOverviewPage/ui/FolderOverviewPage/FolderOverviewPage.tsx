@@ -11,6 +11,7 @@ import { Text } from 'shared/UI/Text';
 import { Divider } from 'primereact/divider';
 import { CandidatesDisclosure } from 'widgets/CandidatesDisclosure';
 import { Candidate, CandidatePreviewGrid } from 'entities/Candidate';
+import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import classes from './FolderOverviewPage.module.scss';
 
 interface FolderOverviewPageProps {
@@ -70,7 +71,14 @@ const FolderOverviewPage = memo((props: FolderOverviewPageProps) => {
     return (
         <DynamicModuleLoader reducers={{ folder: FolderReducer }}>
             <Page className={classNames(classes.FolderOverviewPage, {}, [className])}>
-                <PageTitle title={`Просмотр группы ${folder?.title}`} />
+                <PageTitle
+                    breadcrumbPath={[
+                        { label: 'Сравнение кандидатов', url: RoutePath.candidates },
+                        { label: 'Группировка кандидатов', url: RoutePath.grouping },
+                        { label: 'Просмотр группы' },
+                    ]}
+                    title={`Просмотр группы ${folder?.title}`}
+                />
 
                 <Divider align="left" className={classes.divider}>
                     <Text

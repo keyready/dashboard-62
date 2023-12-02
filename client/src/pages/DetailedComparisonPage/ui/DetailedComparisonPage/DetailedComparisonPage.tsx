@@ -13,6 +13,7 @@ import { useCandidates } from 'pages/CandidatesPage/api/fetchCandidatesApi';
 import { RadarChart } from 'widgets/RadarChart';
 import { BarChart } from 'widgets/BarChart';
 import { PageTitle } from 'widgets/PageTitle';
+import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { ComparedCandidatesResult, useComparedCandidates } from '../../api/compareCandidatesApi';
 import classes from './DetailedComparisonPage.module.scss';
 import cardClasses from './card.module.scss';
@@ -133,7 +134,13 @@ justify="center">
 
     return (
         <Page className={classNames(classes.ComparisonPage, {}, [className])}>
-            <PageTitle title={`Задача: ${task}`} />
+            <PageTitle
+                breadcrumbPath={[
+                    { label: 'Сравнение кандидатов', url: RoutePath.candidates },
+                    { label: 'Подробное сравнение кандидатов' },
+                ]}
+                title={`Задача: ${task}`}
+            />
 
             <VStack maxW gap="32">
                 <div className={classes.firstLine}>

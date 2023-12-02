@@ -3,6 +3,7 @@ import { Page } from 'widgets/Page/Page';
 import { memo, useEffect, useState } from 'react';
 import { PageTitle } from 'widgets/PageTitle';
 import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
+import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import classes from './AllocationPage.module.scss';
 
 interface AllocationPageProps {
@@ -25,7 +26,14 @@ const AllocationPage = memo((props: AllocationPageProps) => {
 
     return (
         <Page className={classNames(classes.AllocationPage, {}, [className])}>
-            <PageTitle title={`Распределения кандидатов группы '${groupTitle}'`} />
+            <PageTitle
+                breadcrumbPath={[
+                    { label: 'Сравнение кандидатов', url: RoutePath.candidates },
+                    { label: 'Группировка кандидатов', url: RoutePath.grouping },
+                    { label: 'Распределение кандидатов' },
+                ]}
+                title={`Распределения кандидатов группы '${groupTitle}'`}
+            />
         </Page>
     );
 });

@@ -187,3 +187,12 @@ div[data-pc-section="actions"] {
 .p-multiselect-label-container {
     background: #1a1d21;
 }
+
+// breadcrumbs
+.p-breadcrumb.p-component {
+    background: transparent;
+}
+
+.p-breadcrumb {
+    padding: 0;
+}

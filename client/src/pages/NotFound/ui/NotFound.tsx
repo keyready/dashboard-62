@@ -6,6 +6,7 @@ import { Theme, useTheme } from 'app/providers/ThemeProvider';
 
 import React, { useEffect } from 'react';
 import { PageTitle } from 'widgets/PageTitle';
+import { Breadcrumb } from 'shared/UI/Breadcrumb';
 import classes from './NotFound.module.scss';
 
 interface NotFoundProps {
