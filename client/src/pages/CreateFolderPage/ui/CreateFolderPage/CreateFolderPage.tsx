@@ -94,6 +94,9 @@ const CreateFolderPage = memo((props: CreateFolderPageProps) => {
     const handleAgeRangeChange = useCallback((event: SliderChangeEvent) => {
         setAge(event.value as [number, number]);
     }, []);
+    const handleManualFolderFilling = useCallback(() => {
+        navigate(RoutePath.manualgrouping);
+    }, [navigate]);
 
     useEffect(() => {
         setSelectedSortType(suggestions.findIndex((item) => item === sortParam));
@@ -180,14 +183,18 @@ const CreateFolderPage = memo((props: CreateFolderPageProps) => {
                             </>
                         )}
 
-                        <Button
-                            disabled={isButtonDisabled}
-                            isLoading={isFolderCreating}
-                            className={classes.submitBtn}
-                            type="submit"
-                        >
-                            Сформировать группу
-                        </Button>
+                        <HStack maxW justify="end" gap="16" className={classes.submitBtn}>
+                            <Button onClick={handleManualFolderFilling}>
+                                Ручное заполнение группы
+                            </Button>
+                            <Button
+                                disabled={isButtonDisabled}
+                                isLoading={isFolderCreating}
+                                type="submit"
+                            >
+                                Сформировать группу
+                            </Button>
+                        </HStack>
                     </VStack>
                 </form>
             </Page>

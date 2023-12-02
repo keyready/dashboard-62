@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createFolder } from '../services/createFolder';
 import { FolderSchema } from '../types/FolderSchema';
+import { createFolderManually } from '../services/createFolderManually';
 
 const initialState: FolderSchema = {
     data: undefined,
@@ -22,6 +23,18 @@ export const FolderSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(createFolder.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(createFolderManually.pending, (state) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(createFolderManually.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(createFolderManually.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

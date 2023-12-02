@@ -2,6 +2,7 @@ export type { Folder } from './model/types/Folder';
 export type { FolderSchema } from './model/types/FolderSchema';
 export { FolderActions, FolderReducer } from './model/slice/FolderSlice';
 export { createFolder } from './model/services/createFolder';
+export { createFolderManually } from './model/services/createFolderManually';
 export {
     getFolderData,
     getFolderIsLoading,

@@ -1,0 +1,44 @@
+.divider {
+    margin: 35px 0 0;
+
+    &:first-child {
+        margin: 0;
+    }
+}
+
+.dividerTitle {
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: #1a1d21;
+
+    p {
+        color: #999;
+    }
+}
+
+.buttonWrapper {
+    margin-top: 100px;
+}
+
+.candidatesList {
+    width: 55%;
+}
+
+.selectedCandidatesGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+.candCard {
+    cursor: not-allowed;
+    padding: 30px;
+}
+
+.img {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+}
+

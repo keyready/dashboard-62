@@ -29,6 +29,7 @@ import { fetchTotalCandidates } from 'pages/CandidatesPage';
 import { Modal } from 'shared/UI/Modal';
 import { CandidatesFilterModal, FilterOptions } from 'widgets/CandidatesFilterModal';
 import { PageTitle } from 'widgets/PageTitle';
+import { CandidatesDisclosure } from 'widgets/CandidatesDisclosure';
 import { QueryProps, useCandidates } from '../../api/fetchCandidatesApi';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
@@ -53,9 +54,9 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const [selected, setSelected] = useState<Candidate[]>([]);
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
     const [taskValue, setTaskValue] = useState<string>('');
+    const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const [limit, setLimit] = useState<number>(10);
-    const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
     const [filterOptions, setFilterOptions] = useState<FilterOptions>({
         education: [],
         age: [18, 40],
@@ -258,67 +259,12 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                 ))}
                             </VStack>
                         ) : (
-                            <Disclosure
-                                titles={
-                                    candidates?.map((candidate) => (
-                                        <HStack
-                                            className={classes.disclosureBug}
-                                            maxW
-                                            justify="start"
-                                            gap="16"
-                                            key={candidate.id}
-                                        >
-                                            <Checkbox
-                                                onChange={(event) => {
-                                                    event.stopPropagation();
-                                                    if (selected.includes(candidate)) {
-                                                        setSelected((prev) =>
-                                                            prev.filter(
-                                                                (item) => item !== candidate,
-                                                            ),
-                                                        );
-                                                        return;
-                                                    }
-                                                    setSelected((prev) => [...prev, candidate]);
-                                                }}
-                                                checked={selected.includes(candidate)}
-                                            />
-                                            <img
-                                                src={candidate.img}
-                                                title={candidate.lastname}
-                                                alt={candidate.lastname}
-                                                className={classes.img}
-                                            />
-                                            <Text
-                                                className={classes.textBlock}
-                                                size="extrasmall"
-                                                title={candidate.firstname}
-                                            />
-                                        </HStack>
-                                    )) || [<p>ничего</p>]
-                                }
-                                paragraphs={
-                                    candidates?.map((user) => (
-                                        <VStack maxW gap="0" key={user.id}>
-                                            <HStack maxW>
-                                                <b>Возраст:</b>
-                                                <p>{user.age}</p>
-                                            </HStack>
-                                            <HStack maxW>
-                                                <b>Факультет:</b>
-                                                <p>{user.faculty}</p>
-                                            </HStack>
-                                            <HStack maxW>
-                                                <b>Специальность:</b>
-                                                <p>{user.department}</p>
-                                            </HStack>
-                                            <HStack maxW>
-                                                <b>Ключевые навыки:</b>
-                                                <p>{user.keySkills.slice(0, 3).join(', ')}</p>
-                                            </HStack>
-                                        </VStack>
-                                    )) || [<p>ничего</p>]
-                                }
+                            <CandidatesDisclosure
+                                page={page}
+                                limit={limit}
+                                filterOptions={filterOptions}
+                                defaultSelected={selected}
+                                setSelectedProps={setSelected}
                             />
                         )}
                         <Paginator

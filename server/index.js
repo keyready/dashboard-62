@@ -310,6 +310,13 @@ app.post('/api/folder/create', (req, res) => {
     return res.status(201).json('Папка создана, кандидаты сгруппированы');
 });
 
+app.post('/api/folder/manual_create', (req, res) => {
+    const { body } = req;
+    console.log(body);
+
+    return res.status(201).json('Папка создана, кандидаты сгруппированы');
+});
+
 app.get('/api/folder/fetch_all', (req, res) => res.status(200).json([]));
 
 app.listen(5000);

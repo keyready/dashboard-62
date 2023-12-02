@@ -8,6 +8,7 @@ import { CreateCandidatePage } from 'pages/CreateCandidatePage';
 import { GroupingPage } from 'pages/GroupingPage';
 import { CreateFolderPage } from 'pages/CreateFolderPage';
 import { AllocationPage } from 'pages/AllocationPage';
+import { ManualGroupingPage } from 'pages/ManualGroupingPage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
@@ -22,6 +23,7 @@ export enum AppRoutes {
     GROUPING = 'grouping',
     CREATEGROUP = 'creategroup',
     ALLOCATION = 'allocation',
+    MANUALGROUPING = 'manualgrouping',
 
     // last
     NOT_FOUND = 'not_found',
@@ -31,6 +33,7 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.MAIN]: '/',
     [AppRoutes.CANDIDATES]: '/candidates',
     [AppRoutes.GROUPING]: '/candidates/grouping',
+    [AppRoutes.MANUALGROUPING]: '/candidates/manual',
     [AppRoutes.ALLOCATION]: '/candidates/allocation',
     [AppRoutes.DETAILEDCOMPARISON]: '/candidates/detailed_comparison',
     [AppRoutes.FILESUPLOAD]: '/candidates/upload',
@@ -71,6 +74,11 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.GROUPING]: {
         path: RoutePath.grouping,
         element: <GroupingPage />,
+        authOnly: true,
+    },
+    [AppRoutes.MANUALGROUPING]: {
+        path: RoutePath.manualgrouping,
+        element: <ManualGroupingPage />,
         authOnly: true,
     },
     [AppRoutes.CREATEGROUP]: {
