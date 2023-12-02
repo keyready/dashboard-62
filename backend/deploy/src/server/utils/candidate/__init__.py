@@ -2,7 +2,7 @@ import PyPDF2
 import json,yaml,xmltodict,os,string,random
 from yaml.loader import SafeLoader
 import numpy as np
-from scipy.stats import kstest, norm, chi2, ksone
+from scipy.stats import kstest, norm, chi2, ksone,skew, kurtosis, entropy
 
 from server import db
 from server.models import Candidate
@@ -188,3 +188,24 @@ def read_pdf(file_path):
             text += page.extractText()
 
     return text
+
+def calculate_statistics(data):
+    mean = np.mean(data)
+    variance = np.var(data)
+    std_deviation = np.sqrt(variance)
+    median = np.median(data)
+    asymmetry_coefficient = skew(data)
+    kurtosis_coefficient = kurtosis(data)
+    entropy_value = entropy(data)
+
+    statObject= {
+        "Математическое ожидание": mean,
+        "Дисперсия": variance,
+        "Среднеквадратичное отклонение": std_deviation,
+        "Медиана":median,
+        "Коэффициент ассиметрии": asymmetry_coefficient,
+        "Коэффициент эксцесса": kurtosis_coefficient,
+        "Дифференциальная энтропия":entropy_value
+    }
+
+    return statObject

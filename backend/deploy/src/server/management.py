@@ -7,6 +7,8 @@ from flask import (
     url_for
 )
 
+import json
+
 from server.utils.management import (
     check_password_hash,
     generate_password_hash,
@@ -67,16 +69,88 @@ def candidates():
         print(e)
         abort(500)
 
+@app.route('/api/folder/manual_create',methods=['POST'])
+def manual_create():
+    db.session.add(Folder(title=request.json['folderTitle'],groupingRule=request.json['groupingRule']))
+    db.session.commit()
+
+    folder=Folder.query.filter_by(title=request.json['folderTitle']).first()
+    for id in request.json['candidatesIds']:
+        cnd=Candidate.query.filter_by(id=id).first()
+        cnd.foldersId.append(folder.id)
+        db.session.add(cnd)
+        db.session.commit()
+    return jsonify(msg="success")
+
 @app.route('/api/folder/create',methods=['POST'])
 def create_folder():
-    db.session.add(Folder(title=request.json['title']))
+
+    groupBy = json.dumps({request.json['params']['param']:request.json['params']['value']})    
+
+    db.session.add(Folder(
+        title=request.json['folderTitle'],
+        groupBy=groupBy,
+    ))
     db.session.commit()
-    return jsonify(title=request.json['title'])
+
+    candidates=Candidate.query.all()
+    folder=Folder.query.filter_by(title=request.json['folderTitle']).first()
+
+    for cnd in candidates:
+        parametrs=Candidate.object_as_dict(cnd).keys()
+        jsonCnd=Candidate.object_as_dict(cnd)
+        if request.json['params']['param'] in parametrs:
+            match request.json['params']['param']:
+                case 'age':
+                    if int(str(request.json['params']['value']).split('-')[0]) <= cnd.age <= int(str(request.json['params']['value']).split('-')[1]):
+                        cnd.foldersId.append(folder.id)
+                        db.session.add(cnd)
+                        db.session.commit()
+                    else:
+                        break
+                case 'faculty':
+                    if cnd.faculty == request.json['params']['value']:
+                        cnd.foldersId.append(folder.id)
+                        db.session.add(cnd)
+                        db.session.commit()
+                    else:
+                        break
+                case 'keySkills':
+                    for skill in jsonCnd['keySkills']:
+                        if skill in request.json['params']['value']:
+                            cnd.foldersId.append(folder.id)
+                            db.session.add(cnd)
+                            db.session.commit()
+                        else:
+                            break
+    
+    jsonCandidates=[]
+    for cnd in candidates:
+        jsonCandidates.append(Candidate.object_as_dict(cnd))
+
+    return jsonify(jsonCandidates)
+
+@app.route('/api/folder/candidates',methods=['GET'])
+def folder_candidates():
+    folderId=request.args['folderId']
+    
+    folder=Folder.query.filter_by(id=folderId).first()
+    if folder is None: abort(404)
+
+    jsonCandidates=[]
+    candidates=Candidate.query.filter(Candidate.foldersId._in(folderId)).all()
+    for cnd in candidates:
+        jsonCandidates.append(Candidate.object_as_dict(cnd))
+    
+    return jsonify(
+        folderTitle=folder.title,
+        candidates=jsonCandidates,
+    )
 
 @app.route('/api/folder/fetch_all',methods=['GET'])
 def all_folder():
-    folders=Folder.query.all()
     foldersJson=[]
+    folders=Folder.query.all()
     for folder in folders:
         foldersJson.append(Folder.object_as_dict(folder))
     return jsonify(foldersJson)
@@ -87,7 +161,6 @@ def all_subjects():
     subJson=[]
     for sub in subjects:
         subJson.append(Subject.object_as_dict(sub))
-    print(subJson)
     return jsonify(subJson)
 
 @app.route('/api/departments/fetch',methods=['GET'])
