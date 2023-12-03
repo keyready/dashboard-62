@@ -4,7 +4,7 @@ import { VStack } from 'shared/UI/Stack';
 import { DiplomaScoreInput } from 'shared/UI/DiplomaScoreInput';
 import classes from './StatisticsCard.module.scss';
 
-interface Statistics {
+export interface Statistics {
     mathematicalExpectation: number;
     variance: number;
     meanSquareDeviation: number;

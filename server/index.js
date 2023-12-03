@@ -359,4 +359,33 @@ app.post('/api/folder/delete', (req, res) => {
     res.status(202).json({});
 });
 
+app.get('/api/get_allocation', (req, res) => {
+    const { allocationType } = req.query;
+
+    function gaussianRandom(mean = 0, stdev = 1) {
+        const u = 1 - Math.random(); // Конвертация [0,1) в (0,1]
+        const v = Math.random();
+        const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+        // Преобразование к желаемому среднему значению и стандартному отклонению:
+        return z * stdev + mean;
+    }
+    const numValues = 22;
+    const means = Array(numValues).fill(0);
+    const standardDeviations = Array(numValues).fill(1);
+    const randomData = means.map((mean, i) => gaussianRandom(mean, standardDeviations[i]));
+
+    return res.status(200).json({
+        data: randomData,
+        statistics: {
+            mathematicalExpectation: ((Math.random() % 100) * 10 * Math.random()).toFixed(2),
+            variance: ((Math.random() % 100) * 10 * Math.random()).toFixed(2),
+            meanSquareDeviation: ((Math.random() % 100) * 10 * Math.random()).toFixed(2),
+            median: ((Math.random() % 100) * 10 * Math.random()).toFixed(2),
+            asymmetryCoefficient: ((Math.random() % 100) * 10 * Math.random()).toFixed(2),
+            kurtosisCoefficient: ((Math.random() % 100) * 10 * Math.random()).toFixed(2),
+            differentialEntropy: ((Math.random() % 100) * 10 * Math.random()).toFixed(2),
+        },
+    });
+});
+
 app.listen(5000);

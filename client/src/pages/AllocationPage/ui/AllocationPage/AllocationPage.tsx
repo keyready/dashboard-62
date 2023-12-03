@@ -1,15 +1,25 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { PageTitle } from 'widgets/PageTitle';
 import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { HStack } from 'shared/UI/Stack';
-import { ButtonIcon } from '@radix-ui/react-icons';
-import { Button } from 'primereact/button';
+import { useSubjects } from 'pages/CreateCandidatePage';
+import { Text } from 'shared/UI/Text';
+import { Divider } from 'primereact/divider';
+import { Dropdown } from 'primereact/dropdown';
+import { Subject } from 'entities/Subject';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { DynamicModuleLoader } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
+import { fetchDataset } from '../../model/services/fetchDataset';
+import { AllocationPageReducer } from '../../model/slice/AllocationPageSlice';
 import { StatisticsCard } from '../StatisticsCard/StatisticsCard';
 import classes from './AllocationPage.module.scss';
 import { ChartCard } from '../ChartCard/ChartCard';
+import { getDataset } from '../../model/selector/allocationPageSelectors';
+import { Dataset } from '../../model/types/Dataset';
 
 interface AllocationPageProps {
     className?: string;
@@ -22,65 +32,93 @@ const AllocationPage = memo((props: AllocationPageProps) => {
         document.title = 'Распределение кандидатов';
     }, []);
 
-    function gaussianRandom(mean = 0, stdev = 1) {
-        const u = 1 - Math.random(); // Конвертация [0,1) в (0,1]
-        const v = Math.random();
-        const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-        // Преобразование к желаемому среднему значению и стандартному отклонению:
-        return z * stdev + mean;
-    }
-    const numValues = 22;
-    const means = Array(numValues).fill(0);
-    const standardDeviations = Array(numValues).fill(1);
-    const randomData = means.map((mean, i) => gaussianRandom(mean, standardDeviations[i]));
-
     const [groupTitle, setGroupTitle] = useState<string>('');
-    const [dataset, setDataset] = useState<any>({
-        label: 'привет',
-        data: randomData,
-        fill: false,
-        borderColor: '#b6f09c',
+    const [localDataset, setLocalDataset] = useState<any>({
+        data: [],
+        statistics: {
+            mathematicalExpectation: 100,
+            variance: 100,
+            meanSquareDeviation: 100,
+            median: 100,
+            asymmetryCoefficient: 100,
+            kurtosisCoefficient: 100,
+            differentialEntropy: 100,
+        },
+    });
+    const [allocationType, setAllocationType] = useState<Subject>({
+        title: 'По среднему баллу',
+        id: -1,
     });
 
-    const { getSearchParam } = useURLParams();
+    const { data: subjects, isLoading: isSubjectsLoading } = useSubjects();
+    const dataset = useSelector(getDataset);
+    const dispatch = useAppDispatch();
+
+    const { getSearchParam, addSearchParams } = useURLParams();
     useEffect(() => {
         setGroupTitle(getSearchParam('folder') || '');
     }, []);
 
-    return (
-        <Page className={classNames(classes.AllocationPage, {}, [className])}>
-            <PageTitle
-                breadcrumbPath={[
-                    { label: 'Сравнение кандидатов', url: RoutePath.candidates },
-                    { label: 'Группировка кандидатов', url: RoutePath.grouping },
-                    { label: 'Распределение кандидатов' },
-                ]}
-                title={`Распределения кандидатов группы '${groupTitle}'`}
-            />
+    useEffect(() => {
+        if (allocationType.id !== -1) dispatch(fetchDataset(allocationType.title));
+    }, [allocationType, dispatch]);
 
-            <HStack maxW gap="32">
-                <ChartCard dataset={[dataset]} />
-                <StatisticsCard
-                    statistics={{
-                        mathematicalExpectation: 1000,
-                        variance: 1000,
-                        meanSquareDeviation: 1000,
-                        median: 1000,
-                        asymmetryCoefficient: 1000,
-                        kurtosisCoefficient: 1000,
-                        differentialEntropy: 1000,
-                    }}
+    useEffect(() => {
+        setLocalDataset({
+            data: {
+                label: allocationType.title,
+                data: dataset?.data,
+                fill: false,
+                borderColor: '#b6f09c',
+            },
+            statistics: dataset?.statistics,
+        });
+
+        addSearchParams({ allocationType: allocationType.title });
+    }, [allocationType, dataset]);
+
+    return (
+        <DynamicModuleLoader reducers={{ allocationPage: AllocationPageReducer }}>
+            <Page className={classNames(classes.AllocationPage, {}, [className])}>
+                <PageTitle
+                    breadcrumbPath={[
+                        { label: 'Сравнение кандидатов', url: RoutePath.candidates },
+                        { label: 'Группировка кандидатов', url: RoutePath.grouping },
+                        { label: 'Распределение кандидатов' },
+                    ]}
+                    title={`Распределения кандидатов группы '${groupTitle}'`}
                 />
-            </HStack>
-            <Button
-                onClick={() => {
-                    if (dataset.label === 'хуй') setDataset({ ...dataset, label: 'пизда' });
-                    else setDataset({ ...dataset, label: 'хуй' });
-                }}
-            >
-                привет
-            </Button>
-        </Page>
+
+                <Divider align="left" className={classes.divider}>
+                    <Text
+                        className={classes.dividerTitle}
+                        align="left"
+                        text="Выберите, по каким данным строить распределение"
+                        size="small"
+                    />
+                </Divider>
+                <Dropdown
+                    optionLabel="title"
+                    options={[{ title: 'По среднему баллу', id: -1 }, ...(subjects || [])]}
+                    value={allocationType}
+                    onChange={(event) => setAllocationType(event.value)}
+                    emptyMessage={<p>Ничего не найдено</p>}
+                    placeholder="Выберите параметр группировки"
+                    required
+                />
+
+                <HStack maxW gap="32">
+                    {localDataset?.data?.length || localDataset?.statistics ? (
+                        <>
+                            <ChartCard dataset={[localDataset?.data]} />
+                            <StatisticsCard statistics={localDataset?.statistics} />
+                        </>
+                    ) : (
+                        <h2>Пока ничего нет</h2>
+                    )}
+                </HStack>
+            </Page>
+        </DynamicModuleLoader>
     );
 });
 
