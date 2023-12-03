@@ -11,15 +11,22 @@ import classes from './CandidatesDisclosure.module.scss';
 
 interface CandidatesDisclosureProps {
     className?: string;
-    page: number;
-    limit: number;
-    filterOptions: FilterOptions;
+    page?: number;
+    limit?: number;
+    filterOptions?: any;
     defaultSelected: Candidate[];
     setSelectedProps: (selected: Candidate[]) => void;
 }
 
 export const CandidatesDisclosure = memo((props: CandidatesDisclosureProps) => {
-    const { className, filterOptions, limit, page, defaultSelected, setSelectedProps } = props;
+    const {
+        className,
+        filterOptions = { age: [18, 40], education: [] },
+        limit = 10000,
+        page = 0,
+        defaultSelected,
+        setSelectedProps,
+    } = props;
 
     const [selected, setSelected] = useState<Candidate[]>(defaultSelected);
 
@@ -31,7 +38,15 @@ export const CandidatesDisclosure = memo((props: CandidatesDisclosureProps) => {
         setSelected(defaultSelected);
     }, [defaultSelected]);
 
-    const { data: candidates } = useCandidates({ page, limit, filterOptions });
+    const { data: candidates } = useCandidates({
+        page,
+        limit,
+        filterOptions,
+    });
+
+    useEffect(() => {
+        console.log(filterOptions);
+    }, [filterOptions]);
 
     return (
         <Disclosure

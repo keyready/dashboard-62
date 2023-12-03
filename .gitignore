@@ -6,3 +6,5 @@
 
 /server/node_modules
 /server/src
+
+/backend/deploy/src/server/static

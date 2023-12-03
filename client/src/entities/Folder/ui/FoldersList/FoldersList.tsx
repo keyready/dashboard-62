@@ -11,16 +11,23 @@ import { FolderCard } from '../FolderCard/FolderCard';
 interface FoldersListProps {
     className?: string;
     folders?: Folder[];
+    refreshFolderList?: () => void;
 }
 
 export const FoldersList = memo((props: FoldersListProps) => {
-    const { className, folders } = props;
+    const { className, folders, refreshFolderList } = props;
 
     return (
         <HStack gap="32" className={classNames(classes.FoldersList, {}, [className])}>
             <FolderCard isFirst />
             {folders?.length ? (
-                folders.map((folder) => <FolderCard key={folder.id} folder={folder} />)
+                folders.map((folder) => (
+                    <FolderCard
+                        refreshFolderList={refreshFolderList}
+                        key={folder.id}
+                        folder={folder}
+                    />
+                ))
             ) : (
                 <Text title="Пока групп нет" text="Но Вы можете их создать!" />
             )}

@@ -95,7 +95,7 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
         authOnly: true,
     },
     [AppRoutes.FOLDEROVERVIEW]: {
-        path: `${RoutePath.folderoverview}/:folderId`,
+        path: `${RoutePath.folderoverview}/:urlFolderId`,
         element: <FolderOverviewPage />,
         authOnly: true,
     },
