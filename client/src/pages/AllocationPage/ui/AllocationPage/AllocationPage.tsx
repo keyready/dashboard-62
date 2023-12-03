@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { PageTitle } from 'widgets/PageTitle';
 import { useURLParams } from 'shared/url/useSearchParams/useSearchParams';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
@@ -46,27 +46,40 @@ const AllocationPage = memo((props: AllocationPageProps) => {
             differentialEntropy: 100,
         },
     });
-    const [allocationType, setAllocationType] = useState<Subject>({
-        title: 'По среднему баллу',
-        id: -1,
-    });
+    const [allocationType, setAllocationType] = useState<Partial<Subject>>({});
 
     const { data: subjects, isLoading: isSubjectsLoading } = useSubjects();
+    const subjectsFromLS = useMemo<Subject[]>(() => {
+        const sfls = localStorage.getItem('subjects');
+        if (sfls) {
+            return JSON.parse(sfls);
+        }
+        return [];
+    }, []);
     const dataset = useSelector(getDataset);
     const dispatch = useAppDispatch();
 
     const { getSearchParam, addSearchParams } = useURLParams();
     useEffect(() => {
         setGroupTitle(getSearchParam('folder') || '');
-        setAllocationType({
-            title: getSearchParam('allocationType') || 'По среднему баллу',
-            id: Number(getSearchParam('allocationTypeId')) || -1,
-        });
-    }, []);
+
+        if (subjectsFromLS.length) {
+            if (subjectsFromLS.find((obj) => obj.title === getSearchParam('allocationType'))) {
+                setAllocationType({
+                    title: getSearchParam('allocationType') || 'По среднему баллу',
+                    id: Number(getSearchParam('allocationTypeId')) || -1,
+                });
+            }
+        }
+    }, [subjectsFromLS]);
 
     useEffect(() => {
-        if (allocationType.id !== -1) dispatch(fetchDataset(allocationType.title));
+        if (allocationType.title) dispatch(fetchDataset(allocationType.title));
     }, [allocationType, dispatch]);
+
+    useEffect(() => {
+        if (subjects?.length) localStorage.setItem('subjects', JSON.stringify(subjects));
+    }, [subjects]);
 
     useEffect(() => {
         setLocalDataset({
@@ -79,8 +92,10 @@ const AllocationPage = memo((props: AllocationPageProps) => {
             statistics: dataset?.statistics,
         });
 
-        addSearchParams({ allocationType: allocationType.title });
-        addSearchParams({ allocationTypeId: allocationType.id.toString() });
+        if (allocationType.id && allocationType.title) {
+            addSearchParams({ allocationType: allocationType.title });
+            addSearchParams({ allocationTypeId: allocationType?.id.toString() });
+        }
     }, [allocationType, dataset]);
 
     return (
@@ -129,7 +144,9 @@ const AllocationPage = memo((props: AllocationPageProps) => {
                                 <StatisticsCard statistics={localDataset?.statistics} />
                             </>
                         ) : (
-                            <Text title="Выберите, по каким данным строить распределение" />
+                            <HStack maxW justify="center" className={classes.skeleton}>
+                                <Text title="Выберите, по каким данным строить распределение" />
+                            </HStack>
                         )}
                     </HStack>
                 )}
