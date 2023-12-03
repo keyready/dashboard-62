@@ -15,6 +15,7 @@ export default (env: BuildEnv) => {
             dist: path.resolve(__dirname, '../backend/deploy/src/server/static'),
             html: path.resolve(__dirname, 'public/index.html'),
             src: path.resolve(__dirname, 'src'),
+            env: path.resolve(__dirname, '../.env'),
         },
         isDev,
         port,

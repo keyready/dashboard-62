@@ -3,11 +3,14 @@ import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 import { BuildOptions } from './config/types';
 
-export function buildPlugins(
-    { paths, isDev, apiUrl }: BuildOptions,
-): webpack.WebpackPluginInstance[] {
+export function buildPlugins({
+    paths,
+    isDev,
+    apiUrl,
+}: BuildOptions): webpack.WebpackPluginInstance[] {
     const plugins = [
         new HtmlWebpackPlugin({
             template: paths.html,
@@ -25,14 +28,18 @@ export function buildPlugins(
             __API__: JSON.stringify(apiUrl),
             LOADING_DELAY: JSON.stringify(500),
         }),
+
+        new Dotenv({ path: paths.env }),
     ];
 
     if (isDev) {
         plugins.push(new ReactRefreshWebpackPlugin());
         plugins.push(new webpack.HotModuleReplacementPlugin());
-        plugins.push(new BundleAnalyzerPlugin({
-            openAnalyzer: false,
-        }));
+        plugins.push(
+            new BundleAnalyzerPlugin({
+                openAnalyzer: false,
+            }),
+        );
     }
 
     return plugins;
