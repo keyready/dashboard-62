@@ -7,24 +7,26 @@ import classes from './DiplomaScoreInput.module.scss';
 interface DiplomaScoreInputProps {
     className?: string;
     title: string;
-    value?: number;
-    setValue: (value: number) => void;
+    value: number;
+    setValue?: (value: number) => void;
+    disabled?: boolean;
 }
 
 export const DiplomaScoreInput = memo((props: DiplomaScoreInputProps) => {
-    const { className, setValue, value, title } = props;
+    const { className, setValue, value, title, disabled } = props;
 
     return (
         <HStack maxW className={classNames(classes.DiplomaScoreInput, {}, [className])}>
             <div className={classes.title}>{title}</div>
             <Input
+                disabled={disabled}
                 min={3}
                 max={5}
                 required
                 className={classes.input}
                 value={value}
-                onChange={(value) => setValue(~~value)}
-                placeholder="5"
+                onChange={(value) => setValue?.(~~value)}
+                placeholder="3"
             />
         </HStack>
     );

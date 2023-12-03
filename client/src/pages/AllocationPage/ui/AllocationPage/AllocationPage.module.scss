@@ -1,3 +1,19 @@
-.AllocationPage {
+.divider {
+    &:first-child {
+        margin: 0;
+    }
+}
 
+.dividerTitle {
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: #1a1d21;
+
+    p {
+        color: #999;
+    }
+}
+
+.skeleton {
+    margin-top: 55px;
 }

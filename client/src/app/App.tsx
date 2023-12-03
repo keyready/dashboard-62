@@ -21,7 +21,7 @@ export const App = () => {
 
     return (
         <div className={classNames('app', {}, [theme])}>
-            <ContextMenu global model={items} breakpoint="1000px" />
+            {/* <ContextMenu global model={items} breakpoint="1000px" /> */}
             <Notification />
 
             <Suspense fallback="">
