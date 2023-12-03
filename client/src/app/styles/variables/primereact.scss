@@ -196,3 +196,8 @@ div[data-pc-section="actions"] {
 .p-breadcrumb {
     padding: 0;
 }
+
+// context
+.p-submenu-list.p-contextmenusub-enter-done {
+    min-width: 250px !important;
+}
