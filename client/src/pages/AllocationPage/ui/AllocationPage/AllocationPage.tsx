@@ -13,6 +13,7 @@ import { Subject } from 'entities/Subject';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { DynamicModuleLoader } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
+import { Skeleton } from 'primereact/skeleton';
 import { fetchDataset } from '../../model/services/fetchDataset';
 import { AllocationPageReducer } from '../../model/slice/AllocationPageSlice';
 import { StatisticsCard } from '../StatisticsCard/StatisticsCard';
@@ -57,6 +58,10 @@ const AllocationPage = memo((props: AllocationPageProps) => {
     const { getSearchParam, addSearchParams } = useURLParams();
     useEffect(() => {
         setGroupTitle(getSearchParam('folder') || '');
+        setAllocationType({
+            title: getSearchParam('allocationType') || 'По среднему баллу',
+            id: Number(getSearchParam('allocationTypeId')) || -1,
+        });
     }, []);
 
     useEffect(() => {
@@ -75,6 +80,7 @@ const AllocationPage = memo((props: AllocationPageProps) => {
         });
 
         addSearchParams({ allocationType: allocationType.title });
+        addSearchParams({ allocationTypeId: allocationType.id.toString() });
     }, [allocationType, dataset]);
 
     return (
@@ -103,20 +109,30 @@ const AllocationPage = memo((props: AllocationPageProps) => {
                     value={allocationType}
                     onChange={(event) => setAllocationType(event.value)}
                     emptyMessage={<p>Ничего не найдено</p>}
-                    placeholder="Выберите параметр группировки"
+                    placeholder="Выберите, по каким данным строить распределение"
                     required
                 />
 
-                <HStack maxW gap="32">
-                    {localDataset?.data?.length || localDataset?.statistics ? (
-                        <>
-                            <ChartCard dataset={[localDataset?.data]} />
-                            <StatisticsCard statistics={localDataset?.statistics} />
-                        </>
-                    ) : (
-                        <h2>Пока ничего нет</h2>
-                    )}
-                </HStack>
+                {isSubjectsLoading && (
+                    <Skeleton
+                        className={classes.skeleton}
+                        width="100%"
+                        height="400px"
+                        borderRadius="10px"
+                    />
+                )}
+                {!isSubjectsLoading && (
+                    <HStack maxW gap="32">
+                        {localDataset?.data?.length || localDataset?.statistics ? (
+                            <>
+                                <ChartCard dataset={[localDataset?.data]} />
+                                <StatisticsCard statistics={localDataset?.statistics} />
+                            </>
+                        ) : (
+                            <Text title="Выберите, по каким данным строить распределение" />
+                        )}
+                    </HStack>
+                )}
             </Page>
         </DynamicModuleLoader>
     );
