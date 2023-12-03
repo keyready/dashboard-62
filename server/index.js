@@ -366,7 +366,6 @@ app.get('/api/get_allocation', (req, res) => {
         const u = 1 - Math.random(); // Конвертация [0,1) в (0,1]
         const v = Math.random();
         const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-        // Преобразование к желаемому среднему значению и стандартному отклонению:
         return z * stdev + mean;
     }
     const numValues = 22;

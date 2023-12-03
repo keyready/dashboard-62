@@ -14,12 +14,13 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { DynamicModuleLoader } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
 import { Skeleton } from 'primereact/skeleton';
+import { MultiSelect } from 'shared/UI/MultiSelect';
 import { fetchDataset } from '../../model/services/fetchDataset';
 import { AllocationPageReducer } from '../../model/slice/AllocationPageSlice';
 import { StatisticsCard } from '../StatisticsCard/StatisticsCard';
 import classes from './AllocationPage.module.scss';
 import { ChartCard } from '../ChartCard/ChartCard';
-import { getDataset } from '../../model/selector/allocationPageSelectors';
+import { getDataset, getDatasetIsLoading } from '../../model/selector/allocationPageSelectors';
 import { Dataset } from '../../model/types/Dataset';
 
 interface AllocationPageProps {
@@ -57,6 +58,7 @@ const AllocationPage = memo((props: AllocationPageProps) => {
         return [];
     }, []);
     const dataset = useSelector(getDataset);
+    const isDatasetLoading = useSelector(getDatasetIsLoading);
     const dispatch = useAppDispatch();
 
     const { getSearchParam, addSearchParams } = useURLParams();
@@ -119,6 +121,7 @@ const AllocationPage = memo((props: AllocationPageProps) => {
                     />
                 </Divider>
                 <Dropdown
+                    filter
                     optionLabel="title"
                     options={[{ title: 'По среднему баллу', id: -1 }, ...(subjects || [])]}
                     value={allocationType}
@@ -128,15 +131,14 @@ const AllocationPage = memo((props: AllocationPageProps) => {
                     required
                 />
 
-                {isSubjectsLoading && (
-                    <Skeleton
-                        className={classes.skeleton}
-                        width="100%"
-                        height="400px"
-                        borderRadius="10px"
-                    />
-                )}
-                {!isSubjectsLoading && (
+                {isSubjectsLoading ||
+                    (isDatasetLoading && (
+                        <HStack maxW className={classes.skeleton} gap="32">
+                            <Skeleton width="100%" height="400px" borderRadius="10px" />
+                            <Skeleton width="100%" height="400px" borderRadius="10px" />
+                        </HStack>
+                    ))}
+                {!isSubjectsLoading && !isDatasetLoading && (
                     <HStack maxW gap="32" className={classes.skeleton}>
                         {localDataset?.data?.length || localDataset?.statistics ? (
                             <>

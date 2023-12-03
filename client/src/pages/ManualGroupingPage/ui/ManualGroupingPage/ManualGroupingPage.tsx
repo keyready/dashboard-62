@@ -70,7 +70,7 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
                 navigate(RoutePath.grouping);
             }
         },
-        [candidatesIds, dispatch, folderTitle, groupingRule, navigate],
+        [candidatesIds, dispatch, folderTitle, groupingRule, navigate, pending],
     );
 
     return (
