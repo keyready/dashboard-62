@@ -137,14 +137,14 @@ const AllocationPage = memo((props: AllocationPageProps) => {
                     />
                 )}
                 {!isSubjectsLoading && (
-                    <HStack maxW gap="32">
+                    <HStack maxW gap="32" className={classes.skeleton}>
                         {localDataset?.data?.length || localDataset?.statistics ? (
                             <>
                                 <ChartCard dataset={[localDataset?.data]} />
                                 <StatisticsCard statistics={localDataset?.statistics} />
                             </>
                         ) : (
-                            <HStack maxW justify="center" className={classes.skeleton}>
+                            <HStack maxW justify="center">
                                 <Text title="Выберите, по каким данным строить распределение" />
                             </HStack>
                         )}
