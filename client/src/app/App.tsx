@@ -6,15 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserInited, userActions } from 'entities/User';
 import { Navbar } from 'widgets/Navbar';
 import { ContextMenu } from 'primereact/contextmenu';
-import { MenuItem, MenuItemCommandEvent } from 'primereact/menuitem';
-import {
-    AvatarIcon,
-    DesktopIcon,
-    GearIcon,
-    GitHubLogoIcon,
-    HeartIcon,
-    PaperPlaneIcon,
-} from '@radix-ui/react-icons';
 import { items } from './consts/const';
 
 export const App = () => {
