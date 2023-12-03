@@ -14,14 +14,12 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { DynamicModuleLoader } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
 import { Skeleton } from 'primereact/skeleton';
-import { MultiSelect } from 'shared/UI/MultiSelect';
 import { fetchDataset } from '../../model/services/fetchDataset';
 import { AllocationPageReducer } from '../../model/slice/AllocationPageSlice';
 import { StatisticsCard } from '../StatisticsCard/StatisticsCard';
 import classes from './AllocationPage.module.scss';
 import { ChartCard } from '../ChartCard/ChartCard';
 import { getDataset, getDatasetIsLoading } from '../../model/selector/allocationPageSelectors';
-import { Dataset } from '../../model/types/Dataset';
 
 interface AllocationPageProps {
     className?: string;
