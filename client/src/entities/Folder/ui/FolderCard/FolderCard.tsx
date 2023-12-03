@@ -14,6 +14,7 @@ import { MenuItem, MenuItemCommandEvent } from 'primereact/menuitem';
 import { ContextMenu } from 'primereact/contextmenu';
 import { Button } from 'shared/UI/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { useToaster } from 'shared/lib/hooks/useToaster/useToaster';
 import { Folder } from '../../model/types/Folder';
 import { deleteFolder } from '../../model/services/deleteFolder';
 import classes from './FolderCard.module.scss';
@@ -32,6 +33,7 @@ export const FolderCard = memo((props: FolderCardProps) => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const { pending } = useToaster();
 
     const [width, setWidth] = useState<number>(25);
     const [content, setContent] = useState<ReactNode>(<DoubleArrowRightIcon />);
@@ -66,14 +68,17 @@ export const FolderCard = memo((props: FolderCardProps) => {
     const handleFolderDelete = useCallback(
         async (folderId?: number) => {
             if (folderId) {
-                const result = await dispatch(deleteFolder(folderId));
+                const result = await pending(dispatch(deleteFolder(folderId)), {
+                    loadingMessage: 'Удаляем группу...',
+                    successMessage: 'Группа удалена!',
+                });
 
                 if (result.meta.requestStatus === 'fulfilled') {
                     refreshFolderList?.();
                 }
             }
         },
-        [dispatch, refreshFolderList],
+        [dispatch, pending, refreshFolderList],
     );
 
     const items: MenuItem[] = useMemo(
