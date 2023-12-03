@@ -17,6 +17,7 @@ import { DynamicModuleLoader } from 'shared/lib/DynamicModuleLoader/DynamicModul
 import { useSelector } from 'react-redux';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { useNavigate } from 'react-router-dom';
+import { useToaster } from 'shared/lib/hooks/useToaster/useToaster';
 import { useKeySkills } from '../../api/fetchKeySkillsApi';
 import classes from './CreateFolderPage.module.scss';
 
@@ -34,6 +35,7 @@ const CreateFolderPage = memo((props: CreateFolderPageProps) => {
     const { data: keySkills } = useKeySkills();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { pending } = useToaster();
     const isFolderCreating = useSelector(getFolderIsLoading);
 
     const [sortParam, setSortParam] = useState<string>('');
@@ -57,24 +59,27 @@ const CreateFolderPage = memo((props: CreateFolderPageProps) => {
         async (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
-            const result = await dispatch(
-                createFolder({
-                    folderTitle,
-                    params: {
-                        param:
-                            selectedSortType === 0
-                                ? 'age'
-                                : selectedSortType === 1
-                                ? 'faculty'
-                                : 'keySkills',
-                        value:
-                            selectedSortType === 0
-                                ? age.join('-')
-                                : selectedSortType === 1
-                                ? selectedFaculty.join(',')
-                                : selectedKeySkills.map((keySkill) => keySkill.title).join(','),
-                    },
-                }),
+            const result = await pending(
+                dispatch(
+                    createFolder({
+                        folderTitle,
+                        params: {
+                            param:
+                                selectedSortType === 0
+                                    ? 'age'
+                                    : selectedSortType === 1
+                                    ? 'faculty'
+                                    : 'keySkills',
+                            value:
+                                selectedSortType === 0
+                                    ? age.join('-')
+                                    : selectedSortType === 1
+                                    ? selectedFaculty.join(',')
+                                    : selectedKeySkills.map((keySkill) => keySkill.title).join(','),
+                        },
+                    }),
+                ),
+                { loadingMessage: 'Создаем группу...', successMessage: 'Группа создана!' },
             );
 
             if (result.meta.requestStatus === 'fulfilled') {
@@ -82,13 +87,14 @@ const CreateFolderPage = memo((props: CreateFolderPageProps) => {
             }
         },
         [
-            navigate,
-            age,
+            pending,
             dispatch,
             folderTitle,
+            selectedSortType,
+            age,
             selectedFaculty,
             selectedKeySkills,
-            selectedSortType,
+            navigate,
         ],
     );
     const handleAgeRangeChange = useCallback((event: SliderChangeEvent) => {
@@ -190,8 +196,7 @@ const CreateFolderPage = memo((props: CreateFolderPageProps) => {
                             </>
                         )}
 
-                        <HStack maxW justify="end" gap="16"
-className={classes.submitBtn}>
+                        <HStack maxW justify="end" gap="16" className={classes.submitBtn}>
                             <Button onClick={handleManualFolderFilling}>
                                 Ручное заполнение группы
                             </Button>

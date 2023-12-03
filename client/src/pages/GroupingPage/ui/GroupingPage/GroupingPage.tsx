@@ -3,7 +3,7 @@ import { Page } from 'widgets/Page/Page';
 import { memo, useEffect, useMemo } from 'react';
 import { PageTitle } from 'widgets/PageTitle';
 import { HStack } from 'shared/UI/Stack';
-import { FolderCard, FoldersList, useFolders } from 'entities/Folder';
+import { FoldersList, useFolders } from 'entities/Folder';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Skeleton } from 'primereact/skeleton';
 import classes from './GroupingPage.module.scss';

@@ -2,7 +2,7 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import React, { memo } from 'react';
 import { Card } from 'shared/UI/Card';
 import { Text } from 'shared/UI/Text';
-import { HStack, VStack } from 'shared/UI/Stack';
+import { VStack } from 'shared/UI/Stack';
 import { Breadcrumb, BreadcrumbPath } from 'shared/UI/Breadcrumb';
 import classes from './PageTitle.module.scss';
 

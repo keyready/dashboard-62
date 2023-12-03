@@ -13,7 +13,8 @@ import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Button } from 'shared/UI/Button';
 import { useSelector } from 'react-redux';
 import { CandidatesDisclosure } from 'widgets/CandidatesDisclosure';
-import { Candidate, CandidatePreviewCard, CandidatePreviewGrid } from 'entities/Candidate';
+import { Candidate, CandidatePreviewGrid } from 'entities/Candidate';
+import { useToaster } from 'shared/lib/hooks/useToaster/useToaster';
 import classes from './ManualGroupingPage.module.scss';
 
 interface ManualGroupingPageProps {
@@ -29,6 +30,7 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { pending } = useToaster();
 
     const isFolderCreating = useSelector(getFolderIsLoading);
 
@@ -53,12 +55,15 @@ const ManualGroupingPage = memo((props: ManualGroupingPageProps) => {
         async (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
-            const result = await dispatch(
-                createFolderManually({
-                    folderTitle,
-                    groupingRule,
-                    candidatesIds,
-                }),
+            const result = await pending(
+                dispatch(
+                    createFolderManually({
+                        folderTitle,
+                        groupingRule,
+                        candidatesIds,
+                    }),
+                ),
+                { loadingMessage: 'Создаем группу...', successMessage: 'Группа создана!' },
             );
 
             if (result.meta.requestStatus === 'fulfilled') {

@@ -1,11 +1,13 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { useTheme } from 'app/providers/ThemeProvider';
 import { AppRouter } from 'app/providers/AppRouter';
-import { Suspense, useEffect, useMemo, useRef } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserInited, userActions } from 'entities/User';
 import { Navbar } from 'widgets/Navbar';
 import { ContextMenu } from 'primereact/contextmenu';
+import { Toaster } from 'react-hot-toast';
+import { Notification } from 'shared/UI/Notification';
 import { items } from './consts/const';
 
 export const App = () => {
@@ -20,6 +22,8 @@ export const App = () => {
     return (
         <div className={classNames('app', {}, [theme])}>
             <ContextMenu global model={items} breakpoint="1000px" />
+            <Notification />
+
             <Suspense fallback="">
                 <Navbar />
                 <div className="page">{inited && <AppRouter />}</div>

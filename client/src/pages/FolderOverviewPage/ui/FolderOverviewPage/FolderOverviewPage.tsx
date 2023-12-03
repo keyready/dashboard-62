@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { PageTitle } from 'widgets/PageTitle';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -9,11 +9,12 @@ import { useSelector } from 'react-redux';
 import { DynamicModuleLoader } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
 import { Text } from 'shared/UI/Text';
 import { Divider } from 'primereact/divider';
-import { Candidate, CandidatePreviewGrid, deleteCandidateFolder } from 'entities/Candidate';
+import { CandidatePreviewGrid, deleteCandidateFolder } from 'entities/Candidate';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Skeleton } from 'primereact/skeleton';
 import { HStack, VStack } from 'shared/UI/Stack';
 import { Button } from 'shared/UI/Button';
+import { useToaster } from 'shared/lib/hooks/useToaster/useToaster';
 import { AddParticipantsModal } from '../AddParticipantsModal/AddParticipantsModal';
 import classes from './FolderOverviewPage.module.scss';
 
@@ -32,6 +33,7 @@ const FolderOverviewPage = memo((props: FolderOverviewPageProps) => {
     const dispatch = useAppDispatch();
     const isFolderLoading = useSelector(getFolderIsLoading);
     const folder = useSelector(getFolderData);
+    const { pending } = useToaster();
 
     const [folderId, setFolderId] = useState<number>(-55);
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
@@ -61,13 +63,19 @@ const FolderOverviewPage = memo((props: FolderOverviewPageProps) => {
 
     const handleCandidateDelete = useCallback(
         async (candidateId: number) => {
-            const result = await dispatch(deleteCandidateFolder({ folderId, candidateId }));
+            const result = await pending(
+                dispatch(deleteCandidateFolder({ folderId, candidateId })),
+                {
+                    loadingMessage: 'Исключаем кандидата из группы...',
+                    successMessage: 'Его здесь больше нет!',
+                },
+            );
 
             if (result.meta.requestStatus === 'fulfilled') {
                 dispatch(fetchFolderById(folderId));
             }
         },
-        [dispatch, folderId],
+        [dispatch, folderId, pending],
     );
 
     if (isFolderLoading) {
