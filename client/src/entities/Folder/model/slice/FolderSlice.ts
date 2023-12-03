@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { deleteFolder } from '../services/deleteFolder';
 import { createFolder } from '../services/createFolder';
 import { FolderSchema } from '../types/FolderSchema';
 import { createFolderManually } from '../services/createFolderManually';
@@ -7,7 +8,7 @@ import { Folder } from '../types/Folder';
 
 const initialState: FolderSchema = {
     data: undefined,
-    isLoading: true,
+    isLoading: false,
     error: undefined,
 };
 
@@ -50,6 +51,18 @@ export const FolderSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(fetchFolderById.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(deleteFolder.pending, (state) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(deleteFolder.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(deleteFolder.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

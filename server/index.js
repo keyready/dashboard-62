@@ -221,11 +221,12 @@ app.use((req, res, next) => {
 });
 
 app.get('/api/candidates', (req, res) => {
-    const { page, limit, education, age } = req.query;
+    const { page, limit, education, age, folderId } = req.query;
 
     const _page = Number(page);
     const _limit = Number(limit);
     const _age = age?.split(',').map(Number) || [18, 40];
+    const _folderId = Number(folderId);
 
     const startIndex = _page * _limit;
     const endIndex = startIndex + _limit;
@@ -344,6 +345,18 @@ app.get('/api/folder/candidates', (req, res) => {
         title: 'Инженеры',
         participants: candidatesFromDB.slice(4, 10),
     });
+});
+
+app.post('/api/candidate/define', (req, res) => {
+    res.status(201).json({});
+});
+
+app.post('/api/candidate/delete', (req, res) => {
+    res.status(202).json({});
+});
+
+app.post('/api/folder/delete', (req, res) => {
+    res.status(202).json({});
 });
 
 app.listen(5000);

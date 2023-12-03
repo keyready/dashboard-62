@@ -23,6 +23,7 @@ const GroupingPage = memo((props: GroupingPageProps) => {
         data: folders,
         isLoading: isFoldersLoading,
         error: foldersError,
+        refetch: refreshFolderList,
     } = useFolders(0, { refetchOnMountOrArgChange: true });
 
     const Loader = useMemo(
@@ -54,7 +55,9 @@ const GroupingPage = memo((props: GroupingPageProps) => {
 
             {isFoldersLoading && Loader}
             {foldersError && !isFoldersLoading && <div>Ошибка при загрузке</div>}
-            {!isFoldersLoading && !foldersError && <FoldersList folders={folders} />}
+            {!isFoldersLoading && !foldersError && (
+                <FoldersList refreshFolderList={refreshFolderList} folders={folders} />
+            )}
         </Page>
     );
 });

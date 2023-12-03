@@ -1,5 +1,5 @@
 .candCard {
-    cursor: not-allowed;
+    cursor: pointer;
     padding: 30px;
 }
 
@@ -7,4 +7,8 @@
     width: 150px;
     height: 150px;
     border-radius: 20px;
+}
+
+.icon {
+    margin-right: 10px;
 }

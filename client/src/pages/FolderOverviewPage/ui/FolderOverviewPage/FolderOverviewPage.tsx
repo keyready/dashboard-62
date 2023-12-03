@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Page } from 'widgets/Page/Page';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { PageTitle } from 'widgets/PageTitle';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -9,11 +9,12 @@ import { useSelector } from 'react-redux';
 import { DynamicModuleLoader } from 'shared/lib/DynamicModuleLoader/DynamicModuleLoader';
 import { Text } from 'shared/UI/Text';
 import { Divider } from 'primereact/divider';
-import { CandidatesDisclosure } from 'widgets/CandidatesDisclosure';
-import { Candidate, CandidatePreviewGrid } from 'entities/Candidate';
+import { Candidate, CandidatePreviewGrid, deleteCandidateFolder } from 'entities/Candidate';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Skeleton } from 'primereact/skeleton';
-import { VStack } from 'shared/UI/Stack';
+import { HStack, VStack } from 'shared/UI/Stack';
+import { Button } from 'shared/UI/Button';
+import { AddParticipantsModal } from '../AddParticipantsModal/AddParticipantsModal';
 import classes from './FolderOverviewPage.module.scss';
 
 interface FolderOverviewPageProps {
@@ -27,23 +28,47 @@ const FolderOverviewPage = memo((props: FolderOverviewPageProps) => {
         document.title = 'Просмотр группы';
     }, []);
 
-    const { folderId } = useParams();
+    const { urlFolderId } = useParams();
     const dispatch = useAppDispatch();
     const isFolderLoading = useSelector(getFolderIsLoading);
     const folder = useSelector(getFolderData);
 
-    const [selected2Delete, setSelected2Delete] = useState<Candidate[]>([]);
+    const [folderId, setFolderId] = useState<number>(-55);
+    const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+    const [wasDefined, setWasDefined] = useState<boolean>(false);
 
     useEffect(() => {
-        setSelected2Delete(folder?.participants || []);
-        console.log(folder?.participants);
-    }, [folder]);
-
-    useEffect(() => {
-        if (folderId) {
-            dispatch(fetchFolderById(~~folderId));
+        if (!urlFolderId) {
+            throw new Error('FolderID');
         }
+        setFolderId(~~urlFolderId);
+    }, [urlFolderId]);
+
+    useEffect(() => {
+        if (folderId > 0) dispatch(fetchFolderById(folderId));
     }, [dispatch, folderId]);
+
+    useEffect(() => {
+        if (wasDefined) {
+            dispatch(fetchFolderById(folderId));
+            setWasDefined(false);
+        }
+    }, [wasDefined, dispatch, folderId]);
+
+    const handleModalClick = useCallback(() => {
+        setIsModalOpened(true);
+    }, []);
+
+    const handleCandidateDelete = useCallback(
+        async (candidateId: number) => {
+            const result = await dispatch(deleteCandidateFolder({ folderId, candidateId }));
+
+            if (result.meta.requestStatus === 'fulfilled') {
+                dispatch(fetchFolderById(folderId));
+            }
+        },
+        [dispatch, folderId],
+    );
 
     if (isFolderLoading) {
         return (
@@ -84,6 +109,13 @@ const FolderOverviewPage = memo((props: FolderOverviewPageProps) => {
     return (
         <DynamicModuleLoader reducers={{ folder: FolderReducer }}>
             <Page className={classNames(classes.FolderOverviewPage, {}, [className])}>
+                <AddParticipantsModal
+                    folderId={folderId}
+                    open={isModalOpened}
+                    setOpen={setIsModalOpened}
+                    setWasDefined={setWasDefined}
+                />
+
                 <PageTitle
                     breadcrumbPath={[
                         { label: 'Сравнение кандидатов', url: RoutePath.candidates },
@@ -94,17 +126,26 @@ const FolderOverviewPage = memo((props: FolderOverviewPageProps) => {
                 />
 
                 <Divider align="left" className={classes.divider}>
-                    <Text
-                        className={classes.dividerTitle}
-                        align="left"
-                        text="Участники группы"
-                        size="small"
-                    />
+                    <HStack gap="32">
+                        <Text
+                            className={classes.dividerTitle}
+                            align="left"
+                            text="Участники группы"
+                            size="small"
+                        />
+                        <Button size="small" onClick={handleModalClick}>
+                            Добавить
+                        </Button>
+                    </HStack>
                 </Divider>
                 {!folder?.participants?.length ? (
                     <Text title="Тут пока никого нет..." />
                 ) : (
-                    <CandidatePreviewGrid gridColumns={6} candidates={folder.participants} />
+                    <CandidatePreviewGrid
+                        handleCandidateDelete={handleCandidateDelete}
+                        gridColumns={6}
+                        candidates={folder.participants}
+                    />
                 )}
             </Page>
         </DynamicModuleLoader>

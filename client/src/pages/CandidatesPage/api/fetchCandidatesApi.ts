@@ -5,19 +5,15 @@ import { FilterOptions } from 'widgets/CandidatesFilterModal';
 export interface QueryProps {
     page: number;
     limit: number;
-    filterOptions?: FilterOptions;
+    filterOptions?: any;
 }
 
 const fetchCandidatesApi = rtkApi.injectEndpoints({
     endpoints: (build) => ({
         fetchCandidates: build.query<Candidate[], QueryProps>({
-            query: (props) => ({
+            query: ({ page, limit, filterOptions }) => ({
                 url: '/api/candidates',
-                params: {
-                    page: props.page,
-                    limit: props.limit,
-                    ...props.filterOptions,
-                },
+                params: { page, limit, ...filterOptions },
             }),
         }),
     }),
