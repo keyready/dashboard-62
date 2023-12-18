@@ -4,10 +4,11 @@ services:
   backend:
     container_name: backend
     build: ./src
-    command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 36000 --reload
-    # command: ['sh','-c','/backend/start.sh']
+    # command: gunicorn --bind 0.0.0.0:5000 manage:app --timeout 36000 --reload
+    command: ['sh','-c','/backend/entrypoint.sh']
     restart: always    
     volumes:
+      - ../data/academy:/data
       - ./src:/backend #DEV
       - ./src/server/static:/static
     ports:

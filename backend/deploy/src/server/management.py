@@ -15,7 +15,7 @@ from server.utils.management import (
     check_management_in_db
 )
 
-from server import app
+from    server import app
 from server.models import db,Management,Candidate,Folder,Subject,Department,Faculty
 
 @app.route('/login',methods=['POST'])
@@ -47,8 +47,14 @@ def logout():
 def candidates():
     try:
         queryParams = request.args.to_dict()        
-        
         jsonCandidates=[]
+
+        if 'folderId' in queryParams.keys():
+            candidates=Candidate.query.filter(~Candidate.foldersId.contains[queryParams['folderId']]).all()
+            for cnd in candidates:
+                jsonCandidates.append(Candidate.object_as_dict(cnd))
+                return jsonify(jsonCandidates)
+        
         ########################################## ПАГИНАЦИЯ #######################################################
         candidates = Candidate.query.order_by(
             Candidate.id        
@@ -61,7 +67,8 @@ def candidates():
         for candidate in candidates:
             # if candidate.faculty == queryParams['faculty'] and \
                     # candidate.departments == queryParams['department'] and \
-                        # queryParams['age'].split(',')[0] <= candidate.age <= queryParams['age'].split(',')[1]:
+                        # queryParams['age'].split(',')[0] <= candidate.age <= queryParams['age'].split(',')[1] and \
+                            # not candidate.foldersId.contains(queryParams['foldersId']):
                 jsonCandidates.append(Candidate.object_as_dict(candidate))
         
         return jsonify(jsonCandidates)  

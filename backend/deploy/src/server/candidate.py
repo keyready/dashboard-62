@@ -22,11 +22,7 @@ from server.utils.candidate import (
     check_candidate_in_db,
     save_candidate_in_db,
     parse_diagramData,
-    list_score,
-    kolmogorov_test,
-    pearson_test,
-    average_score,
-    calculate_statistics
+    average_score
 )
 
 @app.route('/',methods=['GET'])
@@ -178,9 +174,6 @@ def compare_candidates():
             
             jsonCandidate=Candidate.object_as_dict(candidate)
 
-            kolmogorovTest = kolmogorov_test(list_score(jsonCandidate))
-            pearsonTest = pearson_test(list_score(jsonCandidate))
-
             with GigaChat(credentials=app.config['GIGACHAT_API'],verify_ssl_certs=False) as giga:
             ############################################## Сравнение по хобби, специальности, факультету и кафедре ##################################################
                 hobbyOverplapAnswer=f'''
@@ -216,8 +209,6 @@ def compare_candidates():
                 {
                     'hobbyOverlap':hobbyOverlapValue,
                     'taskOverlap':taskOverlapValue,
-                    'kolmogorovTest':kolmogorovTest,
-                    'pearsonTest':pearsonTest,
                 })
             
             jsonCandidates.append(jsonCandidate)
@@ -321,9 +312,29 @@ def candidate_statistics():
     for cnd in candidates:
         for subject in cnd.subjectsEstimation:
             listSubjectScore.append(subject['value'])
-        statistic=calculate_statistics(listSubjectScore)
-        statistic.update({"id":cnd.id})
-        finalStats.append(statistic)
+        # statistic=calculate_statistics(listSubjectScore)
+        # statistic.update({"id":cnd.id})
+        # finalStats.append(statistic)
     
     return jsonify(finalStats)
 
+@app.route('/api/folder/delete')
+def delete_folder():
+    folderId=request.json['folderId']
+
+    candidates=Candidate.query.filter(Candidate.foldersId.contains([folderId])).all()
+    for cnd in candidates:
+        cnd.foldersId.remove(folderId)
+        db.session.add(cnd)
+
+    db.session.delete(Folder.query.filter_by(id=folderId).first())
+    
+    db.session.commit()
+
+    return jsonify(msg="ok")
+
+from server.utils.candidate.statistics import calculate_statistic
+
+# @app.route('/api/get_allocation')
+# def allocation():
+#     pass

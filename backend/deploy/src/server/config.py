@@ -1,6 +1,7 @@
 import os
 
 class Config(object):
+    APP_DATA_FOLDER=os.getenv('APP_DATA_FOLDER')
     SECRET_KEY = os.getenv('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = os.getenv('DB_URI')  
     GIGACHAT_API = os.getenv('GIGACHAT_API')  
