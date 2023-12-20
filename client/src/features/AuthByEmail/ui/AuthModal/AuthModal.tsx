@@ -1,8 +1,7 @@
-import { classNames } from 'shared/lib/classNames/classNames';
-import React, { FormEvent, memo, useCallback, useState } from 'react';
+import React, { FormEvent, memo, useCallback, useEffect, useState } from 'react';
 import { Button } from 'shared/UI/Button';
 import { RoutePath } from 'shared/config/routeConfig/routeConfig';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Modal } from 'shared/UI/Modal';
 import { HStack, VStack } from 'shared/UI/Stack';
 import { Input } from 'shared/UI/Input';
@@ -15,24 +14,30 @@ import { getLoginEmail, getLoginError, getLoginPassword, loginActions } from 'fe
 import { loginByEmail } from 'features/AuthByEmail/model/services/loginByEmail/loginByEmail';
 import classes from './AuthModal.module.scss';
 
-interface AuthModalProps {
-    className?: string;
-}
+interface AuthModalProps {}
 
 export const AuthModal = memo((props: AuthModalProps) => {
-    const { className } = props;
-
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+    const [emailError, setEmailError] = useState<string>('');
+    const [redirectedFrom, setRedirectedFrom] = useState<string>('');
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const userMail = useSelector(getLoginEmail);
     const userPass = useSelector(getLoginPassword);
     const authError = useSelector(getLoginError);
 
+    useEffect(() => {
+        if (location.state?.from) {
+            setRedirectedFrom(location.state?.from.pathname + location.state?.from.search);
+        }
+    }, [location]);
+
     const handleEmailChange = useCallback(
         (value: string) => {
+            setEmailError('');
             dispatch(loginActions.setEmail(value));
         },
         [dispatch],
@@ -48,16 +53,24 @@ export const AuthModal = memo((props: AuthModalProps) => {
         async (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
+            if (!userMail || !userPass) return;
+            const emailRegex =
+                /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+            if (!emailRegex.test(userMail)) {
+                setEmailError('Вы ввели некорректный email');
+                return;
+            }
             const result = await dispatch(loginByEmail({ email: userMail, password: userPass }));
 
             if (result.meta.requestStatus === 'fulfilled') {
                 setIsModalOpened(false);
                 dispatch(loginActions.setEmail(''));
                 dispatch(loginActions.setPassword(''));
-                navigate(RoutePath.candidates);
+                navigate(redirectedFrom || RoutePath.candidates);
+                if (redirectedFrom) window.location.reload();
             }
         },
-        [dispatch, navigate, userMail, userPass],
+        [dispatch, navigate, redirectedFrom, userMail, userPass],
     );
 
     return (
@@ -70,15 +83,19 @@ export const AuthModal = memo((props: AuthModalProps) => {
             >
                 <form onSubmit={handleLoginClick}>
                     <VStack maxW justify="start" gap="16" className={classes.body}>
-                        <Input
-                            value={userMail}
-                            onChange={handleEmailChange}
-                            placeholder="Ваша почта"
-                            icon={MailIcon}
-                        />
+                        <VStack maxW>
+                            <Input
+                                value={userMail}
+                                onChange={handleEmailChange}
+                                placeholder="Ваша почта"
+                                icon={MailIcon}
+                            />
+                            {emailError && <Text size="small" text={emailError} variant="error" />}
+                        </VStack>
                         <Input
                             value={userPass}
                             onChange={handlePassChange}
+                            type="password"
                             placeholder="Ваш пароль"
                             icon={PassIcon}
                         />
@@ -90,7 +107,12 @@ export const AuthModal = memo((props: AuthModalProps) => {
                             className={classes.forget}
                         />
 
-                        <Button variant="success" type="submit" className={classes.loginBtn}>
+                        <Button
+                            disabled={!userMail || !userPass}
+                            variant="success"
+                            type="submit"
+                            className={classes.loginBtn}
+                        >
                             Войти
                         </Button>
 
