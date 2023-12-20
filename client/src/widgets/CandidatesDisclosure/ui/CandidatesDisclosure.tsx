@@ -90,7 +90,10 @@ export const CandidatesDisclosure = memo((props: CandidatesDisclosureProps) => {
                             <Text
                                 className={classes.textBlock}
                                 size="extrasmall"
-                                title={candidate.firstname}
+                                title={`${candidate.lastname} ${candidate.firstname.slice(
+                                    0,
+                                    1,
+                                )}.${candidate.middlename.slice(0, 1)}.`}
                             />
                         </HStack>
 

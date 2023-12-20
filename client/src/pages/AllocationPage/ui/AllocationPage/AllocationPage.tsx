@@ -46,6 +46,17 @@ const AllocationPage = memo((props: AllocationPageProps) => {
         },
     });
     const [allocationType, setAllocationType] = useState<Partial<Subject>>({});
+    const [allocationRealType, setAllocationRealType] = useState<string>('Нормальное');
+
+    const allocationRealTypes = useMemo(
+        () => [
+            { id: 1, value: 'Нормальное' },
+            { id: 2, value: 'Равномерное' },
+            { id: 3, value: 'Экспоненциальное' },
+            { id: 4, value: 'По Гауссу' },
+        ],
+        [],
+    );
 
     const { data: subjects, isLoading: isSubjectsLoading } = useSubjects();
     const subjectsFromLS = useMemo<Subject[]>(() => {
@@ -69,13 +80,21 @@ const AllocationPage = memo((props: AllocationPageProps) => {
                     title: getSearchParam('allocationType') || 'По среднему баллу',
                     id: Number(getSearchParam('allocationTypeId')) || -1,
                 });
+                setAllocationRealType(getSearchParam('allocationRealType') || 'Нормальное');
             }
         }
     }, [subjectsFromLS]);
 
     useEffect(() => {
-        if (allocationType.title) dispatch(fetchDataset(allocationType.title));
-    }, [allocationType, dispatch]);
+        if (allocationType.title && allocationRealType) {
+            dispatch(
+                fetchDataset({
+                    allocationData: allocationType.title,
+                    allocationType: allocationRealType,
+                }),
+            );
+        }
+    }, [allocationRealType, allocationType, dispatch]);
 
     useEffect(() => {
         if (subjects?.length) localStorage.setItem('subjects', JSON.stringify(subjects));
@@ -96,7 +115,10 @@ const AllocationPage = memo((props: AllocationPageProps) => {
             addSearchParams({ allocationType: allocationType.title });
             addSearchParams({ allocationTypeId: allocationType?.id.toString() });
         }
-    }, [allocationType, dataset]);
+        if (allocationRealType) {
+            addSearchParams({ allocationRealType });
+        }
+    }, [allocationRealType, allocationType, dataset]);
 
     return (
         <DynamicModuleLoader reducers={{ allocationPage: AllocationPageReducer }}>
@@ -118,16 +140,26 @@ const AllocationPage = memo((props: AllocationPageProps) => {
                         size="small"
                     />
                 </Divider>
-                <Dropdown
-                    filter
-                    optionLabel="title"
-                    options={[{ title: 'По среднему баллу', id: -1 }, ...(subjects || [])]}
-                    value={allocationType}
-                    onChange={(event) => setAllocationType(event.value)}
-                    emptyMessage={<p>Ничего не найдено</p>}
-                    placeholder="Выберите, по каким данным строить распределение"
-                    required
-                />
+                <HStack gap="32">
+                    <Dropdown
+                        filter
+                        optionLabel="title"
+                        options={[{ title: 'По среднему баллу', id: -1 }, ...(subjects || [])]}
+                        value={allocationType}
+                        onChange={(event) => setAllocationType(event.value)}
+                        emptyMessage={<p>Ничего не найдено</p>}
+                        placeholder="Выберите, по каким данным строить распределение"
+                        required
+                    />
+                    <Dropdown
+                        optionLabel="value"
+                        options={allocationRealTypes}
+                        value={allocationRealType}
+                        onChange={(event) => setAllocationRealType(event.value)}
+                        placeholder="Выберите, какое распределение строить"
+                        required
+                    />
+                </HStack>
 
                 {isSubjectsLoading ||
                     (isDatasetLoading && (

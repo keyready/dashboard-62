@@ -2,15 +2,20 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider/config/StateSchema';
 import { Dataset } from '../types/Dataset';
 
-export const fetchDataset = createAsyncThunk<Dataset, string, ThunkConfig<string>>(
+interface fetchDatasetProps {
+    allocationData: string;
+    allocationType: string;
+}
+
+export const fetchDataset = createAsyncThunk<Dataset, fetchDatasetProps, ThunkConfig<string>>(
     'AllocationPage/fetchDataset',
-    async (allocationMethod, thunkAPI) => {
+    async (props, thunkAPI) => {
         const { extra, rejectWithValue } = thunkAPI;
 
         try {
             const response = await extra.api.get<Dataset>('/api/get_allocation', {
                 params: {
-                    allocationMethod,
+                    props,
                 },
             });
 
