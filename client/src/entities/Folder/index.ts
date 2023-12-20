@@ -14,3 +14,4 @@ export { useFolders } from './api/fetchFolderApi';
 
 export { FolderCard } from './ui/FolderCard/FolderCard';
 export { FoldersList } from './ui/FoldersList/FoldersList';
+export { VerticalFolderList } from './ui/VerticalFolderList/VerticalFolderList';
