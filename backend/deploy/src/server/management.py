@@ -10,12 +10,10 @@ from flask import (
 import json
 
 from server.utils.management import (
-    check_password_hash,
-    generate_password_hash,
     check_management_in_db
 )
 
-from    server import app
+from server import app
 from server.models import db,Management,Candidate,Folder,Subject,Department,Faculty
 
 @app.route('/login',methods=['POST'])
@@ -185,3 +183,7 @@ def all_faculties():
     for fac in facs:
         facsJson.append(Faculty.object_as_dict(fac))
     return jsonify(facsJson)
+
+@app.route('/api/get_allocation')
+def get_allocation():
+    pass    

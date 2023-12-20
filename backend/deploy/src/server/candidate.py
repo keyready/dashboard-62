@@ -303,6 +303,9 @@ def all_folders():
     
     return jsonify(jsonFolders)
 
+
+#todo ОБЩАЯ СТАТИСТИКА
+from server.utils.candidate import statistics
 @app.route('/api/candidate/statistics')
 def candidate_statistics():
     finalStats=[]
@@ -312,9 +315,9 @@ def candidate_statistics():
     for cnd in candidates:
         for subject in cnd.subjectsEstimation:
             listSubjectScore.append(subject['value'])
-        # statistic=calculate_statistics(listSubjectScore)
-        # statistic.update({"id":cnd.id})
-        # finalStats.append(statistic)
+        statistic=statistics.calculate_statistic(listSubjectScore)
+        statistic.update({"id":cnd.id})
+        finalStats.append(statistic)
     
     return jsonify(finalStats)
 
@@ -327,14 +330,7 @@ def delete_folder():
         cnd.foldersId.remove(folderId)
         db.session.add(cnd)
 
-    db.session.delete(Folder.query.filter_by(id=folderId).first())
-    
+    db.session.delete(Folder.query.filter_by(id=folderId).first())    
     db.session.commit()
 
     return jsonify(msg="ok")
-
-from server.utils.candidate.statistics import calculate_statistic
-
-# @app.route('/api/get_allocation')
-# def allocation():
-#     pass
