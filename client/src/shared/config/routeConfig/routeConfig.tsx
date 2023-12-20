@@ -35,7 +35,7 @@ export enum AppRoutes {
 
 export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.MAIN]: '/',
-    [AppRoutes.AUTHORIZATION]: '/auth',
+    [AppRoutes.AUTHORIZATION]: '/unlikely_forbidden',
     [AppRoutes.CANDIDATES]: '/candidates',
     [AppRoutes.GROUPING]: '/candidates/grouping',
     [AppRoutes.MANUALGROUPING]: '/candidates/manual',
