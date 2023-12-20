@@ -16,7 +16,7 @@ import { RoutePath } from 'shared/config/routeConfig/routeConfig';
 import { Icon } from 'shared/UI/Icon/Icon';
 import ChevronIcon from 'shared/assests/icons/chevron-down.svg';
 import { Input } from 'shared/UI/Input';
-import { Candidate } from 'entities/Candidate';
+import { Candidate, defineCandidateFolder } from 'entities/Candidate';
 import { Skeleton } from 'primereact/skeleton';
 import { Paginator } from 'widgets/Paginator';
 import { useSelector } from 'react-redux';
@@ -26,6 +26,9 @@ import { fetchTotalCandidates } from 'pages/CandidatesPage';
 import { CandidatesFilterModal, FilterOptions } from 'widgets/CandidatesFilterModal';
 import { PageTitle } from 'widgets/PageTitle';
 import { CandidatesDisclosure } from 'widgets/CandidatesDisclosure';
+import { Modal } from 'shared/UI/Modal';
+import { VerticalFolderList } from 'entities/Folder';
+import { useToaster } from 'shared/lib/hooks/useToaster/useToaster';
 import { useCandidates } from '../../api/fetchCandidatesApi';
 import { CandidatesPageReducer } from '../../model/slice/CandidatesPageSlice';
 import classes from './CandidatesPage.module.scss';
@@ -51,8 +54,11 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const [selectedIdsFromUrl, setSelectedIdsFromUrl] = useState<number[]>([]);
     const [taskValue, setTaskValue] = useState<string>('');
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+    const [isCandidateAdding, setIsCandidateAdding] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const [limit, setLimit] = useState<number>(10);
+    const [selectedCandidateToAdd, setSelectedCandidateToAdd] = useState<number>(-1);
+    const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
     const [filterOptions, setFilterOptions] = useState<FilterOptions>({
         education: [],
         age: [18, 40],
@@ -61,6 +67,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
     const navigate = useNavigate();
     const totalCandidates = useSelector(getTotalCandidates);
     const dispatch = useAppDispatch();
+    const { pending } = useToaster();
 
     const {
         data: candidates,
@@ -127,6 +134,32 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
     const handleRowDelete = useCallback((candForDelete: Candidate) => {
         setSelected((prevState) => prevState.filter((cand) => cand.id !== candForDelete.id));
+    }, []);
+
+    const handler = useCallback(
+        async (id: number) => {
+            setIsCandidateAdding(true);
+            await pending(
+                dispatch(
+                    defineCandidateFolder({
+                        candidateIds: [selectedCandidateToAdd],
+                        folderId: id,
+                    }),
+                ),
+                {
+                    successMessage: 'Кандидат добавлен в группу',
+                    loadingMessage: 'Добавление...',
+                },
+            );
+            setIsCandidateAdding(false);
+            setIsAddModalOpen(false);
+        },
+        [dispatch, pending, selectedCandidateToAdd],
+    );
+
+    const handleModalOpen = useCallback((id: number) => {
+        setIsAddModalOpen(true);
+        setSelectedCandidateToAdd(id);
     }, []);
 
     useEffect(() => {
@@ -203,6 +236,10 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+            <Modal className={classes.modal} isOpen={isAddModalOpen} setIsOpen={setIsAddModalOpen}>
+                <VerticalFolderList isCandidateAdding={isCandidateAdding} handleClick={handler} />
+            </Modal>
+
             <Page className={classNames(classes.CandidatesPage, {}, [className])}>
                 <CandidatesFilterModal
                     filterOptions={filterOptions}
@@ -214,7 +251,11 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                 <PageTitle title="Сравнение выпускников" />
 
                 <HStack className={classes.deleteBtn} maxW justify="end">
-                    <Button size="small" onClick={() => navigate(RoutePath.grouping)}>
+                    <Button
+                        variant="warning"
+                        size="small"
+                        onClick={() => navigate(RoutePath.grouping)}
+                    >
                         Группировка кандидатов
                     </Button>
                     <Button size="small" onClick={() => setIsModalOpened(true)}>
@@ -261,6 +302,7 @@ const CandidatesPage = memo((props: CandidatesPageProps) => {
                                 filterOptions={filterOptions}
                                 defaultSelected={selected}
                                 setSelectedProps={setSelected}
+                                handleShowAddModal={handleModalOpen}
                             />
                         )}
                         <Paginator

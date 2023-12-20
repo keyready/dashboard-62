@@ -324,16 +324,19 @@ app.get('/api/folder/fetch_all', (req, res) =>
             id: 1,
             title: 'Инженеры',
             groupingRule: 'Просто отчаянные ребята',
+            participants: candidatesFromDB.slice(4, 11),
         },
         {
             id: 2,
             title: 'Фронтендеры',
             groupingRule: 'Главные за кнопки и их положение на экране',
+            participants: candidatesFromDB.slice(4, 6),
         },
         {
             id: 3,
             title: 'Дизайнеры',
             groupingRule: 'Ниче не делают, а денег просят много',
+            participants: candidatesFromDB.slice(4, 8),
         },
     ]),
 );

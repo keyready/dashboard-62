@@ -112,6 +112,17 @@
     }
 }
 
+.warning {
+    border-radius: 8px;
+    color: #111;
+    background: #f0d79c;
+    transition: 100ms;
+
+    &:hover {
+        background: #eecaac;
+    }
+}
+
 .disabled {
     cursor: not-allowed;
     color: var(--primary-color);

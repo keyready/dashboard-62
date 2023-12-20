@@ -10,6 +10,7 @@ import { CreateFolderPage } from 'pages/CreateFolderPage';
 import { AllocationPage } from 'pages/AllocationPage';
 import { ManualGroupingPage } from 'pages/ManualGroupingPage';
 import { FolderOverviewPage } from 'pages/FolderOverviewPage';
+import { AuthPage } from 'pages/AuthPage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
@@ -26,6 +27,7 @@ export enum AppRoutes {
     CREATEGROUP = 'creategroup',
     ALLOCATION = 'allocation',
     MANUALGROUPING = 'manualgrouping',
+    AUTHORIZATION = 'authorization',
 
     // last
     NOT_FOUND = 'not_found',
@@ -33,6 +35,7 @@ export enum AppRoutes {
 
 export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.MAIN]: '/',
+    [AppRoutes.AUTHORIZATION]: '/unlikely_forbidden',
     [AppRoutes.CANDIDATES]: '/candidates',
     [AppRoutes.GROUPING]: '/candidates/grouping',
     [AppRoutes.MANUALGROUPING]: '/candidates/manual',
@@ -52,6 +55,10 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.MAIN]: {
         path: RoutePath.main,
         element: <MainPage />,
+    },
+    [AppRoutes.AUTHORIZATION]: {
+        path: RoutePath.authorization,
+        element: <AuthPage />,
     },
     [AppRoutes.CREATECANDIDATEPAGE]: {
         path: RoutePath.createcandidatepage,

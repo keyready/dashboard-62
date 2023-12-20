@@ -14,7 +14,7 @@ export const defineCandidateFolder = createAsyncThunk<
     const { extra, rejectWithValue } = thunkAPI;
 
     try {
-        const response = await extra.api.post<string>('/api/candidate/define');
+        const response = await extra.api.post<string>('/api/candidate/define', props);
 
         if (!response.data) {
             throw new Error();
