@@ -148,19 +148,26 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
 
                         <VStack maxW align="start" className={classes.candidatesFrame}>
                             {compareResult?.comparedCandidates.map((user) => (
-                                <HStack maxW align="center" justify="start" gap="8" key={user.id}>
-                                    <img
-                                        src={`../${user.img}`}
-                                        title={user.lastname}
-                                        alt={user.lastname}
-                                        className={classes.img}
-                                    />
+                                <HStack
+                                    className={classes.row}
+                                    maxW
+                                    align="center"
+                                    justify="start"
+                                    gap="8"
+                                    key={user.id}
+                                >
+                                    {/* <img */}
+                                    {/*     src={`../${user.img}`} */}
+                                    {/*     title={user.lastname} */}
+                                    {/*     alt={user.lastname} */}
+                                    {/*     className={classes.img} */}
+                                    {/* /> */}
                                     <div>
                                         <Text
                                             text={`${user.lastname} ${user.firstname}`}
-                                            size="extrasmall"
+                                            size="small"
                                         />
-                                        <Text text={user.middlename} size="extrasmall" />
+                                        <Text text={user.middlename} size="small" />
                                     </div>
                                 </HStack>
                             ))}

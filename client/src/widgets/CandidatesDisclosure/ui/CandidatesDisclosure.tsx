@@ -81,12 +81,12 @@ export const CandidatesDisclosure = memo((props: CandidatesDisclosureProps) => {
                                 }}
                                 checked={selected.includes(candidate)}
                             />
-                            <img
-                                src={candidate.img}
-                                title={candidate.lastname}
-                                alt={candidate.lastname}
-                                className={classes.img}
-                            />
+                            {/* <img */}
+                            {/*     src={candidate.img} */}
+                            {/*     title={candidate.lastname} */}
+                            {/*     alt={candidate.lastname} */}
+                            {/*     className={classes.img} */}
+                            {/* /> */}
                             <Text
                                 className={classes.textBlock}
                                 size="extrasmall"
