@@ -1,5 +1,5 @@
 import { classNames } from 'shared/lib/classNames/classNames';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { HStack } from 'shared/UI/Stack';
 import { Chart } from 'primereact/chart';
 import classes from './ChartCard.module.scss';
@@ -15,7 +15,10 @@ export const ChartCard = memo((props: ChartCardProps) => {
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
 
-    const labels = Array.from({ length: 22 }, (_, i) => (i + 1).toString());
+    const labels = useMemo(
+        () => Array.from({ length: dataset[0].data?.length || 10 }, (_, i) => (i + 1).toString()),
+        [dataset],
+    );
 
     useEffect(() => {
         const data = {

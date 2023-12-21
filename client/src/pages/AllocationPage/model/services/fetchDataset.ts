@@ -5,6 +5,7 @@ import { Dataset } from '../types/Dataset';
 interface fetchDatasetProps {
     allocationData: string;
     allocationType: string;
+    folderTitle: string;
 }
 
 export const fetchDataset = createAsyncThunk<Dataset, fetchDatasetProps, ThunkConfig<string>>(

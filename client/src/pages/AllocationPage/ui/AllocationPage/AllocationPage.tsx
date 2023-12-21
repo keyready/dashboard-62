@@ -51,9 +51,8 @@ const AllocationPage = memo((props: AllocationPageProps) => {
     const allocationRealTypes = useMemo(
         () => [
             { id: 1, value: 'Нормальное' },
-            { id: 2, value: 'Равномерное' },
-            { id: 3, value: 'Экспоненциальное' },
-            { id: 4, value: 'По Гауссу' },
+            { id: 2, value: 'Пирсона' },
+            { id: 3, value: 'Колмогорова' },
         ],
         [],
     );
@@ -91,10 +90,11 @@ const AllocationPage = memo((props: AllocationPageProps) => {
                 fetchDataset({
                     allocationData: allocationType.title,
                     allocationType: allocationRealType,
+                    folderTitle: groupTitle,
                 }),
             );
         }
-    }, [allocationRealType, allocationType, dispatch]);
+    }, [allocationRealType, allocationType, dispatch, groupTitle]);
 
     useEffect(() => {
         if (subjects?.length) localStorage.setItem('subjects', JSON.stringify(subjects));
