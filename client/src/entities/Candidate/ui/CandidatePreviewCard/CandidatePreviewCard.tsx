@@ -47,7 +47,7 @@ export const CandidatePreviewCard = memo((props: CandidatePreviewCardProps) => {
             </Tooltip>
 
             <img
-                src={`../../${candidate.img}`}
+                src={`../${candidate.img}`}
                 alt={candidate.lastname}
                 className={classNames(classes.img, {}, ['tooltip-preview'])}
             />
