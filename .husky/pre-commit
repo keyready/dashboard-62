@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run lint:project || exit 0
+npm run lint:project && cd ./client && npm run build || exit 0
