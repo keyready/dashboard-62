@@ -42,7 +42,8 @@ export const CandidatePreviewCard = memo((props: CandidatePreviewCardProps) => {
             className={classNames(classes.candCard, {}, [className])}
         >
             <ContextMenu model={items} ref={cm} />
-            <Tooltip showDelay={300} mouseTrack mouseTrackLeft={10} target=".tooltip-preview">
+            <Tooltip showDelay={300} mouseTrack mouseTrackLeft={10}
+target=".tooltip-preview">
                 <span>Нажмите ПКМ для дополнительных действий</span>
             </Tooltip>
 

@@ -61,7 +61,8 @@ export const ChartCard = memo((props: ChartCardProps) => {
 
     return (
         <HStack maxW className={classNames(classes.ChartCard, {}, [className])}>
-            <Chart style={{ width: '100%' }} type="line" data={chartData} options={chartOptions} />
+            <Chart style={{ width: '100%' }} type="line" data={chartData}
+options={chartOptions} />
         </HStack>
     );
 });
