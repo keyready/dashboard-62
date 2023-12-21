@@ -110,8 +110,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
     if (error) {
         return (
             <Page className={classNames(classes.ComparisonPage, {}, [className])}>
-                <VStack className={classes.error} maxW align="center"
-justify="center">
+                <VStack className={classes.error} maxW align="center" justify="center">
                     <Text
                         align="center"
                         variant="error"
@@ -149,10 +148,9 @@ justify="center">
 
                         <VStack maxW align="start" className={classes.candidatesFrame}>
                             {compareResult?.comparedCandidates.map((user) => (
-                                <HStack maxW align="center" justify="start"
-gap="8" key={user.id}>
+                                <HStack maxW align="center" justify="start" gap="8" key={user.id}>
                                     <img
-                                        src={user.img}
+                                        src={`../${user.img}`}
                                         title={user.lastname}
                                         alt={user.lastname}
                                         className={classes.img}
@@ -200,8 +198,7 @@ gap="8" key={user.id}>
                     <Card className={classes.cardStack}>
                         <h3 className={classes.title}>Лучший</h3>
 
-                        <VStack maxW justify="center" align="center"
-className={classes.best}>
+                        <VStack maxW justify="center" align="center" className={classes.best}>
                             <img
                                 src={bestCandidate.img}
                                 title={bestCandidate.lastname}
