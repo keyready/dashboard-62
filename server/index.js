@@ -371,7 +371,7 @@ app.get('/api/get_allocation', (req, res) => {
         const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
         return z * stdev + mean;
     }
-    const numValues = 22;
+    const numValues = 20;
     const means = Array(numValues).fill(0);
     const standardDeviations = Array(numValues).fill(1);
     const randomData = means.map((mean, i) => gaussianRandom(mean, standardDeviations[i]));

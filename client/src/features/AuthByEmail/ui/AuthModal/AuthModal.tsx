@@ -82,7 +82,8 @@ export const AuthModal = memo((props: AuthModalProps) => {
                 setIsOpen={setIsModalOpened}
             >
                 <form onSubmit={handleLoginClick}>
-                    <VStack maxW justify="start" gap="16" className={classes.body}>
+                    <VStack maxW justify="start" gap="16"
+className={classes.body}>
                         <VStack maxW>
                             <Input
                                 value={userMail}
@@ -126,7 +127,8 @@ export const AuthModal = memo((props: AuthModalProps) => {
                             />
                         )}
 
-                        <HStack gap="8" justify="center" maxW className={classes.helpers}>
+                        <HStack gap="8" justify="center" maxW
+className={classes.helpers}>
                             <Text
                                 onClick={handleForgetPassClick}
                                 size="extrasmall"
