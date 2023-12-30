@@ -221,7 +221,7 @@ const DetailedComparisonPage = memo((props: DetailedComparisonPageProps) => {
                             <HStack justify="center" gap="8">
                                 <Icon Svg={StarIcon} />
                                 <Text
-                                    title={`${bestCandidate?.taskOverlap} / 5`}
+                                    title={`${bestCandidate?.taskOverlap} / 10`}
                                     className={classes.textBlock}
                                 />
                             </HStack>
