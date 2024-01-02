@@ -22,9 +22,6 @@ from server.utils.candidate import (
     check_candidate_in_db,
     save_candidate_in_db,
     parse_diagramData,
-    list_score,
-    kolmogorov_test,
-    pearson_test,
     average_score
 )
 
@@ -177,9 +174,6 @@ def compare_candidates():
             
             jsonCandidate=Candidate.object_as_dict(candidate)
 
-            kolmogorovTest = kolmogorov_test(list_score(jsonCandidate))
-            pearsonTest = pearson_test(list_score(jsonCandidate))
-
             with GigaChat(credentials=app.config['GIGACHAT_API'],verify_ssl_certs=False) as giga:
             ############################################## Сравнение по хобби, специальности, факультету и кафедре ##################################################
                 hobbyOverplapAnswer=f'''
@@ -215,8 +209,6 @@ def compare_candidates():
                 {
                     'hobbyOverlap':hobbyOverlapValue,
                     'taskOverlap':taskOverlapValue,
-                    'kolmogorovTest':kolmogorovTest,
-                    'pearsonTest':pearsonTest,
                 })
             
             jsonCandidates.append(jsonCandidate)
@@ -230,6 +222,14 @@ def compare_candidates():
         print(err)
         abort(500)
 
+@app.route('/api/candidate/delete',methods=['POST'])
+def candidate_delete():
+    candidate=Candidate.query.filter_by(id=request.json['candidateId']).first()
+    candidate.foldersId.remove(request.json['folderId'])
+    db.session.add(candidate)
+    db.session.commit()
+    return jsonify(msg="success")
+
 @app.route('/api/candidate/define',methods=['POST'])
 def define_folder():
     candidateId=request.json['candidateId']
@@ -238,16 +238,14 @@ def define_folder():
     candidate=Candidate.query.filter_by(id=candidateId).first()
     if candidate is None: abort(404)
 
-    if folderId == -1:
-        db.session.delete(candidate)
-    else:
-        folder=Folder.query.filter_by(id=folderId).first()
-        if folder is None: abort(404)
+    folder=Folder.query.filter_by(id=folderId).first()
+    if folder is None: abort(404)
         
-        candidate.folderId=folderId
-        db.session.add(candidate)
-
+    candidate.foldersId.append(folderId)
+    
+    db.session.add(candidate)
     db.session.commit()
+
     return jsonify(candidate)
 
 @app.route('/api/candidate/define_mass',methods=['POST'])
@@ -266,7 +264,7 @@ def define_mass_folder():
         if param['name'] == oneParam:
             candidates=Candidate.query.filter_by(oneParam=param['value']).all()
             for cnd in candidates:
-                cnd.folderId = folderId.id
+                cnd.foldersId.append(folderId.id)
                 db.session.add(cnd)
                 db.session.commit()
     
@@ -276,13 +274,63 @@ def define_mass_folder():
 def unique_skills():
     listSkills=[]
     jsonCandidates=[]
+    tmp=[]
 
     candidates=Candidate.query.all()
     for cnd in candidates:
         jsonCandidates.append(Candidate.object_as_dict(cnd))
 
+    id=0
     for jsonCandidate in jsonCandidates:
-        if jsonCandidate['keySkills'] not in listSkills:
-            listSkills.append(jsonCandidate['keySkills'])
-
+        for keySkill in jsonCandidate['keySkills']:
+            if keySkill not in tmp:
+                id+=1
+                tmp.append(keySkill)      
+                obj={
+                    'id':id,
+                    'title':keySkill
+                }
+                listSkills.append(obj)
     return jsonify(listSkills)
+
+@app.route('/api/folder/fetch_all',methods=['GET'])
+def all_folders():
+    jsonFolders=[]
+
+    folders=Folder.query.all()
+    for f in folders:
+        jsonFolders.append(Folder.object_as_dict(f))
+    
+    return jsonify(jsonFolders)
+
+
+#todo ОБЩАЯ СТАТИСТИКА
+from server.utils.candidate import statistics
+@app.route('/api/candidate/statistics')
+def candidate_statistics():
+    finalStats=[]
+    listSubjectScore=[]
+    candidates=Candidate.query.filter(Candidate.foldersId.contains([request.json['folderId']])).all()
+    
+    for cnd in candidates:
+        for subject in cnd.subjectsEstimation:
+            listSubjectScore.append(subject['value'])
+        statistic=statistics.calculate_statistic(listSubjectScore)
+        statistic.update({"id":cnd.id})
+        finalStats.append(statistic)
+    
+    return jsonify(finalStats)
+
+@app.route('/api/folder/delete')
+def delete_folder():
+    folderId=request.json['folderId']
+
+    candidates=Candidate.query.filter(Candidate.foldersId.contains([folderId])).all()
+    for cnd in candidates:
+        cnd.foldersId.remove(folderId)
+        db.session.add(cnd)
+
+    db.session.delete(Folder.query.filter_by(id=folderId).first())    
+    db.session.commit()
+
+    return jsonify(msg="ok")
