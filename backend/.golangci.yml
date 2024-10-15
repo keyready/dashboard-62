@@ -1,0 +1,49 @@
+linters:
+  enable:
+    - golint
+    - staticcheck
+    - errcheck
+    - gocyclo
+    - gosec
+    - ineffassign
+    - unconvert
+    - revive
+    - deadcode
+    - misspell
+    - typecheck
+    - varcheck
+    - gocritic
+    - lll
+    - gofmt
+    - goimports
+
+  disable:
+    - gocyclo # отключение линтера для цикломатической сложности
+
+issues:
+  exclude-use-default: false
+run:
+  tests: true # Проверяйте тестовые файлы
+  # Используйте этот параметр, чтобы исключить тесты, если это необходимо
+  # skip-dirs:
+  #   - test
+  #   - vendor
+  # ignore: | # исключить определенные пути или файлы
+  #   - .*\.md
+  #   - /vendor/.*\.go
+
+  # Список директорий, которые необходимо проверить
+  include:
+    - . # Проверяйте текущую директорию
+
+  # Параметры для конфигурации линтеров
+  max-same-issues: 10 # Максимальное количество одинаковых проблем, которые могут быть выведены
+
+  # Время выполнения (в секундах) для проверки каждого линтера
+  timeout: 5s
+
+# Форматирование вывода
+output:
+  format: colored-line-number # Формат вывода, возможно значение json, junit и другие
+  # Если вы хотите использовать цветной вывод
+  color: true
