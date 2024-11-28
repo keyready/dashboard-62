@@ -4,13 +4,12 @@ from sqlalchemy import create_engine,inspect
 from server import app
 from server.models import db,Management,Faculty,Department,Subject
 
-import os
+import os,json
 
 cli=FlaskGroup(app)
 
 @cli.command('create_db')
 def create_db():
-
     subjects = [
         "История",
         "Теория вероятностей",
@@ -36,6 +35,9 @@ def create_db():
         "Философия",
         "Огневая подготовка"
     ]
+    for s in subjects:
+        db.session.add(Subject(title=s))
+
 
     faculties = [
         "Факультет конструкции летательных аппаратов",
@@ -48,6 +50,8 @@ def create_db():
         "Факультет средств ракетно-космической обороны",
         "Факультет автоматизированных систем управления войсками"
     ]
+    for f in faculties:
+        db.session.add(Faculty(title=f))
 
     departments = [
         "Кафедра контроля качества и испытания вооружения, военной и специальной техники",
@@ -94,32 +98,25 @@ def create_db():
         "Кафедра автоматизированных систем управления космических комплексов",
         "Программно-алгоритмическое обеспечения автоматизированных систем управления ракетно-космической обороны",
         "Метрологического обеспечения вооружения, военной и специальной техники"
-    ]
+    ] 
 
-    if not os.path.exists('/backend/server/static/files/'):
-        os.mkdir('/backend/server/static/files/')
+    for d in departments:
+        db.session.add(Department(title=d))
 
-    if not os.path.exists('/backend/server/static/documents/'):
-        os.mkdir('/backend/server/static/documents/')
+
+    if not os.path.exists(f'{app.config["FOLDER_DATA"]}/files/'):
+        os.mkdir(f'{app.config["FOLDER_DATA"]}/files/')
+
+    if not os.path.exists(f'{app.config["FOLDER_DATA"]}/documents/'):
+        os.mkdir(f'{app.config["FOLDER_DATA"]}/documents/')
 
     engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
-    inspector = inspect(engine)
-    # if not database_exists(app.config["SQLALCHEMY_DATABASE_URI"]) or \
-            # len(inspector.get_table_names()) == 0:
     db.drop_all()
     db.create_all()
     db.session.add(Management(email='Admin@localhost.com',password='admin_password'))
     db.session.add(Management(email='SuperUser@localhost.com',password='superuser_password'))
-    for fac in faculties:
-        db.session.add(Faculty(title=fac))
-    for dep in departments:
-        db.session.add(Department(title=dep))
-    for sub in subjects:
-        db.session.add(Subject(title=sub))
     db.session.commit()
     print("Бд успешно создана.\n\nДиректория для хранения анкет успешно создана.\n\nДиректория для хранения сканов документов создана")
-    # else:
-        # print("Бд не пустая!")
 
 @cli.command('clear_db')
 def clear_db():

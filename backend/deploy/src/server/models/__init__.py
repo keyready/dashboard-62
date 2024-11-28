@@ -27,7 +27,9 @@ class Folder(db.Model):
     __tablename__='folders'
 
     id=db.Column(db.Integer(),primary_key=True)
-    title=db.Column(db.String())
+    title=db.Column(db.String(),unique=True)
+    groupBy=db.Column(db.JSON())
+    groupingRule=db.Column(db.String(),default=None)
 
     def object_as_dict(obj):
         return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
@@ -55,7 +57,7 @@ class Candidate(db.Model):
     keySkills = db.Column(db.ARRAY(db.String()))
     subjectsEstimation = db.Column(db.ARRAY(db.JSON()),nullable=True)
     document = db.Column(db.String()) #скан
-    folderId = db.Column(db.Integer())
+    foldersId = db.Column(db.ARRAY(db.Integer()))
 
     def __init__(self, **kwargs):
         super(Candidate, self).__init__(**kwargs)
